@@ -37,12 +37,12 @@ writeFileSync('site/credits.html', `<!doctype html>
   </div>
 </header>
 <main id="main" class="page">
-  <div class="wrap done">
+  <div class="wrap"><div class="done">
     <h1>Photograph credits</h1>
     <p class="t-lede">Dolce Nova is fictional, so every photograph is a licensed stand-in by the photographers below, not a picture of this shop or its coffee.</p>
     <ul class="credits">${items}
     </ul>
-  </div>
+  </div></div>
 </main>
 </body>
 </html>
