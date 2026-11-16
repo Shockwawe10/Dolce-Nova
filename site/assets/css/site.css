@@ -233,7 +233,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .js .roast { height: 240svh; }
   .js .roast__stage { position: sticky; top: var(--header); height: calc(100svh - var(--header)); align-content: center; padding-block: var(--s-4); }
-  .js .roast__frames picture + picture { opacity: var(--o, 0); }
+  .js .roast__frames picture + picture { opacity: 0; visibility: hidden; }
 }
 @media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
   /* phone and tablet: frames first, then a compact four-step row whose one description line crossfades */

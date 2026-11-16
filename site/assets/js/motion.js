@@ -46,7 +46,8 @@ export function mountRoast() {
   const section = document.querySelector('[data-roast]');
   if (!section || !motionOK()) return;
   const stage = section.querySelector('.roast__stage');
-  const layers = [...section.querySelectorAll('[data-frames] picture')].slice(1);
+  const pics = [...section.querySelectorAll('[data-frames] picture')];
+  const shown = pics.map(() => -1); // last opacity written per layer, so unchanged layers cost nothing
   const heat = section.querySelector('.roast__heat');
   const stages = [...section.querySelectorAll('[data-stages] li')];
   let last = -1;
@@ -60,7 +61,17 @@ export function mountRoast() {
     const travel = r.height - stage.offsetHeight;
     const p = Math.min(Math.max((stickyTop - r.top) / (travel || 1), 0), 1);
     const x = p * 3; // 0..3 across green, light, medium, dark
-    layers.forEach((pic, i) => pic.style.setProperty('--o', Math.min(Math.max(x - i, 0), 1).toFixed(3)));
+    // layer 0 (green) is the base; layer i fades in over [i-1, i]. Only the top opaque layer and the one
+    // fading over it are painted: everything below a fully opaque layer, or at 0, is hidden.
+    const opacity = pics.map((_, i) => (i === 0 ? 1 : Math.min(Math.max(x - (i - 1), 0), 1)));
+    const topOpaque = opacity.lastIndexOf(1);
+    pics.forEach((pic, i) => {
+      const o = i < topOpaque ? 0 : Math.round(opacity[i] * 1000) / 1000;
+      if (o === shown[i]) return;
+      shown[i] = o;
+      pic.style.opacity = String(o);
+      pic.style.visibility = o === 0 ? 'hidden' : 'visible';
+    });
     heat.style.setProperty('--p', p.toFixed(3));
     const idx = Math.min(3, Math.round(x));
     if (idx !== last) {
