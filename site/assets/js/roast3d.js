@@ -108,9 +108,15 @@ export async function mount(section) {
   const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
   const qa = new URLSearchParams(location.search).has('qa');
 
+  // Guide 7.1: one WebGL renderer on a canvas that never enters the page; the visible canvas is 2D and the frame
+  // is copied in with drawImage. Quality steps resize only the off-screen buffer. (WebKit stopped presenting an
+  // in-page WebGL canvas after any resize; the buffer still held the bean: qa/roast-pixels.mjs found it.)
+  const glCanvas = document.createElement('canvas');
+  const view = canvas.getContext('2d');
   let renderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
+    if (!view) throw new Error('no 2d context');
+    renderer = new THREE.WebGLRenderer({ canvas: glCanvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
   } catch (e) { section.classList.add('roastpath--fallback'); return null; }
   // a shader a strict GPU refuses must not leave a bare gradient: switch to the real roast photographs
   let broken = false;
@@ -119,7 +125,20 @@ export async function mount(section) {
     fallback();
     console.warn('roast path: shader failed, showing photographs', gl.getProgramInfoLog(program), gl.getShaderInfoLog(vs), gl.getShaderInfoLog(fs));
   };
-  canvas.addEventListener('webglcontextlost', fallback);
+  glCanvas.addEventListener('webglcontextlost', fallback);
+  // draw = render off screen, then copy into the page's canvas in the same task (the buffer is not preserved)
+  const REST_PX = 3.2e6;
+  function sizeView() {
+    let r = Math.min(devicePixelRatio || 1, 3);
+    r = Math.min(r, Math.sqrt(REST_PX / (W * H)));
+    const w = Math.round(W * r), h = Math.round(H * r);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+  }
+  function draw() {
+    renderer.render(scene, camera);
+    view.clearRect(0, 0, canvas.width, canvas.height);
+    view.drawImage(glCanvas, 0, 0, canvas.width, canvas.height);
+  }
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.85;
@@ -225,7 +244,7 @@ export async function mount(section) {
   // ---- quality (adaptive-render-quality)
   const LEVELS = (touch ? [1.5, 1.25, 1.0, 0.85] : [2, 1.5, 1.25, 1.0]).map((l) => Math.min(l, devicePixelRatio || 1));
   let level = 0, ema = 16.7, slow = 0, fast = 0, lastUp = 0;
-  function applySize(pr) { renderer.setPixelRatio(pr); renderer.setSize(W, H, false); }
+  function applySize(pr) { renderer.setPixelRatio(pr); renderer.setSize(W, H, false); sizeView(); }
   function sample(dt) {
     if (qa) return;
     ema += (dt * 1000 - ema) * 0.1;
@@ -290,7 +309,7 @@ export async function mount(section) {
     }
     apply(shownP);
     if (sharpLevel) { applySize(LEVELS[level]); sharpLevel = 0; }   // back to the motion level, drawn this same frame
-    renderer.render(scene, camera);
+    draw();
     dirty = false;
     if (vel !== 0 || shownP !== goalP) raf = requestAnimationFrame(frame);
     else { last = 0; clearTimeout(sharpTimer); sharpTimer = setTimeout(sharpPass, 140); }
@@ -298,10 +317,17 @@ export async function mount(section) {
   const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
   // sharp at rest: one redraw at the full device pixel ratio, then back to the motion level
   let sharpLevel = 0, active = false;
+  // The resize and the redraw happen together inside an animation frame: setSize clears the canvas, and WebKit
+  // showed a blank canvas when the pair ran from a timer (guide 13: a quality change must redraw).
   function sharpPass() {
-    if (!ready || raf || !active) return;
+    if (!ready || raf || !active || broken) return;
     const full = Math.min(devicePixelRatio || 1, 3);
-    if (full > LEVELS[level] + 0.01) { applySize(full); renderer.render(scene, camera); sharpLevel = full; }
+    if (full <= LEVELS[level] + 0.01) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      if (shownP !== goalP || vel !== 0) { kick(); return; }   // motion resumed: the normal loop draws
+      applySize(full); apply(shownP); draw(); sharpLevel = full;
+    });
   }
   // render only while the section is on screen, and only when the progress actually moved
   const onScroll = () => {
@@ -317,7 +343,7 @@ export async function mount(section) {
   await yieldTask();
   await renderer.compileAsync(scene, camera);
   await yieldTask();
-  readScroll(); shownP = goalP; apply(shownP); renderer.render(scene, camera);
+  readScroll(); shownP = goalP; apply(shownP); draw();
   if (broken) return null;
   ready = true; canvas.classList.add('is-ready');
   addEventListener('scroll', onScroll, { passive: true });
@@ -328,6 +354,9 @@ export async function mount(section) {
   const api = {
     get p() { return shownP; },
     get quality() { return { level, pixelRatio: renderer.getPixelRatio(), dpr: devicePixelRatio, locked: qa }; },
+    _debug: { renderer, redraw: () => { apply(shownP); draw(); }, sizes: () => ({ W, H, pr: renderer.getPixelRatio(), cw: canvas.width, ch: canvas.height }) },
+    // test hook: one quality step down at rest, exactly as the adaptive loop would take it (it must redraw)
+    stepQuality() { if (level < LEVELS.length - 1) { level++; applySize(LEVELS[level]); sharpLevel = 0; dirty = true; kick(); } },
     settled: () => new Promise((res) => { readScroll(); kick(); let n = 0; const chk = () => (++n > 2 && !raf && shownP === goalP ? setTimeout(res, 200) : requestAnimationFrame(chk)); requestAnimationFrame(chk); }),
   };
   window.__roast = api;

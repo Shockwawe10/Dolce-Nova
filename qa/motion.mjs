@@ -4,7 +4,7 @@
 import { chromium, webkit } from 'playwright';
 import { readFileSync, readdirSync } from 'node:fs';
 
-const BASE = 'http://localhost:4600/Dolce-Nova/';
+const BASE = process.env.BASE || 'http://localhost:4600/Dolce-Nova/';
 let fail = 0;
 const report = (ok, msg) => { console.log(`${ok ? 'PASS' : 'FAIL'} ${msg}`); if (!ok) fail++; };
 

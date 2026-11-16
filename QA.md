@@ -103,6 +103,16 @@ the scene module) is 757 KB minified, 193 KB gzipped (measured), loaded only nea
 - **The bean is a render, not a photograph**: procedural geometry and physically based materials, colours
   chosen to match the roast photographs. The roast temperatures are general roasting knowledge.
 
+**Checked against 3D-AND-DESIGN-GUIDE.md** (applied 2026-11-16 at your request):
+
+| Guide rule | Check | Result |
+|---|---|---|
+| 6 / 10.2 Pixels, not state; pair `?qa` with an unlocked run and a forced quality step | `qa/roast-pixels.mjs` (bean pixels with the canvas shown vs hidden, at three stages) | **Found a real bug:** WebKit stopped presenting the WebGL canvas after any resize (0 bean pixels after a quality step, though the GL buffer held 24,660). Fixed with the guide's 7.1 architecture: off-screen renderer, frame copied into a 2D canvas. Now PASS in Chromium and WebKit, 1440 and 390, locked and unlocked |
+| 8.2 No bare half screen in a pinned section | `qa/roast-coverage.mjs` (121 positions) | **Failed first** (text half bare at 27% of positions on desktop, 17% on a phone); fixed with sticky cards; now 121/121 at both sizes |
+| 7 Compare against HEAD, interleaved | `qa/frames-compare.mjs`, 3 rounds, Chromium + GPU, 4x CPU | tree 98.9% / 98.6% of frames < 20 ms (phone / desktop) against HEAD 98.7% / 98.6%: the off-screen copy costs nothing measurable |
+| 12 Phones at 360, 390 and 430 | `qa/roast-shots.mjs` | read by eye; a sliver of the previous card at 430 fixed (a full screen per card on phones) |
+| 11 Live check in Chrome and WebKit | `BASE=<live> node qa/roast-pixels.mjs chromium` and `webkit` | see the deploy commit |
+
 ## Accessibility (qa/a11y.mjs)
 
 axe-core 4.10.3, tags wcag2a/aa, wcag21a/aa, wcag22aa, WebKit, 390 and 1440, six states each: home,

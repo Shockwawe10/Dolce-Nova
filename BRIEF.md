@@ -76,10 +76,20 @@ No two adjacent beats share a feeling. Origin is deliberately the quietest beat,
 Lives in craft, step 2 (roast). It gets the largest scroll span of any step, and the best photographs.
 Under reduced motion it shows the final roasted state (or a stepped fade), never a hidden image.
 
-**Revised 2026-11-16 (user):** the roast becomes a path. One bean travels down it as you scroll, from
-green to light, medium and dark, the light and surroundings changing with it, each stage described.
-Built as a real-time 3D bean (the user chose it over cut-out photographs); the four roast photographs
-remain as the fallback.
+## Revisions log (the owner's words, verbatim, dated)
+
+- **2026-11-16**, the roast section: "change the next session, next section of the design. So when we have a
+  section when we talk about like roasting, I want this section to be like, you know, the path from the light to
+  the dark. So, for example, we have while scrolling the single bean, like, yeah, and it while scrolling comes from
+  light green to light to medium to dark, maybe changing environment, maybe changing like light or something like
+  that, maybe using 3 VGS. I don't know how to better do that, but I wanted like to have background like a parallax
+  effect or something like that, and have like a path when we scrolling, and on each stage I describing about this
+  stage."
+  Asked how to build the bean, the owner chose: "Real-time 3D bean (Recommended)" (over cut-out photographs).
+  Built as a three.js bean on a drawn path; the four roast photographs remain as the fallback.
+- **2026-11-16**, working rules: "now you have a new file, 3D, and design guide. There was used on my previous
+  projects, analyze it and apply these rules whenever you will be working with 3D animations or design."
+  Applied: `3D-AND-DESIGN-GUIDE.md` is loaded by CLAUDE.md for all 3D, animation and design work.
 
 ### Tell-someone sentence
 

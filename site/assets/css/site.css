@@ -233,16 +233,21 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 @media (max-width: 1023px) { .roastpath__frames { width: min(100%, 40svh); } }
 
 .roastpath__panels { position: relative; pointer-events: none; }
-.roastpath__panel { min-height: var(--panel); display: flex; align-items: center; }
-.roastpath__panel > .wrap { width: min(100% - 2 * var(--gutter), var(--max)); }
-.roastpath__panel--intro { min-height: 100vh; min-height: 100lvh; align-items: flex-start; padding-top: var(--padt); }
+/* Cards are sticky inside their own panel (guide 8.2: no bare half screen): each holds its place until its
+   panel scrolls away, and the next card arrives directly behind it, so one card is always readable. */
+.roastpath__panel { min-height: var(--panel); display: flex; align-items: flex-start; }
+.roastpath__panel > .wrap { width: min(100% - 2 * var(--gutter), var(--max)); position: sticky; top: 30vh; top: 30lvh; }
+.roastpath__panel--intro { min-height: 100vh; min-height: 100lvh; padding-top: var(--padt); }
+.roastpath__panel--intro > .wrap { top: var(--padt); }
 .roastpath__card { width: var(--col5); display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--c-ground); border-radius: var(--r-1); pointer-events: auto; }
 .roastpath__panel--intro .roastpath__card { padding: 0; background: none; gap: var(--s-3); }
 .roastpath__card p { font-size: var(--fs-3); line-height: 1.5; }
 .roastpath__temp { font-size: var(--fs-1) !important; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; }
 @media (max-width: 1023px) {
   /* the bean owns the upper half of the stage; the cards dock above Safari's toolbar */
-  .roastpath__panel, .roastpath__panel--intro { align-items: flex-end; padding-top: 0; padding-bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); }
+  /* a full screen per card on phones, so the previous card has left before the bean rests at the next stage */
+  .roastpath__panel, .roastpath__panel--intro { align-items: flex-end; padding-top: 0; min-height: 100vh; min-height: 100lvh; }
+  .roastpath__panel > .wrap, .roastpath__panel--intro > .wrap { top: auto; bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); margin-bottom: var(--s-3); }
   .roastpath__card, .roastpath__panel--intro .roastpath__card { width: 100%; padding: var(--s-3); background: var(--c-ground); gap: var(--s-1); }
   .roastpath__card p { font-size: var(--fs-2); }
   .roastpath__panel--intro h2 { font-size: var(--fs-5); }
