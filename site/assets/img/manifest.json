@@ -1,0 +1,226 @@
+{
+  "roast-green": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      1470,
+      1470
+    ],
+    "alt": "Green, unroasted coffee beans filling the frame",
+    "source": "f84555762",
+    "by": "Roger Burger",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Green_arabica_coffee_beans.jpg",
+    "cropped": true
+  },
+  "roast-light": {
+    "widths": [
+      420,
+      640,
+      760
+    ],
+    "ratio": [
+      760,
+      760
+    ],
+    "alt": "Light roasted coffee beans, pale cinnamon brown",
+    "source": "f125379393",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Row_of_15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "roast-medium": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      840,
+      840
+    ],
+    "alt": "Medium roasted coffee beans, even chestnut brown",
+    "source": "f125379393",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Row_of_15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "roast-dark": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      840,
+      840
+    ],
+    "alt": "Dark roasted coffee beans with an oily sheen",
+    "source": "f125379393",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Row_of_15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "bean-light": {
+    "widths": [
+      420,
+      640,
+      780
+    ],
+    "ratio": [
+      780,
+      780
+    ],
+    "alt": "Whole light roasted coffee beans",
+    "source": "f125379394",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "bean-medium": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      840,
+      840
+    ],
+    "alt": "Whole medium roasted coffee beans",
+    "source": "f125379394",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "bean-dark": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      840,
+      840
+    ],
+    "alt": "Whole dark roasted coffee beans",
+    "source": "f125379394",
+    "by": "Alorin",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
+    "cropped": true
+  },
+  "grind-espresso": {
+    "widths": [
+      420,
+      640,
+      840
+    ],
+    "ratio": [
+      900,
+      900
+    ],
+    "alt": "Fine espresso grind, soft as cocoa powder",
+    "source": "f197293151",
+    "by": "Shixart1985",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:A_black_container_filled_with_finely_ground_coffee.jpg",
+    "cropped": true
+  },
+  "grind-filter": {
+    "widths": [
+      420,
+      640,
+      840,
+      1000
+    ],
+    "ratio": [
+      1000,
+      1000
+    ],
+    "alt": "Medium filter grind, like coarse sand",
+    "source": "f56710941",
+    "by": "-Abe",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Caf%C3%A9_molido.jpg",
+    "cropped": true
+  },
+  "hero": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560,
+      3456
+    ],
+    "ratio": [
+      3456,
+      2298
+    ],
+    "alt": "Green, unroasted coffee beans spilling from an open burlap sack onto a wooden floor",
+    "source": "c69",
+    "by": "DeaPeaJay",
+    "licence": "CC BY-SA 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Green_Bean_Coffee.jpg",
+    "cropped": false
+  },
+  "origin": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560
+    ],
+    "ratio": [
+      4310,
+      2875
+    ],
+    "alt": "A hand lifting green coffee beans from a wide basket during sorting",
+    "source": "m62054123",
+    "by": "Joshua Newton",
+    "licence": "CC0",
+    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Joshua_Newton_2016-10-01_(Unsplash_XpyD7z6AP4g).jpg",
+    "cropped": false
+  },
+  "brew": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560
+    ],
+    "ratio": [
+      3849,
+      2561
+    ],
+    "alt": "Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above",
+    "source": "c96",
+    "by": "Kim Sanso",
+    "licence": "CC0",
+    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Manual_drip_(pour-over)_coffee.jpg",
+    "cropped": false
+  }
+}

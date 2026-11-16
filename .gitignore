@@ -4,3 +4,4 @@ qa/out/
 .env
 # repo-local agent tooling (skills); not part of the deliverable
 .claude/
+assets-src/
