@@ -3,7 +3,7 @@
 import { webkit } from 'playwright';
 import assert from 'node:assert/strict';
 
-const URL = 'http://localhost:4600/Dolce-Nova/';
+const URL = process.env.BASE || 'http://localhost:4600/Dolce-Nova/';
 const browser = await webkit.launch();
 let failed = 0;
 for (const [w, h] of [[390, 844], [1440, 900]]) {

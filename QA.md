@@ -18,12 +18,12 @@ client changed scope to a static GitHub Pages site with a demo card checkout and
 | Motion | No `transition: all`, only transform/opacity animated | **PASS** (static scan of CSS and JS) |
 | Motion | Reduced motion: no running animations after load | **PASS** · 0 on 5 page states, 0 hidden reveal targets |
 | Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy** (99.8%) · **FAIL in WebKit at 3×** (see below) · **not run on a real iPhone** |
-| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS** · home 98, LCP 2.0 s, CLS 0 · checkout 100, LCP 1.7 s, CLS 0 (local server) |
+| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS on the live site** · home 100, LCP 1.2 s, CLS 0, TBT 50 ms · checkout 100, LCP 1.2 s, CLS 0 (local server: 98 / 2.0 s) |
 | Quality | axe WCAG 2.2 AA, no serious issues | **PASS** · 0 violations of any impact in 12 states |
 | Quality | WebKit 390×844, 820×1180, 1440×900, 1920×1080: no clipped text, no horizontal overflow | **PASS** · 0 px overflow at all four (and reduced motion); 0 clipped text in the audit |
 | Quality | Inputs ≥ 16px, tap targets ≥ 44px | **PASS** · inputs 16px; 0 targets under 44px (inline text links exempt, listed in `qa/out/audit.json`) |
 | Logic | Cart totals in integer cents | **PASS** · `node --test`: 8/8, including 50 random carts against a hand-typed price table |
-| Flow | Add → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900 (`qa/flow.mjs`) |
+| Flow | Add → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900, locally and on the live site (`BASE=https://shockwawe10.github.io/Dolce-Nova/ node qa/flow.mjs`) |
 | Secrets | `git grep` finds no `sk_test_` / `whsec_` | **PASS** · tree clean; full history has no key-shaped strings |
 | Skill gate | design-taste-frontend `gate.mjs` | **OPEN 35** after 3 rounds (60 → 60 → 35); see below |
 
@@ -121,8 +121,9 @@ mutants killed, `nginx -t` OK) and remains in git history at commit `02c20db`.
   look ordinary. The bar used was the two measured references and the comp review in DESIGN.md.
 - **No real iPhone was tested.** Touch scrolling, Safari's address-bar resizing (`svh`/`lvh` sections),
   and real GPU frame times are unverified until checked on a device.
-- **Lighthouse ran against a local server.** GitHub Pages adds compression and a CDN, which should help;
-  re-run on the live URL once deployed.
+- **Lighthouse on the live site** (https://shockwawe10.github.io/Dolce-Nova/, Lighthouse 12.8, mobile):
+  home 100 / 100 / 100 / 100 (Performance, Accessibility, Best Practices, SEO); checkout 100 / 100 / 100,
+  SEO 60 because the checkout page is deliberately `noindex`. Simulated throttling, one run each.
 - **Photographs are licensed stand-ins**, not the brand's coffee (credits page). The library had no
   coarse-grind photograph under a free licence, so the cafetière grind was dropped rather than faked.
 - **Roast temperatures** (first crack near 196 °C, second near 224 °C) and the 12-minute roast are
