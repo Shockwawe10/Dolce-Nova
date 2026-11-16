@@ -49,12 +49,19 @@ for (const [path, setup] of [['', null], ['', 'drawer'], ['checkout.html', null]
 await wk.close();
 
 // ---- 3. frame timing ----
-async function frames(browserType, label, { w, h, throttle, dpr }) {
-  const browser = await browserType.launch();
+async function frames(browserType, label, { w, h, throttle, dpr, warm, gpu }) {
+  // default headless Chromium renders WebGL in software (SwiftShader); gpu: true uses this machine's GPU via ANGLE
+  const browser = await browserType.launch(gpu ? { args: ['--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=d3d11'] } : {});
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: w < 1024, isMobile: browserType === chromium && w < 1024, deviceScaleFactor: dpr ?? (w < 1024 ? 3 : 2) });
   const page = await ctx.newPage();
   if (throttle) { const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: throttle }); }
   await page.goto(BASE, { waitUntil: 'networkidle' });
+  if (warm) {
+    // steady state: let the 3D roast path finish its one-time setup first, then measure from the top
+    await page.evaluate(() => { const s = document.querySelector('[data-roastpath]'); if (s) scrollTo(0, s.offsetTop - innerHeight); });
+    await page.waitForFunction(() => window.__roast || document.querySelector('.roastpath--fallback'), null, { timeout: 60000 }).catch(() => {});
+    await page.evaluate(() => scrollTo(0, 0));
+  }
   await page.waitForTimeout(1500);
   const result = await page.evaluate(async () => {
     const deltas = [];
@@ -84,8 +91,12 @@ async function frames(browserType, label, { w, h, throttle, dpr }) {
   const pct = (100 * result.under20) / result.n;
   report(pct >= 95, `frames ${label}: ${pct.toFixed(1)}% of ${result.n} frames < 20 ms (p95 ${result.p95.toFixed(1)} ms, worst ${result.max.toFixed(1)} ms)`);
 }
-await frames(chromium, 'Chromium 390x844 @3x, 4x CPU throttle (iPhone PROXY)', { w: 390, h: 844, throttle: 4 });
-await frames(chromium, 'Chromium 1440x900 @2x, 4x CPU throttle', { w: 1440, h: 900, throttle: 4 });
+await frames(chromium, 'Chromium 390x844 @3x, 4x CPU throttle (iPhone PROXY), first visit', { w: 390, h: 844, throttle: 4 });
+await frames(chromium, 'Chromium 390x844 @3x, 4x CPU throttle (iPhone PROXY), 3D already set up', { w: 390, h: 844, throttle: 4, warm: true });
+await frames(chromium, 'Chromium 1440x900 @2x, 4x CPU throttle, first visit', { w: 1440, h: 900, throttle: 4 });
+await frames(chromium, 'Chromium 1440x900 @2x, 4x CPU throttle, 3D already set up', { w: 1440, h: 900, throttle: 4, warm: true });
+await frames(chromium, 'Chromium 390x844 @3x, 4x CPU throttle, hardware GPU, first visit', { w: 390, h: 844, throttle: 4, gpu: true });
+await frames(chromium, 'Chromium 1440x900 @2x, 4x CPU throttle, hardware GPU, first visit', { w: 1440, h: 900, throttle: 4, gpu: true });
 await frames(webkit, 'WebKit 390x844 @1x, no throttle (WebKit cannot throttle)', { w: 390, h: 844, dpr: 1 });
 await frames(webkit, 'WebKit 390x844 @3x, no throttle (software-rendered on Windows; see qa/webkit-baseline.mjs)', { w: 390, h: 844 });
 process.exit(fail ? 1 : 0);

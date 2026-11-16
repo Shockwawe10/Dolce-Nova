@@ -42,6 +42,7 @@ writeFileSync('site/credits.html', `<!doctype html>
     <p class="t-lede">Dolce Nova is fictional, so every photograph is a licensed stand-in by the photographers below, not a picture of this shop or its coffee.</p>
     <ul class="credits">${items}
     </ul>
+    <p class="t-soft">The 3D roast path uses <a class="link" href="https://threejs.org/">three.js</a> (MIT licence). Fonts: Fraunces and Figtree (SIL Open Font License).</p>
   </div></div>
 </main>
 </body>

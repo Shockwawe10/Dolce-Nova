@@ -198,41 +198,54 @@ body > .skip-link { left: var(--gutter); }
 @media (min-width: 640px) { .add .btn { justify-self: start; min-width: 280px; } }
 .add__status { min-height: 24px; font-size: var(--fs-1); }
 
-/* ---------- the roast peak (a scroll moment inside its own two-screen section) ---------- */
-.roast { --h: 2; padding-block: 0; }
-.roast__stage { padding-block: var(--padt) var(--padb); }
-.roast__frames { position: relative; aspect-ratio: 1; width: 100%; max-width: 504px; overflow: hidden; background: var(--c-surface); }
-.roast__frames picture { position: absolute; inset: 0; }
-.roast__frames img { width: 100%; height: 100%; object-fit: cover; }
-.roast__heat { height: 2px; background: var(--c-line); position: relative; overflow: hidden; }
-.roast__heat i { position: absolute; inset: 0; background: var(--c-accent); transform-origin: left; transform: scaleX(var(--p, 1)); }
-.stages { display: grid; gap: var(--s-2); }
-.stages li { display: grid; grid-template-columns: 120px 1fr; gap: var(--s-2); align-items: baseline; }
-.stages b { position: relative; justify-self: start; font-family: var(--f-display); font-weight: 400; font-size: var(--fs-4); line-height: 1.2; }
-/* the active stage is marked by a bar, never by dimming the others (dimmed text would fail contrast) */
-.stages b::after { content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--c-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--d-2) var(--ease); }
-.stages li.is-on b::after { transform: scaleX(1); }
-@media (prefers-reduced-motion: no-preference) {
-  .js .roast__stage { position: sticky; top: 0; min-height: var(--screen); }
-  .js .roast__frames picture + picture { opacity: 0; visibility: hidden; }
+/* ---------- the roast path: a sticky 3D stage with five cards scrolling over it (ios-sticky-stage) ---------- */
+:root { --toolbar: calc(100lvh - 100svh); --panel: 90vh; }
+@supports (height: 100lvh) { :root { --panel: 90lvh; } }
+@supports not (height: 100lvh) { :root { --toolbar: 0px; } }
+/* stage and cards share one grid cell: the cards scroll over the sticky stage without a negative margin */
+.roastpath { position: relative; display: grid; }
+.roastpath__stage, .roastpath__panels { grid-area: 1 / 1; }
+.roastpath__stage { position: sticky; top: 0; align-self: start; height: 100vh; height: 100lvh; overflow: hidden; }
+.roastpath__bg { position: absolute; inset: 0; opacity: 0; }
+.roastpath__bg--green { opacity: 1; background: linear-gradient(180deg, var(--c-ground), var(--c-surface)); }
+.roastpath__bg--light { background: radial-gradient(60% 55% at 72% 50%, color-mix(in srgb, var(--c-accent) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
+.roastpath__bg--medium { background: radial-gradient(55% 50% at 72% 55%, color-mix(in srgb, var(--c-accent) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
+.roastpath__bg--dark { background: radial-gradient(50% 45% at 72% 60%, color-mix(in srgb, var(--c-accent) 55%, transparent), transparent 75%), var(--c-ink); }
+@media (max-width: 1023px) {
+  .roastpath__bg--light { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
+  .roastpath__bg--medium { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
+  .roastpath__bg--dark { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 55%, transparent), transparent 75%), var(--c-ink); }
 }
-@media (prefers-reduced-motion: no-preference) and (max-width: 1023px) {
-  /* phone and tablet: frames first, then a compact four-step row whose one description line crossfades */
-  .js .roast__stage { gap: var(--s-2); }
-  .js .roast__stage .split__text { gap: var(--s-2); }
-  .js .roast__frames { order: -1; max-width: none; aspect-ratio: 4 / 3; }
-  .js .stages { grid-template-columns: repeat(4, auto); justify-content: space-between; gap: var(--s-1) var(--s-2); }
-  .js .stages li { display: contents; }
-  .js .stages b { grid-row: 1; font-size: var(--fs-3); }
-  .js .stages span { grid-row: 2; grid-column: 1 / -1; opacity: 0; transition: opacity var(--d-2) var(--ease); }
-  .js .stages li.is-on span { opacity: 1; }
+.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; transition: opacity var(--d-4) var(--ease); }
+.roastpath__canvas.is-ready { opacity: 1; }
+
+/* without JavaScript or WebGL: the four real roast photographs, still */
+.roastpath__fallback { display: none; position: absolute; inset: var(--padt) 0 auto; left: 0; right: 0; }
+html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { display: grid; }
+.roastpath--fallback .roastpath__canvas { display: none; }
+.roastpath__frames { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); width: min(100%, 504px); }
+.roastpath__frames picture { aspect-ratio: 1; overflow: hidden; background: var(--c-surface); }
+.roastpath__frames img { width: 100%; height: 100%; object-fit: cover; }
+@media (min-width: 1024px) {
+  .roastpath__fallback { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); }
+  .roastpath__frames { grid-column: 2; }
 }
-@media (prefers-reduced-motion: reduce) {
-  /* a still grid of the four stages instead of a scroll-linked crossfade, in one screen */
-  .roast { --h: 1; }
-  .roast__frames { aspect-ratio: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); background: none; }
-  .roast__frames picture { position: static; aspect-ratio: 1; }
-  .roast__heat { display: none; }
+@media (max-width: 1023px) { .roastpath__frames { width: min(100%, 40svh); } }
+
+.roastpath__panels { position: relative; pointer-events: none; }
+.roastpath__panel { min-height: var(--panel); display: flex; align-items: center; }
+.roastpath__panel > .wrap { width: min(100% - 2 * var(--gutter), var(--max)); }
+.roastpath__panel--intro { min-height: 100vh; min-height: 100lvh; align-items: flex-start; padding-top: var(--padt); }
+.roastpath__card { width: var(--col5); display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--c-ground); border-radius: var(--r-1); pointer-events: auto; }
+.roastpath__panel--intro .roastpath__card { padding: 0; background: none; gap: var(--s-3); }
+.roastpath__card p { font-size: var(--fs-3); line-height: 1.5; }
+.roastpath__temp { font-size: var(--fs-1) !important; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; }
+@media (max-width: 1023px) {
+  /* the bean owns the upper half of the stage; the cards dock above Safari's toolbar */
+  .roastpath__panel, .roastpath__panel--intro { align-items: flex-end; padding-top: 0; padding-bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); }
+  .roastpath__card, .roastpath__panel--intro .roastpath__card { width: 100%; padding: var(--s-3); background: var(--c-ground); gap: var(--s-1); }
+  .roastpath__card p { font-size: var(--fs-2); }
+  .roastpath__panel--intro h2 { font-size: var(--fs-5); }
 }
 
 /* ---------- closing: the close and the footer, one screen on its own ground ---------- */

@@ -100,7 +100,7 @@ starts on the 5/12 line (623px at 1440). Columns are top-aligned.
 | Hero | 1 | demo notice line, h1, lede, button left; photograph right, ending 64px above the fold; phone: words, then the photograph fills what is left |
 | Shop | 2 | h2 and lede on the split line; six rows on one left edge (name, then origin, process, roast and price); the open row: choices left, grind preview right |
 | Origin | 1 | text left, photograph right (full content height) |
-| Roast (peak) | 2 | sticky stage inside its own section: text and stage list left, four roast photographs crossfading right; phone: frames first, compact four-step row |
+| Roast path (peak) | 4.6 | a sticky 3D stage: one bean travels a drawn path and turns green → light → medium → dark while the backdrop warms from daylight to ember and smoke rises at second crack; five cards (intro + four stages) scroll over it on the left; phone: the whole path above, cards docked at the bottom; still photographs as the fallback |
 | Brew | 1 | text, recipe and button left, photograph right |
 | Closing | 1 | the close (statement and button) on the oat ground, footer links and the demo/legal lines at its foot |
 

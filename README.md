@@ -16,8 +16,10 @@ Use the test card `4242 4242 4242 4242`, any future expiry, any CVC.
   iOS-safe scroll lock, and the count bumping on add.
 - **Demo checkout:** local card checks (Luhn, expiry, CVC) only. Card fields never leave the page and
   never touch storage; only the order summary goes to `sessionStorage` for the confirmation page.
-- **The roast:** scrolling through the roast section crossfades four real photographs from green to
-  dark (opacity only); under reduced motion it is a still grid.
+- **The roast path:** a real-time 3D bean (three.js, `site/assets/js/roast3d.js`) travels a drawn path as
+  you scroll, turning green → light → medium → dark while the light warms, with a card for each stage. It
+  loads only near the section, eases with a damped spring, renders only when something changed, adapts its
+  resolution to the frame rate, and falls back to four real roast photographs without WebGL.
 
 ## Run locally
 
@@ -66,4 +68,5 @@ Results and every failure are in **QA.md**.
 ## Credits
 
 Photographs are licensed stand-ins via Wikimedia Commons (CC0, CC BY, CC BY-SA); authors and licences
-are on `credits.html`. Fonts: Fraunces and Figtree, SIL Open Font License. Dolce Nova is fictional.
+are on `credits.html`. Fonts: Fraunces and Figtree, SIL Open Font License. 3D: three.js r185.1, MIT
+(`site/assets/vendor/three.LICENSE.txt`). Dolce Nova is fictional.

@@ -28,9 +28,10 @@ for (const [w, h] of SIZES) {
   await to('.coffee:nth-child(1) .coffee__panel', header); await shot('03-shop-open');
   await to('#craft', header); await shot('04-craft');
   // the peak: walk the roast section at 0, 1/3, 2/3, 1
-  const roast = await page.evaluate(() => { const s = document.querySelector('[data-roast]'); const st = s.querySelector('.roast__stage'); return { top: s.getBoundingClientRect().top + scrollY, travel: s.offsetHeight - st.offsetHeight }; });
-  for (const [i, f] of [[0, 0], [1, 1 / 3], [2, 2 / 3], [3, 1]]) {
-    await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), roast.top - header + roast.travel * f);
+  const roast = await page.evaluate(() => { const s = document.querySelector('[data-roastpath]'); const st = s.querySelector('.roastpath__stage'); return { top: s.getBoundingClientRect().top + scrollY, travel: s.offsetHeight - st.offsetHeight }; });
+  for (const [i, f] of [[0, 0.25], [1, 0.5], [2, 0.75], [3, 1]]) {
+    await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), roast.top + roast.travel * f);
+    await page.evaluate(() => window.__roast && window.__roast.settled());
     await shot(`05-roast-${i}`);
   }
   await to('#brew-title', header + 200); await shot('06-brew');

@@ -17,7 +17,7 @@ client changed scope to a static GitHub Pages site with a demo card checkout and
 | Design | Natural width ≥ 1.5× displayed | **PASS at DPR 2** (min 1.63×) · **FAIL at DPR 1** (min 1.12×, 20 instances; none upscaled) |
 | Motion | No `transition: all`, only transform/opacity animated | **PASS** (static scan of CSS and JS) |
 | Motion | Reduced motion: no running animations after load | **PASS** · 0 on 5 page states, 0 hidden reveal targets |
-| Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy** (99.8%) · **FAIL in WebKit at 3×** (see below) · **not run on a real iPhone** |
+| Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy with a GPU** (98.7% phone, 98.8% desktop, with the 3D section) · **FAIL with software WebGL** (82.9% to 93.6%) and **in WebKit at 3×** · **not run on a real iPhone** |
 | Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS on the live site** · home 100, LCP 1.2 s, CLS 0, TBT 50 ms · checkout 100, LCP 1.2 s, CLS 0 (local server: 98 / 2.0 s) |
 | Quality | axe WCAG 2.2 AA, no serious issues | **PASS** · 0 violations of any impact in 12 states |
 | Quality | WebKit 390×844, 820×1180, 1440×900, 1920×1080: no clipped text, no horizontal overflow | **PASS** · 0 px overflow at all four (and reduced motion); 0 clipped text in the audit |
@@ -46,14 +46,29 @@ filter grind chosen and the cart drawer open; checkout with errors; confirmation
 
 ## Motion (qa/motion.mjs, qa/webkit-baseline.mjs)
 
-| Run | Frames < 20 ms | p95 |
-|---|---|---|
-| Chromium 390×844 @3×, 4× CPU throttle (**iPhone proxy**) | 99.8% of 507 | 16.8 ms |
-| Chromium 1440×900 @2×, 4× CPU throttle | 99.8% of 513 | 16.8 ms |
-| WebKit 390×844 @1× | 98.7% of 532 | 17.0 ms |
-| WebKit 390×844 @3× | **12.6% of 239 (FAIL)** | 78 ms |
-| *Baseline:* WebKit @3×, bare text page | 60.1% | 22 ms |
-| *Baseline:* WebKit @3×, bare text + the site's photos | 42.9% | 31 ms |
+**With the 3D roast path (current page).** Default headless Chromium renders WebGL in *software*
+(SwiftShader), which no phone does, so the 3D page was also measured with this machine's GPU (ANGLE D3D11).
+"First visit" includes the one-time 3D setup during the scroll; "already set up" measures steady state.
+
+| Run | Frames < 20 ms | p95 | Worst |
+|---|---|---|---|
+| Chromium 390×844 @3×, 4× CPU, **hardware GPU**, first visit (**iPhone proxy**) | **98.7% of 547 (PASS)** | 16.8 ms | 250 ms (setup) |
+| Chromium 1440×900 @2×, 4× CPU, **hardware GPU**, first visit | **98.8% of 567 (PASS)** | 16.8 ms | 250 ms (setup) |
+| Chromium 390×844 @3×, 4× CPU, software GL, first visit | **82.9% of 426 (FAIL)** | 33.4 ms | 817 ms |
+| Chromium 390×844 @3×, 4× CPU, software GL, already set up | **86.5% of 496 (FAIL)** | 33.4 ms | 183 ms |
+| Chromium 1440×900 @2×, 4× CPU, software GL, first visit | 98.7% of 455 (PASS) | 16.8 ms | 2.3 s (setup) |
+| Chromium 1440×900 @2×, 4× CPU, software GL, already set up | **93.6% of 421 (FAIL)** | 100 ms | 300 ms |
+| WebKit 390×844 @1× | 97.6% of 533 (PASS) | 17.0 ms | 815 ms (setup) |
+| WebKit 390×844 @3× | **23.3% of 245 (FAIL)** | 82 ms | |
+
+Each first visit has one long frame while three.js is parsed and the scene is built (up to 0.25 s with a GPU,
+longer in software). The setup starts in idle time after the first scroll, in short tasks, so on a real visit
+it normally finishes while the visitor is still in the shop; a scripted 1,400 px/s fling reaches it sooner.
+Finding and fixing: the first version re-rendered the 3D scene on every scroll event anywhere on the page;
+it now renders only while the section is on screen and progress actually changed.
+
+*Before the 3D section* (photo crossfade), for comparison: Chromium proxy 99.8% / 99.8%, WebKit @1× 98.7%,
+WebKit @3× 12.6%; baselines in the same engine at 3×: bare text page 60.1%, bare text plus photos 42.9%.
 
 Playwright's WebKit on Windows is software-rendered; at 3× even a page with nothing but text fails.
 That does not prove the site is fine on an iPhone; it shows this machine cannot measure it.
@@ -64,6 +79,29 @@ when unchanged, at most two layers painted), and `will-change` on those layers m
 
 Frame-time measurements on this machine are noisy (a bare page ranged from 0% to 96% between runs
 under background load); the table is one consecutive run.
+
+## The 3D roast path
+
+Added 2026-11-16 at your request ("a single bean ... from light green to light to medium to dark ... 3D").
+three.js r185.1 (MIT), vendored in `site/assets/vendor/`. The whole 3D payload (three.js, RoomEnvironment,
+the scene module) is 757 KB minified, 193 KB gzipped (measured), loaded only near the section.
+
+- **Not on the first screen:** Lighthouse requests neither three.js nor the scene module at load
+  (mobile: Performance 99, LCP 2.1 s, CLS 0, TBT 80 ms on the local server).
+- **Stage pinned:** the sticky stage's top stays at 0 px across the scroll range (ios-sticky-stage check);
+  it is sized in `lvh`, so Safari's toolbar cannot move it. Not verified on a device.
+- **Fallbacks:** no WebGL, a failed import, a refused shader or a lost context all show the four real roast
+  photographs (`qa/roast-fallback.mjs`: PASS, 4/4 photos). Without JavaScript the same photographs show.
+- **Reduced motion:** progress snaps to the five states (intro, green, light, medium, dark) without
+  easing; no CSS animation runs (`qa/motion.mjs`: 0 running).
+- **Kit findings it adds** (`consistency.mjs`, not a gate round): `effect-kind` (the taste kit allows WebGL
+  on a shop page only when the brief asks for 3D; you asked for it), `shader-lint` ×5 (it flags reserved
+  words inside three.js's own shader library, `gl_DrawID`, `sampler3D`, `#include <common>`, code that runs
+  on every major GPU; vendored code not edited), and `gl-fallback`, which was real and is fixed (a refused
+  shader now shows the photographs instead of a bare gradient). The section is 4.6 screens, over the kit's
+  two-screen limit, by design.
+- **The bean is a render, not a photograph**: procedural geometry and physically based materials, colours
+  chosen to match the roast photographs. The roast temperatures are general roasting knowledge.
 
 ## Accessibility (qa/a11y.mjs)
 

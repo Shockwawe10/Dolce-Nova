@@ -2,12 +2,12 @@
 import { load } from './store.js';
 import { mountShop } from './shop.js';
 import { mountDrawer } from './drawer.js';
-import { mountReveals, mountHeader, mountHeroDepth, mountRoast, mountAnchors } from './motion.js';
+import { mountReveals, mountHeader, mountHeroDepth, mountRoastPath, mountAnchors } from './motion.js';
 
 mountHeader();
 mountAnchors();
 mountHeroDepth();
-mountRoast();
+mountRoastPath();
 mountReveals();
 
 const { catalog, manifest } = await load();

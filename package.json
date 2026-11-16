@@ -1,1 +1,1 @@
-{"name":"dolce-nova","private":true,"type":"module","scripts":{"serve":"node tools/serve.mjs"},"devDependencies":{"@capsizecss/metrics":"^3.5.0","axe-core":"^4.10.3","lighthouse":"^12.8.2","playwright":"^1.62.1"}}
+{"name":"dolce-nova","private":true,"type":"module","scripts":{"serve":"node tools/serve.mjs"},"devDependencies":{"@capsizecss/metrics":"^3.5.0","axe-core":"^4.10.3","lighthouse":"^12.8.2","playwright":"^1.62.1","three":"^0.185.1"}}

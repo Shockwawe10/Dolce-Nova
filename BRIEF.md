@@ -76,6 +76,11 @@ No two adjacent beats share a feeling. Origin is deliberately the quietest beat,
 Lives in craft, step 2 (roast). It gets the largest scroll span of any step, and the best photographs.
 Under reduced motion it shows the final roasted state (or a stepped fade), never a hidden image.
 
+**Revised 2026-11-16 (user):** the roast becomes a path. One bean travels down it as you scroll, from
+green to light, medium and dark, the light and surroundings changing with it, each stage described.
+Built as a real-time 3D bean (the user chose it over cut-out photographs); the four roast photographs
+remain as the fallback.
+
 ### Tell-someone sentence
 
 > "It's the site where you watch the coffee roast before you buy it."

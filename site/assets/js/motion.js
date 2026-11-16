@@ -55,41 +55,19 @@ export function mountHeroDepth() {
   });
 }
 
-export function mountRoast() {
-  const section = document.querySelector('[data-roast]');
-  if (!section || !motionOK()) return;
-  const stage = section.querySelector('.roast__stage');
-  const pics = [...section.querySelectorAll('[data-frames] picture')];
-  const shown = pics.map(() => -1); // last opacity written per layer, so unchanged layers cost nothing
-  const heat = section.querySelector('.roast__heat');
-  const stages = [...section.querySelectorAll('[data-stages] li')];
-  let last = -1;
-  // Eager-load the four frames once the section is near, so the crossfade never waits on the network.
-  new IntersectionObserver(([e], io) => {
-    if (e.isIntersecting) { section.querySelectorAll('img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }); io.disconnect(); }
-  }, { rootMargin: '100% 0px' }).observe(section);
-  whileVisible(section, () => {
-    const r = section.getBoundingClientRect();
-    const stickyTop = parseFloat(getComputedStyle(stage).top) || 0; // the header height
-    const travel = r.height - stage.offsetHeight;
-    const p = Math.min(Math.max((stickyTop - r.top) / (travel || 1), 0), 1);
-    const x = p * 3; // 0..3 across green, light, medium, dark
-    // layer 0 (green) is the base; layer i fades in over [i-1, i]. Only the top opaque layer and the one
-    // fading over it are painted: everything below a fully opaque layer, or at 0, is hidden.
-    const opacity = pics.map((_, i) => (i === 0 ? 1 : Math.min(Math.max(x - (i - 1), 0), 1)));
-    const topOpaque = opacity.lastIndexOf(1);
-    pics.forEach((pic, i) => {
-      const o = i < topOpaque ? 0 : Math.round(opacity[i] * 1000) / 1000;
-      if (o === shown[i]) return;
-      shown[i] = o;
-      pic.style.opacity = String(o);
-      pic.style.visibility = o === 0 ? 'hidden' : 'visible';
-    });
-    heat.style.setProperty('--p', p.toFixed(3));
-    const idx = Math.min(3, Math.round(x));
-    if (idx !== last) {
-      stages.forEach((li, i) => { li.classList.toggle('is-on', i === idx); if (i === idx) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current'); });
-      last = idx;
-    }
-  });
+/** The roast path: load three.js and the 3D bean only when the section is about a screen and a half away,
+ * so the first screen never pays for it. Any failure (no WebGL, no import maps) shows the photo fallback. */
+export function mountRoastPath() {
+  const section = document.querySelector('[data-roastpath]');
+  if (!section) return;
+  const fail = () => section.classList.add('roastpath--fallback');
+  let started = false;
+  const go = () => { if (started) return; started = true; import('./roast3d.js').then((m) => m.mount(section)).catch(fail); };
+  // Start in idle time after the visitor's first scroll, so the one-time setup happens while they are still
+  // reading the shop, not while the roast section is moving. A visitor who jumps straight there starts it at once.
+  const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 1500 }) : setTimeout(go, 200));
+  addEventListener('scroll', idle, { once: true, passive: true });
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([e], io) => { if (e.isIntersecting) { io.disconnect(); go(); } }, { rootMargin: '150% 0px' }).observe(section);
+  } else go();
 }
