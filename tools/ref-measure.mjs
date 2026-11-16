@@ -65,6 +65,9 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   const page = await ctx.newPage();
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForTimeout(1500);
+  // A consent dialog that locks scrolling: decline it, as a visitor would (never accept on their behalf).
+  const decline = page.getByText(/^\s*(decline all|reject all)\s*$/i).first();
+  if (await decline.isVisible().catch(() => false)) { await decline.click(); await page.waitForTimeout(800); }
   const onLoad = await page.evaluate(() => document.getAnimations().map((a) => {
     const t = a.effect.getTiming(); return { name: a.animationName || a.transitionProperty || '', duration: t.duration, easing: t.easing, delay: t.delay };
   }));
