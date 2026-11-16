@@ -1,6 +1,6 @@
 {
   "currency": "EUR",
-  "sizes": { "250g": "250 g", "1kg": "1 kg" },
+  "sizes": { "250g": "250\u00a0g", "1kg": "1\u00a0kg" },
   "grinds": { "whole": "Whole bean", "espresso": "Espresso", "filter": "Filter" },
   "products": [
     { "id": "yirgacheffe", "name": "Yirgacheffe Konga", "origin": "Ethiopia", "process": "Washed", "roast": "Light", "texture": "bean-light", "notes": "Bergamot, apricot, black tea", "prices": { "250g": 1450, "1kg": 4900 } },

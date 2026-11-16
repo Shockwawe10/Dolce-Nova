@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Checkout · Dolce Nova</title>
+<meta name="description" content="Demo checkout for the Dolce Nova coffee shop. No payment is taken and card details never leave the browser.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#f6f1e7">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script>document.documentElement.classList.add('js')</script>
+<script type="module" src="assets/js/checkout.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<p class="notice" role="note"><span class="notice__short">Demo checkout. Nothing is charged.</span><span class="notice__long">Demo checkout. No payment is taken and no card details leave your browser.</span></p>
+<header class="header">
+  <div class="wrap header__bar">
+    <a class="wordmark" href="./">Dolce Nova</a>
+    <a class="link-arrow" href="./#shop"><span aria-hidden="true">←</span> Back to the shop</a>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <div class="wrap">
+    <h1>Checkout</h1>
+    <div class="checkout">
+      <section aria-labelledby="pay-title">
+        <h2 class="visually-hidden" id="pay-title">Card details</h2>
+        <div class="demo-box">
+          <p><strong>This is a demo.</strong> Please do not enter a real card. Nothing you type is sent anywhere or saved, and no money moves.</p>
+          <p><button class="link" type="button" data-test-card>Use the test card 4242&nbsp;4242&nbsp;4242&nbsp;4242</button></p>
+        </div>
+        <form class="form" data-pay novalidate autocomplete="off">
+          <div class="field">
+            <label for="name">Name on card</label>
+            <input id="name" name="name" type="text" autocomplete="off" spellcheck="false" aria-describedby="name-err">
+            <p class="field__error" id="name-err" data-err="name"></p>
+          </div>
+          <div class="field">
+            <label for="number">Card number</label>
+            <input id="number" name="number" type="text" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="4242 4242 4242 4242" aria-describedby="number-err">
+            <p class="field__error" id="number-err" data-err="number"></p>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="expiry">Expiry (MM/YY)</label>
+              <input id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="12/34" aria-describedby="expiry-err">
+              <p class="field__error" id="expiry-err" data-err="expiry"></p>
+            </div>
+            <div class="field">
+              <label for="cvc">CVC</label>
+              <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" aria-describedby="cvc-err">
+              <p class="field__error" id="cvc-err" data-err="cvc"></p>
+            </div>
+          </div>
+          <button class="btn btn--block" type="submit" data-pay-btn>Place demo order</button>
+          <p class="drawer__note" role="status" data-pay-status></p>
+        </form>
+      </section>
+
+      <aside class="summary" aria-labelledby="sum-title">
+        <h2 id="sum-title">Your order</h2>
+        <div data-summary><p class="t-soft">Loading your cart…</p></div>
+        <p class="summary__total"><span>Total</span><span data-sum-total>€0.00</span></p>
+        <p class="drawer__note">Prices in euro. Demo only: nothing is shipped.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+</body>
+</html>
