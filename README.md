@@ -25,7 +25,7 @@ Requires Node 22+.
 
 ```bash
 node tools/serve.mjs        # http://localhost:4600/Dolce-Nova/  (same base path as GitHub Pages)
-node --test tests/          # cart and card logic, no dependencies
+node --test "tests/*.test.mjs"          # cart and card logic, no dependencies
 ```
 
 The site itself needs no build step: `site/` is what gets deployed.

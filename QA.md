@@ -138,7 +138,7 @@ mutants killed, `nginx -t` OK) and remains in git history at commit `02c20db`.
 npm ci                                   # Playwright 1.62.1, axe-core, Lighthouse (dev only)
 npx playwright install chromium webkit   # if the browsers are not installed yet
 node tools/serve.mjs &                   # http://localhost:4600/Dolce-Nova/
-node --test tests/                       # cart and card logic
+node --test "tests/*.test.mjs"                       # cart and card logic
 node qa/flow.mjs                         # purchase flow, WebKit
 node qa/audit.mjs                        # design audit (add --engine chromium, --dpr 1)
 node qa/motion.mjs                       # motion criteria
