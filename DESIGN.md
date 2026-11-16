@@ -59,13 +59,14 @@ No pure black or white. Hover states use an `opacity` overlay of an existing col
 | px | 13 | 16 | 20 | 25 | 31 | 39 | 49 | 61 | 76 |
 
 Headings step through the scale at breakpoints instead of `clamp()`, so no in-between size ever
-renders. Headings: line height 1.05 to 1.15, tracking −0.02em, `text-wrap: balance`. Body 16 / 1.6.
+renders: h1 49 / 61 / 76, h2 39 / 49 / 61, h3 25 / 25 / 31 (phone / tablet / desktop), each level
+smaller than the one above. Body copy is in the ink (13.58:1); the soft ink is for labels and metadata only. Headings: line height 1.05 to 1.15, tracking −0.02em, `text-wrap: balance`. Body 16 / 1.6.
 Inputs are 16px.
 
 ### Spacing: 8-px grid
 
 `--s-1` 8 · `--s-2` 16 · `--s-3` 24 · `--s-4` 32 · `--s-6` 48 · `--s-8` 64 · `--s-12` 96 · `--s-16` 128.
-Gutter 16 (phone) / 32 (tablet) / 64 (desktop); content width max 1280.
+Page gutter 16 (phone) / 32 (tablet) / 64 (desktop); content width max 1280; 12-column grid gutter 24.
 
 ### Radius (3 at most) and shadow (one)
 
@@ -88,15 +89,21 @@ once), the roast peak becomes a still grid of four stages, the drawer appears wi
 
 ## 3. Layout
 
-| Section | Height at 1440×900 | Composition |
-|---|---|---|
-| Header + demo notice | 96px | wordmark left, Shop / Craft anchors, cart button with live count; sticky |
-| Hero | 1 screen | copy left (5/12) on flat ground, photograph right (7/12) to the edge; phone: photo 52svh then copy |
-| Shop | 1 to 2 screens | editorial list of six; one open row shows texture, grind, size, add |
-| Craft: origin | 1 screen | photograph left, text right |
-| Craft: roast (peak) | about 2.2 screens | sticky stage: four real roast photographs crossfade with scroll, a heat line fills |
-| Craft: brew | 1 screen | text left, photograph right, the warm close and a way back to the shop |
-| Footer | short | demo notice, credits link, fictional-brand line |
+Revised after the taste skill's finish gate (QA.md). Every section is one or two screens tall, its h2
+first at 120px (96px on a phone) under a fixed 64px header. Every split uses one line of a 12-column
+grid with 24px gutters: text starts on the container's left edge (80px at 1440), and the picture
+starts on the 5/12 line (623px at 1440). Columns are top-aligned.
 
-Anchors vary (split left, list, split right, sticky centre, split left) so no two sections share a
-composition.
+| Section | Screens | Composition |
+|---|---|---|
+| Header | fixed, 64px | wordmark, Shop / Craft anchors, cart button with live count |
+| Hero | 1 | demo notice line, h1, lede, button left; photograph right, ending 64px above the fold; phone: words, then the photograph fills what is left |
+| Shop | 2 | h2 and lede on the split line; six rows on one left edge (name, then origin, process, roast and price); the open row: choices left, grind preview right |
+| Origin | 1 | text left, photograph right (full content height) |
+| Roast (peak) | 2 | sticky stage inside its own section: text and stage list left, four roast photographs crossfading right; phone: frames first, compact four-step row |
+| Brew | 1 | text, recipe and button left, photograph right |
+| Closing | 1 | the close (statement and button) on the oat ground, footer links and the demo/legal lines at its foot |
+
+Rows of the list close with a 1px rule; sections are told apart by space and the closing ground,
+never by rules. The demo notice also appears in the cart drawer, on the checkout page (a bar and a
+box) and in the closing legal line.
