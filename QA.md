@@ -111,7 +111,7 @@ the scene module) is 757 KB minified, 193 KB gzipped (measured), loaded only nea
 | 8.2 No bare half screen in a pinned section | `qa/roast-coverage.mjs` (121 positions) | **Failed first** (text half bare at 27% of positions on desktop, 17% on a phone); fixed with sticky cards; now 121/121 at both sizes |
 | 7 Compare against HEAD, interleaved | `qa/frames-compare.mjs`, 3 rounds, Chromium + GPU, 4x CPU | tree 98.9% / 98.6% of frames < 20 ms (phone / desktop) against HEAD 98.7% / 98.6%: the off-screen copy costs nothing measurable |
 | 12 Phones at 360, 390 and 430 | `qa/roast-shots.mjs` | read by eye; a sliver of the previous card at 430 fixed (a full screen per card on phones) |
-| 11 Live check in Chrome and WebKit | `BASE=<live> node qa/roast-pixels.mjs chromium` and `webkit` | see the deploy commit |
+| 11 Live check in Chrome and WebKit | `BASE=<live> node qa/roast-pixels.mjs chromium` and `webkit` | **PASS** on https://shockwawe10.github.io/Dolce-Nova/ (deploy 430ad79): bean pixels at every stage in both engines, at 1440 and 390, locked and unlocked |
 
 ## Accessibility (qa/a11y.mjs)
 
