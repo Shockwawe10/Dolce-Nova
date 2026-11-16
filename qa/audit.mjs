@@ -81,7 +81,7 @@ function walk({ scale, families }) {
       out.images.push({ img: el.currentSrc.split('/').pop(), box: `${Math.round(r.width)}x${Math.round(r.height)}`, rendered: Math.round(contentW), natural: fileW,
         density: +(fileW / contentW).toFixed(2), distortion: +(distortion * 100).toFixed(2) });
     }
-    const interactive = el.matches('a[href], button, input:not([type=radio]), select, textarea, label.chip > span');
+    const interactive = el.matches('a[href], button, input:not([type=radio]), select, textarea, label.chip');
     if (interactive && !el.matches('.skip')) {
       const r = el.getBoundingClientRect();
       const inline = el.matches('a') && getComputedStyle(el).display === 'inline';

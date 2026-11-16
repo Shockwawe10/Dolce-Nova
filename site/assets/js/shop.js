@@ -14,31 +14,28 @@ function row(p, catalog, manifest, open) {
   const img = (g) => (g === 'whole' ? p.texture : GRIND_IMG[g]);
   return `
   <article class="coffee" data-id="${p.id}">
-    <h3 class="coffee__h"><button class="coffee__toggle" type="button" id="t-${p.id}" aria-expanded="${open}" aria-controls="p-${p.id}">
-      <span class="coffee__name">${esc(p.name)}</span>
-      <span class="coffee__info">
-        <span class="coffee__meta">${esc(p.origin)} · ${esc(p.process)} · ${esc(p.roast)} roast</span>
-        <span class="coffee__price">from ${formatEUR(from)}</span>
-        <span class="coffee__icon" aria-hidden="true"></span>
-      </span>
-    </button></h3>
+    <div class="coffee__row">
+      <h3 class="coffee__name"><button class="coffee__toggle" type="button" id="t-${p.id}" aria-expanded="${open}" aria-controls="p-${p.id}">${esc(p.name)}</button></h3>
+      <p class="coffee__meta">${esc(p.origin)} · ${esc(p.process)} · ${esc(p.roast)} roast · <span class="coffee__price">from ${formatEUR(from)}</span></p>
+      <span class="coffee__icon" aria-hidden="true"></span>
+    </div>
     <div class="coffee__panel" id="p-${p.id}" role="region" aria-labelledby="t-${p.id}"${open ? '' : ' hidden'}>
-      <div class="preview" role="img" data-preview aria-label="${esc(manifest[img('whole')].alt)}">
-        ${grinds.map(([g], i) => picture(manifest, img(g), { sizes: PREVIEW_SIZES, alt: '', cls: i === 0 ? 'is-on' : '' }).replace('<picture', `<picture data-grind="${g}"`)).join('')}
-      </div>
       <form class="options" data-add novalidate>
         <p class="options__notes">${esc(p.notes)}.</p>
         <fieldset class="choice"><legend>Grind</legend><div class="chips">
-          ${grinds.map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}><span>${esc(label)}</span></label>`).join('')}
+          ${grinds.map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${esc(label)}</label>`).join('')}
         </div></fieldset>
         <fieldset class="choice"><legend>Size</legend><div class="chips">
-          ${sizes.map(([s, label], i) => `<label class="chip"><input type="radio" name="size" value="${s}"${i === 0 ? ' checked' : ''}><span>${esc(label)} <small>${formatEUR(p.prices[s])}</small></span></label>`).join('')}
+          ${sizes.map(([s, label], i) => `<label class="chip"><input type="radio" name="size" value="${s}"${i === 0 ? ' checked' : ''}>${esc(label)} · ${formatEUR(p.prices[s])}</label>`).join('')}
         </div></fieldset>
         <div class="add">
           <button class="btn" type="submit"><span data-add-label>Add to cart</span> · <span data-price>${formatEUR(p.prices[sizes[0][0]])}</span></button>
           <p class="add__status" role="status" aria-live="polite"></p>
         </div>
       </form>
+      <div class="preview" role="img" data-preview aria-label="${esc(manifest[img('whole')].alt)}">
+        ${grinds.map(([g], i) => picture(manifest, img(g), { sizes: PREVIEW_SIZES, alt: '', cls: i === 0 ? 'is-on' : '' }).replace('<picture', `<picture data-grind="${g}"`)).join('')}
+      </div>
     </div>
   </article>`;
 }

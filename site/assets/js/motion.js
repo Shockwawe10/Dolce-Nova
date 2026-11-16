@@ -13,10 +13,9 @@ export function mountReveals(root = document) {
 
 export function mountHeader() {
   const header = document.querySelector('.header');
-  const sentinel = document.createElement('div');
-  sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none';
-  document.body.prepend(sentinel);
-  new IntersectionObserver(([e]) => header.classList.toggle('is-scrolled', !e.isIntersecting)).observe(sentinel);
+  const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+  addEventListener('scroll', update, { passive: true });
+  update();
 }
 
 /** A scroll-driven loop that only runs while its element is on screen. */
