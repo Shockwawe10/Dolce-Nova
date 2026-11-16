@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comp B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400;62..125,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+/* B: cobalt-on-sand two-tone, Archivo, full-bleed photo with a text panel */
+:root { --bg:#e6dbc7; --surface:#ddd0b9; --ink:#062b8a; --soft:#3d4f86; --line:#b9ab92; --accent:#062b8a; --on-accent:#e6dbc7;
+  --display:"Archivo", Arial, sans-serif; --text:"Archivo", Arial, sans-serif; --r:0px; }
+body { font-stretch: 100%; }
+h1, h2, h3, .mark { font-stretch: 112%; text-transform: none; }
+.top { color: #f4ecdd; }
+.hero picture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero .panel { position: absolute; left: max(16px, calc((100vw - 1280px) / 2)); bottom: 64px; width: min(560px, 100% - 32px);
+  background: var(--bg); padding: 40px; display: grid; gap: 24px; }
+.hero h1 { font-size: clamp(40px, 5vw, 72px); line-height: 1; letter-spacing: -0.035em; }
+@media (max-width: 760px) { .hero .panel { bottom: 16px; padding: 24px; } }
+</style></head>
+<body>
+<header class="top"><div class="wrap bar"><span class="mark">Dolce Nova</span>
+  <nav class="nav"><span class="links"><a>Shop</a><a>Craft</a></span><span class="cart">Cart <b>0</b></span></nav></div></header>
+<section class="hero">
+  <picture><source type="image/avif" srcset="../../site/assets/img/hero-1920.avif"><img src="../../site/assets/img/hero-1920.webp" width="1920" height="1277" alt=""></picture>
+  <div class="panel">
+    <h1>Every cup starts as a green bean.</h1>
+    <p class="lede">Six single-origin coffees, roasted in small batches. 250 g from €11.50.</p>
+    <p><a class="btn">Shop the coffees</a></p>
+  </div>
+</section>
+<section class="shop"><div class="wrap"><h2>Six coffees, three grinds.</h2><div class="grid" id="shop-grid"></div></div></section>
+<script src="shop.js"></script>
+</body></html>

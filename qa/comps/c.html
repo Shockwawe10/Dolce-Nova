@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comp C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400&family=Figtree:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
+<style>
+/* C: offwhite-bottle-yellow, Bricolage/Figtree, centred statement over a wide photo band */
+:root { --bg:#f7f7f7; --surface:#ebebeb; --ink:#0d2a1c; --soft:#4b5d53; --line:#d4d8d5; --accent:#f6e016; --on-accent:#0d2a1c;
+  --display:"Bricolage Grotesque", Arial, sans-serif; --text:"Figtree", system-ui, sans-serif; --r:12px; }
+.hero { display: grid; grid-template-rows: auto 1fr; padding-top: 72px; }
+.hero .copy { text-align: center; display: grid; justify-items: center; gap: 24px; padding: 64px 16px 48px; }
+.hero h1 { font-size: clamp(44px, 7vw, 104px); line-height: 0.98; letter-spacing: -0.04em; max-width: 14ch; }
+.hero .band { margin: 0 16px 16px; border-radius: var(--r); overflow: hidden; position: relative; min-height: 280px; }
+.hero .band img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+</style></head>
+<body>
+<header class="top"><div class="wrap bar"><span class="mark">Dolce Nova</span>
+  <nav class="nav"><span class="links"><a>Shop</a><a>Craft</a></span><span class="cart">Cart <b>0</b></span></nav></div></header>
+<section class="hero">
+  <div class="copy">
+    <h1>Every cup starts as a green bean.</h1>
+    <p class="lede">Six single-origin coffees, roasted in small batches. 250 g from €11.50.</p>
+    <a class="btn">Shop the coffees</a>
+  </div>
+  <div class="band"><picture><source type="image/avif" srcset="../../site/assets/img/hero-1920.avif"><img src="../../site/assets/img/hero-1920.webp" width="1920" height="1277" alt=""></picture></div>
+</section>
+<section class="shop"><div class="wrap"><h2>Six coffees, three grinds.</h2><div class="grid" id="shop-grid"></div></div></section>
+<script src="shop.js"></script>
+</body></html>
