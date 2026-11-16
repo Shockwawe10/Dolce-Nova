@@ -2,9 +2,10 @@
 import { load } from './store.js';
 import { mountShop } from './shop.js';
 import { mountDrawer } from './drawer.js';
-import { mountReveals, mountHeader, mountHeroDepth, mountRoast } from './motion.js';
+import { mountReveals, mountHeader, mountHeroDepth, mountRoast, mountAnchors } from './motion.js';
 
 mountHeader();
+mountAnchors();
 mountHeroDepth();
 mountRoast();
 mountReveals();

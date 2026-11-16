@@ -29,7 +29,7 @@ writeFileSync('site/credits.html', `<!doctype html>
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="header">
   <div class="wrap header__bar">
     <a class="wordmark" href="./">Dolce Nova</a>

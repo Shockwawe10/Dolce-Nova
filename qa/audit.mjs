@@ -82,7 +82,7 @@ function walk({ scale, families }) {
         density: +(fileW / contentW).toFixed(2), distortion: +(distortion * 100).toFixed(2) });
     }
     const interactive = el.matches('a[href], button, input:not([type=radio]), select, textarea, label.chip');
-    if (interactive && !el.matches('.skip')) {
+    if (interactive && !el.matches('.skip-link')) {
       const r = el.getBoundingClientRect();
       const inline = el.matches('a') && getComputedStyle(el).display === 'inline';
       if ((r.height < 44 || r.width < 44) && !inline) out.taps.push(`${where} ${Math.round(r.width)}x${Math.round(r.height)}`);

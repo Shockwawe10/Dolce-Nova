@@ -25,7 +25,7 @@ client changed scope to a static GitHub Pages site with a demo card checkout and
 | Logic | Cart totals in integer cents | **PASS** · `node --test`: 8/8, including 50 random carts against a hand-typed price table |
 | Flow | Add → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900, locally and on the live site (`BASE=https://shockwawe10.github.io/Dolce-Nova/ node qa/flow.mjs`) |
 | Secrets | `git grep` finds no `sk_test_` / `whsec_` | **PASS** · tree clean; full history has no key-shaped strings |
-| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 35** after 3 rounds (60 → 60 → 35); see below |
+| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 25** after 3 rounds (37 → 27 → 25); 14 are the brief's reveals; see below |
 
 ## Design (qa/audit.mjs)
 
@@ -76,23 +76,29 @@ focus to the cart button, and the page behind is `inert` (asserted in `qa/flow.m
 
 ## Skill gate (design-taste-frontend)
 
-Three rounds, then the kit says stop. Round 1: 60 FAIL; round 2: 60 (different mix after the
-restructure); round 3: **OPEN 35**, with 3 waivers accepted (2 more matched nothing by round 3).
+Two gate sessions ran, three rounds each (the kit stops after three).
 
-| Open | Count | Why it stays |
+- **`site/` session:** 60 → 60 → **OPEN 35**, which drove the layout restructure.
+- **Project-root session** (the one the Claude Code stop hook enforces): 37 → 27 → **OPEN 25 (final)**.
+  Between rounds: the h1 now names what is sold ("Coffee that starts as a green bean."); the skip link sits
+  inside the header's `.wrap`; the hero is one `.hero-text` block; the phone shop fits two screens; and two
+  real keyboard bugs were fixed. Page-wide `scroll-behavior: smooth` made focus scrolling animate, so a
+  Tab landed on a control still off-screen (now instant; smooth scrolling only on anchor clicks). And the
+  focus ring of a selected radio was accent on roast at 2.54:1 (now `currentColor`).
+
+| Open (final) | Count | Why it stays |
 |---|---|---|
 | `scroll-reveal` | 14 | **Your brief requires IntersectionObserver reveals**; you chose "brief wins where explicit". The kit cannot waive 14 findings. |
-| `section-air`, `sparse`, `empty-area`, `section-gaps` | 6 | The roast peak is a two-screen sticky scroll moment (scroll-craft); a static checker sees its second screen as empty air. Also the closing screen's air above the footer links. |
+| `section-air`, `sparse`, `empty-area` | 5 | The roast peak is a two-screen sticky scroll moment (scroll-craft); a static checker sees its second screen as empty air. Also the closing screen's air above the footer links. |
 | `split-pair` (shop head, coffee panel), `edge-right` | 3 | The grind preview and roast frames are capped at 480 to 504px by source resolution (no upscaling), so those splits do not reach the right edge. |
-| `edge-left` | 2 | The hero photo and roast frames start on the 5/12 split line (623px), which the kit's `container-edges` check accepts but `edge-left` does not. |
-| `container-edges` | 4 | The skip link (off-screen until focused) and the header measured with it; chip text starting inside its pill; the hero's `.wrap` not using the kit's `.hero-text` class name. |
-| `product-shown` | 1 | Your brief fixes a split hero with one product image; the kit wants the product at 80% of the width. |
-| `screen-height` (390) | 1 | The shop is 2.3 screens tall on a phone with a row open, so it is not exactly two screens. |
-| `button-styles`, `focus-visible` ×2, `effect-kind` | 4 | **Fixed after round 3** (no rounds left to re-run the gate): one button size; focus ring on the whole row and on the whole pill; the unused `data-moment` mark removed. axe and the flow re-ran green afterwards. |
+| `edge-left` | 2 | The hero photo and roast frames start on the 5/12 split line (623px), which `container-edges` accepts but `edge-left` does not. |
+| `container-edges` | 1 | Chip text starts inside its pill (9px past the container line). |
 
-Waived (in `site/.taste-skill/waivers.json`, not deployed): `pinned` (the scroll-craft roast peak),
-`no-visual` (shop visual capped by source resolution), `copy-headings` (the h3s are the product names).
-The copy linter: 0 FAIL, 0 WARN.
+Waived (5, in `.taste-skill/waivers.json`, not deployed): `pinned` (the scroll-craft roast peak),
+`moment-none` (the bespoke peak replaces a kit moment), `no-visual` (shop visual capped by source
+resolution), `product-shown` (the brief's split hero), `copy-headings` (the h3s are the product names).
+The copy linter: 0 FAIL, 0 WARN. After the final round: design audit 0 violations, axe 0 in 12 states,
+flow green.
 
 ## Skill rules I overrode, and why
 

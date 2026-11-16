@@ -11,6 +11,20 @@ export function mountReveals(root = document) {
   items.forEach((el) => io.observe(el));
 }
 
+/** Smooth scrolling for in-page links only. Not page-wide: keyboard focus must scroll instantly so the
+ * focused control is on screen at once. */
+export function mountAnchors() {
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || a.closest('#cart')) return;
+    const target = a.getAttribute('href') === '#top' ? document.body : document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: motionOK() ? 'smooth' : 'auto' });
+    history.pushState(null, '', a.getAttribute('href'));
+  });
+}
+
 export function mountHeader() {
   const header = document.querySelector('.header');
   const update = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
