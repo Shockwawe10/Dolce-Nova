@@ -4,8 +4,20 @@
 proposed (an "Other" free-text choice was available on each). Answers are quoted exactly as chosen.
 Everything under "Derived" is Claude's reading of those answers, not the user's words.
 
-The fixed brief (structure, motion rules, commerce, acceptance checks) is the user's pasted spec;
-where it is explicit it wins over the repo's skills, by the user's decision. Overrides are listed in QA.md.
+The fixed brief (structure, motion rules, acceptance checks) is the user's pasted spec; where it is
+explicit it wins over the repo's skills, by the user's decision. Overrides are listed in QA.md.
+
+**Scope change (user, 2026-11-16):** no Stripe, no Python, no server. A static site on GitHub Pages
+(`shockwawe10.github.io/Dolce-Nova/`). Checkout is a manual demo form: the visitor enters card
+details, nothing is charged, sent or stored. "The main focus right now is the design and premium
+quality of the product itself." All commerce-server acceptance checks are dropped; design, motion and
+quality checks stay.
+
+Demo checkout safety rules (Claude's, so a public page never harvests real cards):
+- The form has no `action`, makes no network request and never writes card fields to storage.
+- Card inputs avoid `cc-*` autocomplete, so the browser does not offer the visitor's saved real cards;
+  a "Use test card" button fills `4242 4242 4242 4242`.
+- A visible notice on the page and in the checkout: demo shop, no payment is taken, do not enter a real card.
 
 ## Answers
 

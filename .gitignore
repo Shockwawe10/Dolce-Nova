@@ -1,11 +1,6 @@
-.venv/
-__pycache__/
-*.pyc
-var/
-.env
-.env.*
 node_modules/
 .taste-skill/
 qa/out/
+.env
 # repo-local agent tooling (skills); not part of the deliverable
 .claude/
