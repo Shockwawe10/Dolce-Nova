@@ -10,8 +10,10 @@ export const clamp01 = (x) => Math.min(1, Math.max(0, x));
 export const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
 export const mix = (a, b, t) => a + (b - a) * t;
 
-/** One pose for the whole section: the flat face and its S-shaped cut turned three quarters to the camera. */
-export const POSE = { x: -0.95, y: 0.45, z: 0.35 };
+/** One pose for the whole section: the flat face and its S-shaped cut toward the camera (pitch -90 deg), the length
+ *  leaning 0.55 rad on a diagonal, rolled 0.3 rad so a little of the dome shows. The first pose (-0.95, 0.45, 0.35)
+ *  rolled the bean about its length and left the cut on its edge; the owner asked to see the cut (2026-11-17). */
+export const POSE = { x: -1.5708, y: 0.55, z: -0.3 };
 export const ASSEMBLED_AT = 0.2;
 /** Where each stage (green, light, medium, dark) is reached exactly. */
 export const STAGE_P = [0, 1, 2, 3].map((k) => ASSEMBLED_AT + ((1 - ASSEMBLED_AT) * k) / 3);
