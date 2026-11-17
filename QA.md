@@ -67,7 +67,7 @@ CLS 0. Bean pixels PASS in Chromium and WebKit (8 runs); no caption overlaps at 
 
 `qa/flow.mjs` now delays `catalog.json` by 1.5 s on every run (it failed at both sizes without fix 1) and
 blocks `checkout.js` once to press Enter in the card field (it showed the card number in the URL without
-fix 2; with it, the URL is unchanged). Re-checked live after the fix deploy: see the line below.
+fix 2; with it, the URL is unchanged). **Re-checked live after the fix (deploy 4bd89e0): flow PASS at 390 and 1440, no native submit PASS.**
 
 ## Previous versions (kept for the record)
 
