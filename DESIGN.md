@@ -120,6 +120,20 @@ header, carousel, footer and drawer into the hand-written pages, so names and pr
 `tests/pages.test.mjs` fails if a page drifts from the catalog. Build order after a catalog or image change:
 `node tools/images.mjs && node tools/credits.mjs && node tools/pages.mjs`.
 
+### Checkout and confirmation
+
+The checkout is one form in four groups, in the order both references use: **Contact** (email), **Delivery
+address** (first and last name, street, optional apartment, postcode, town, country from the 27 EU states, optional
+phone), **Shipping** (two radio cards, each with its price and its arrival dates computed in working days), and
+**Payment** (the demo card). The order summary beside it shows subtotal, shipping (Free once Standard passes
+EUR 40), total and "Arrives Wed 18 Nov – Thu 19 Nov". Address fields use the standard `autocomplete` tokens, so
+browsers fill them; card fields do not (it is a demo card). Every field says what it needs; focus goes to the first.
+
+The confirmation repeats the order and the address, then shows **the confirmation email** as a message (From,
+To, Subject, then the body: greeting, lines, subtotal, shipping, total, arrival window, address, order number),
+labelled as a preview: the site has no server and sends nothing. The sender is `orders@dolcenova.example`, a
+reserved example domain. Rules and prices live in `site/assets/js/order.js` (tested by `tests/order.test.mjs`).
+
 ### Sizes and prices
 
 The bags are printed "Whole bean · 12 oz · 340 g", so the shop sells 340 g and 1 kg (BRIEF.md). The old

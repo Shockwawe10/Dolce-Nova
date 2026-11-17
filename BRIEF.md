@@ -120,6 +120,14 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   Built: one large bean on the hero's dark ground, one fixed pose, gathering from green grains during the intro,
   then only its roast changes; a numbered stage list beside it; three screens instead of five; no path, markers,
   chaff or turning. The origin block is shorter (72% of a screen at most, one paragraph).
+- **2026-11-17**, checkout: "there is to be a mail name second name as always, like the standard process checkout
+  shipping and if there is possible to like actually send the letter with all the information at the checkout
+  price, shipping to the user whenever he enters his email, how long will it take."
+  Explained that a static site needs an outside service to send email, and asked. Chosen: **preview only for now**
+  (no real email; the confirmation page shows the exact email a live shop would send) and **Standard + Express**
+  shipping: Standard 3-5 working days, EUR 4.90, free from EUR 40; Express 1-2 working days, EUR 9.90; EU addresses.
+  A real sender (EmailJS from the browser, or a small serverless function with Resend) can be added later without
+  rebuilding the checkout; it needs the owner's own account.
 
 ### Tell-someone sentence
 
