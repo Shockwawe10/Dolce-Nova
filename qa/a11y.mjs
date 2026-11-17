@@ -23,7 +23,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.goto(BASE, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
       localStorage.setItem('dn-cart', JSON.stringify([{ id: 'huila', size: '340g', grind: 'filter', qty: 2 }]));
-      sessionStorage.setItem('dn-last-order', JSON.stringify({ ref: 'DN-A11Y', totalCents: 2500, lines: [{ name: 'Huila La Plata', size: '250 g', grind: 'Filter', qty: 2, lineCents: 2500 }] }));
+      sessionStorage.setItem('dn-last-order', JSON.stringify({ ref: 'DN-A11Y', placed: '2026-11-17T10:00:00.000Z', contact: { email: 'ada@example.com', firstName: 'Ada', lastName: 'Lovelace', phone: '' }, address: { line1: 'Keizersgracht 1', line2: '', postcode: '1015 CJ', city: 'Amsterdam', country: 'Netherlands' }, shipping: { method: 'Standard', cents: 490, from: '2026-11-20T00:00:00.000Z', to: '2026-11-24T00:00:00.000Z' }, subtotalCents: 3400, totalCents: 3890, lines: [{ name: 'Huila La Plata', size: '340 g', grind: 'Filter', qty: 2, lineCents: 3400 }] }));
     });
     await page.goto(BASE + path + (path === 'success.html' ? '?order=DN-A11Y' : ''), { waitUntil: 'networkidle' });
     await setup(page);

@@ -22,21 +22,38 @@
     <a class="skip-link" href="#main">Skip to content</a>
     <nav class="header__nav" aria-label="Main"><a href="./#coffees">Coffees</a><a href="./#roast">Roast</a><a href="./#brew">Brew</a></nav>
     <a class="wordmark" href="./" aria-label="Dolce Nova, home">Dolce Nova</a>
-    <div class="header__end"><a href="./#coffees">Back to the coffees</a>
+    <div class="header__end"><a href="./#coffees" aria-label="Back to the coffees"><span class="end-long">Back to the coffees</span><span class="end-short">Shop</span></a>
     </div>
   </div>
 </header>
 <!-- /@header -->
 <main id="main" class="page">
   <div class="wrap"><div class="done">
-    <p class="t-label" data-enter style="--i:0">Order <span data-ref>placed</span></p>
+    <p class="tag" data-enter style="--i:0">Order <span data-ref>placed</span></p>
     <h1 data-enter style="--i:1">Thank you. Your coffee is on the roaster’s list.</h1>
-    <p class="t-lede" data-enter style="--i:2">This was a demo order, so nothing was charged and nothing will ship. In a live shop this is where the receipt would land.</p>
+    <p class="t-lede" data-enter style="--i:2" data-lede>This was a demo order, so nothing was charged and nothing will ship.</p>
     <div class="summary" data-order hidden data-enter style="--i:3">
       <h2>What you ordered</h2>
       <div data-lines></div>
+      <p class="summary__row"><span>Subtotal</span><span data-subtotal></span></p>
+      <p class="summary__row"><span>Shipping <span class="t-soft" data-method></span></span><span data-shipping></span></p>
       <p class="summary__total"><span>Total</span><span data-total></span></p>
+      <p class="summary__eta" data-eta></p>
+      <p class="summary__address" data-address></p>
     </div>
+
+    <section class="email-preview" data-email hidden aria-labelledby="email-title">
+      <h2 id="email-title">The confirmation email</h2>
+      <p class="t-soft">Preview only: this demo has no server and sends no email. In a live shop, this is the message <strong data-email-to></strong> would receive.</p>
+      <article class="email" aria-label="Email preview">
+        <dl class="email__head">
+          <dt>From</dt><dd>Dolce Nova &lt;orders@dolcenova.example&gt;</dd>
+          <dt>To</dt><dd data-email-to></dd>
+          <dt>Subject</dt><dd data-email-subject></dd>
+        </dl>
+        <div class="email__body" data-email-body></div>
+      </article>
+    </section>
     <p data-enter style="--i:4"><a class="btn" href="./#coffees">Back to the coffees</a></p>
   </div></div>
 </main>

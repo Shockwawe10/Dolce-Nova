@@ -15,14 +15,14 @@
 <script type="module" src="assets/js/checkout.js"></script>
 </head>
 <body>
-<p class="notice" role="note"><span class="notice__short">Demo checkout. Nothing is charged.</span><span class="notice__long">Demo checkout. No payment is taken and no card details leave your browser.</span></p>
+<p class="notice" role="note"><span class="notice__short">Demo checkout. Nothing is charged.</span><span class="notice__long">Demo checkout. No payment is taken, nothing ships, and nothing you type leaves your browser.</span></p>
 <!-- @header -->
 <header class="header header--fixed header--solid" id="top">
   <div class="wrap header__bar">
     <a class="skip-link" href="#main">Skip to content</a>
     <nav class="header__nav" aria-label="Main"><a href="./#coffees">Coffees</a><a href="./#roast">Roast</a><a href="./#brew">Brew</a></nav>
     <a class="wordmark" href="./" aria-label="Dolce Nova, home">Dolce Nova</a>
-    <div class="header__end"><a href="./#coffees">Back to the coffees</a>
+    <div class="header__end"><a href="./#coffees" aria-label="Back to the coffees"><span class="end-long">Back to the coffees</span><span class="end-short">Shop</span></a>
     </div>
   </div>
 </header>
@@ -32,23 +32,126 @@
   <div class="wrap">
     <h1>Checkout</h1>
     <div class="checkout">
-      <section aria-labelledby="pay-title">
-        <h2 class="visually-hidden" id="pay-title">Card details</h2>
-        <div class="demo-box">
-          <p><strong>This is a demo.</strong> Please do not enter a real card. Nothing you type is sent anywhere or saved, and no money moves.</p>
-          <p><button class="link" type="button" data-test-card>Use the test card 4242&nbsp;4242&nbsp;4242&nbsp;4242</button></p>
-        </div>
-        <form class="form" data-pay novalidate autocomplete="off">
-          <div class="field">
-            <label for="name">Name on card</label>
-            <input id="name" name="name" type="text" autocomplete="off" spellcheck="false" aria-describedby="name-err">
-            <p class="field__error" id="name-err" data-err="name"></p>
+      <form class="form checkout__form" data-pay novalidate>
+        <section class="form__group" aria-labelledby="contact-title">
+          <h2 id="contact-title">Contact</h2>
+            <div class="field">
+              <label for="email">Email <span class="t-soft">for your order confirmation</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" spellcheck="false" inputmode="email" aria-describedby="email-err">
+              <p class="field__error" id="email-err" data-err="email"></p>
+            </div>
+        </section>
+
+        <section class="form__group" aria-labelledby="ship-to-title">
+          <h2 id="ship-to-title">Delivery address</h2>
+          <div class="row-2">
+            <div class="field">
+              <label for="firstName">First name</label>
+              <input id="firstName" name="firstName" type="text" autocomplete="given-name" aria-describedby="firstName-err">
+              <p class="field__error" id="firstName-err" data-err="firstName"></p>
+            </div>
+            <div class="field">
+              <label for="lastName">Last name</label>
+              <input id="lastName" name="lastName" type="text" autocomplete="family-name" aria-describedby="lastName-err">
+              <p class="field__error" id="lastName-err" data-err="lastName"></p>
+            </div>
+          </div>
+            <div class="field">
+              <label for="address1">Street and house number</label>
+              <input id="address1" name="address1" type="text" autocomplete="address-line1" aria-describedby="address1-err">
+              <p class="field__error" id="address1-err" data-err="address1"></p>
+            </div>
+            <div class="field">
+              <label for="address2">Apartment, floor <span class="t-soft">(optional)</span></label>
+              <input id="address2" name="address2" type="text" autocomplete="address-line2" aria-describedby="address2-err">
+              <p class="field__error" id="address2-err" data-err="address2"></p>
+            </div>
+          <div class="row-2">
+            <div class="field">
+              <label for="postcode">Postcode</label>
+              <input id="postcode" name="postcode" type="text" autocomplete="postal-code" aria-describedby="postcode-err">
+              <p class="field__error" id="postcode-err" data-err="postcode"></p>
+            </div>
+            <div class="field">
+              <label for="city">Town or city</label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" aria-describedby="city-err">
+              <p class="field__error" id="city-err" data-err="city"></p>
+            </div>
           </div>
           <div class="field">
-            <label for="number">Card number</label>
-            <input id="number" name="number" type="text" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="4242 4242 4242 4242" aria-describedby="number-err">
-            <p class="field__error" id="number-err" data-err="number"></p>
+            <label for="country">Country</label>
+            <select id="country" name="country" autocomplete="country" aria-describedby="country-err">
+              <option value="">Choose a country</option>
+              <option value="AT">Austria</option>
+              <option value="BE">Belgium</option>
+              <option value="BG">Bulgaria</option>
+              <option value="HR">Croatia</option>
+              <option value="CY">Cyprus</option>
+              <option value="CZ">Czechia</option>
+              <option value="DK">Denmark</option>
+              <option value="EE">Estonia</option>
+              <option value="FI">Finland</option>
+              <option value="FR">France</option>
+              <option value="DE">Germany</option>
+              <option value="GR">Greece</option>
+              <option value="HU">Hungary</option>
+              <option value="IE">Ireland</option>
+              <option value="IT">Italy</option>
+              <option value="LV">Latvia</option>
+              <option value="LT">Lithuania</option>
+              <option value="LU">Luxembourg</option>
+              <option value="MT">Malta</option>
+              <option value="NL">Netherlands</option>
+              <option value="PL">Poland</option>
+              <option value="PT">Portugal</option>
+              <option value="RO">Romania</option>
+              <option value="SK">Slovakia</option>
+              <option value="SI">Slovenia</option>
+              <option value="ES">Spain</option>
+              <option value="SE">Sweden</option>
+            </select>
+            <p class="field__error" id="country-err" data-err="country"></p>
           </div>
+            <div class="field">
+              <label for="phone">Phone <span class="t-soft">(optional, for the courier)</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" aria-describedby="phone-err">
+              <p class="field__error" id="phone-err" data-err="phone"></p>
+            </div>
+        </section>
+
+        <section class="form__group" aria-labelledby="shipping-title">
+          <h2 id="shipping-title">Shipping</h2>
+          <fieldset class="ships" aria-describedby="shipping-err"><legend class="visually-hidden">Shipping method</legend>
+              <label class="ship"><input type="radio" name="shipping" value="standard" checked>
+                <span class="ship__name">Standard</span>
+                <span class="ship__time" data-ship-time="standard">3–5 working days</span>
+                <span class="ship__price" data-ship-price="standard">€4.90 · free from €40</span>
+              </label>
+              <label class="ship"><input type="radio" name="shipping" value="express">
+                <span class="ship__name">Express</span>
+                <span class="ship__time" data-ship-time="express">1–2 working days</span>
+                <span class="ship__price" data-ship-price="express">€9.90</span>
+              </label>
+          </fieldset>
+          <p class="field__error" id="shipping-err" data-err="shipping"></p>
+        </section>
+
+        <section class="form__group" aria-labelledby="pay-title">
+          <h2 id="pay-title">Payment</h2>
+          <div class="demo-box">
+            <p><strong>This is a demo.</strong> Please do not enter a real card. Card details are checked in your browser and never sent or saved, and no money moves.</p>
+            <p><button class="link" type="button" data-test-card>Use the test card 4242&nbsp;4242&nbsp;4242&nbsp;4242</button></p>
+          </div>
+            <div class="field">
+              <label for="name">Name on card</label>
+              <input id="name" name="name" type="text" autocomplete="off" spellcheck="false" aria-describedby="name-err">
+              <p class="field__error" id="name-err" data-err="name"></p>
+            </div>
+            <div class="field">
+              <label for="number">Card number</label>
+              <input id="number" name="number" type="text" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="4242 4242 4242 4242" aria-describedby="number-err">
+              <p class="field__error" id="number-err" data-err="number"></p>
+            </div>
           <div class="row-2">
             <div class="field">
               <label for="expiry">Expiry (MM/YY)</label>
@@ -61,16 +164,21 @@
               <p class="field__error" id="cvc-err" data-err="cvc"></p>
             </div>
           </div>
-          <button class="btn btn--block" type="submit" data-pay-btn disabled>Place demo order</button>
-          <p class="drawer__note" role="status" data-pay-status></p>
-        </form>
-      </section>
+        </section>
+
+        <button class="btn btn--block" type="submit" data-pay-btn disabled>Place demo order</button>
+        <p class="drawer__note" role="status" data-pay-status></p>
+        <p class="drawer__note">Your name, email and address stay in this browser tab: this demo has no server and sends no email. The confirmation page shows the email a live shop would send.</p>
+      </form>
 
       <aside class="summary" aria-labelledby="sum-title">
         <h2 id="sum-title">Your order</h2>
         <div data-summary><p class="t-soft">Loading your cart…</p></div>
+        <p class="summary__row"><span>Subtotal</span><span data-sum-subtotal>€0.00</span></p>
+        <p class="summary__row"><span>Shipping <span class="t-soft" data-sum-method>Standard</span></span><span data-sum-shipping>€0.00</span></p>
         <p class="summary__total"><span>Total</span><span data-sum-total>€0.00</span></p>
-        <p class="drawer__note">Prices in euro. Demo only: nothing is shipped.</p>
+        <p class="summary__eta" data-sum-eta></p>
+        <p class="drawer__note">Prices in euro, including VAT. Demo only: nothing is shipped.</p>
       </aside>
     </div>
   </div>

@@ -414,12 +414,16 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 .demo-box + .form { margin-top: var(--s-4); }
 .field { display: grid; gap: var(--s-1); }
 .field label { font-weight: 500; }
-.field input {
+.field input, .field select {
   height: 56px; padding: 0 var(--s-2); border: 1px solid var(--c-ink-soft); border-radius: var(--r-1);
-  background: var(--c-ground); font-size: var(--fs-2); font-variant-numeric: tabular-nums;
+  background: var(--c-ground); font: inherit; font-size: var(--fs-2); color: var(--c-ink); font-variant-numeric: tabular-nums;
 }
-.field input:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 0; border-color: var(--c-accent); }
-.field input[aria-invalid="true"] { border-color: var(--c-ink); border-width: 2px; }
+.field select { -webkit-appearance: none; appearance: none; padding-right: var(--s-6); cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--c-ink) 50%), linear-gradient(135deg, var(--c-ink) 50%, transparent 50%);
+  background-position: calc(100% - 24px) 26px, calc(100% - 18px) 26px; background-size: 6px 6px; background-repeat: no-repeat; }
+.field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 0; border-color: var(--c-accent); }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--c-ink); border-width: 2px; }
+.field select, .row-2 > * { min-width: 0; width: 100%; }
 .field__error { color: var(--c-ink); font-size: var(--fs-1); font-weight: 500; min-height: 16px; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
 .row-2 > *, .field input { min-width: 0; width: 100%; }
@@ -428,6 +432,32 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 .summary__line { display: grid; grid-template-columns: 1fr auto; gap: var(--s-2); padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 .summary__total { display: flex; justify-content: space-between; font-size: var(--fs-3); padding-top: var(--s-1); font-variant-numeric: tabular-nums; }
 .done { display: grid; gap: var(--s-3); max-width: 640px; }
+/* the checkout form in four groups, Coffee Collective's order: contact, address, shipping, payment */
+.checkout__form { gap: var(--s-6); }
+.form__group { display: grid; gap: var(--s-2); }
+.form__group > h2 { font-size: var(--fs-5); }
+.form__group .demo-box { margin-bottom: var(--s-1); }
+.ships { display: grid; gap: var(--s-1); }
+.ship { display: grid; grid-template-columns: auto 1fr auto; column-gap: var(--s-2); align-items: center; padding: var(--s-2); border: 1px solid var(--c-ink-soft); cursor: pointer; }
+.ship input { -webkit-appearance: none; appearance: none; grid-row: 1 / 3; width: 16px; height: 16px; margin: 0; border: 2px solid currentColor; border-radius: var(--r-pill); }
+.ship input:checked { background: currentColor; }   /* filled, like the grind chips (one shadow style on the site: the drawer) */
+.ship input:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+.ship:has(input:checked) { border-color: var(--c-ink); outline: 1px solid var(--c-ink); outline-offset: -2px; }
+.ship__name { font-weight: 500; }
+.ship__time { grid-column: 2; font-size: var(--fs-1); color: var(--c-ink-soft); }
+.ship__price { grid-row: 1 / 3; grid-column: 3; font-variant-numeric: tabular-nums; }
+.summary__row { display: flex; justify-content: space-between; gap: var(--s-2); font-variant-numeric: tabular-nums; }
+.summary__eta { font-weight: 500; }
+.summary__address { font-size: var(--fs-1); }
+/* the confirmation email, shown as a message: a header block, then the body */
+.email-preview { display: grid; gap: var(--s-2); }
+.email-preview > h2 { font-size: var(--fs-5); }
+.email { border: 1px solid var(--c-line); background: var(--c-ground); }
+.email__head { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--s-2); padding: var(--s-2) var(--s-3); background: var(--c-surface); font-size: var(--fs-1); }
+.email__head dt { color: var(--c-ink-soft); }
+.email__head dd { overflow-wrap: anywhere; }
+.email__body { display: grid; gap: var(--s-2); padding: var(--s-3); }
+.email__lines { border-top: 1px solid var(--c-line); }
 .credits li { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 
 /* ---------- motion: the hero's one entrance (never under reduced motion) ---------- */
@@ -440,3 +470,7 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; animation-delay: 0ms !important; }
 }
+
+/* the utility pages' way back: the full words on a tablet and up, one word on a phone (the bar holds three items) */
+.end-short { display: none; }
+@media (max-width: 639px) { .end-long { display: none; } .end-short { display: inline; } }

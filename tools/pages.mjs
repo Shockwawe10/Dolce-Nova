@@ -24,7 +24,7 @@ const header = ({ home, over = false, cart = true }) => `<header class="header h
     <div class="header__end">${cart ? `
       <button class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart" data-cart-open>
         Cart (<span class="cart-btn__count" data-cart-count aria-live="polite">0</span><span class="visually-hidden"> items</span>)
-      </button>` : `<a href="./#coffees">Back to the coffees</a>`}
+      </button>` : `<a href="./#coffees" aria-label="Back to the coffees"><span class="end-long">Back to the coffees</span><span class="end-short">Shop</span></a>`}
     </div>
   </div>
 </header>`;

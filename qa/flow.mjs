@@ -45,17 +45,44 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.click('[data-cart-open]');
     await page.click('[data-checkout]');
     await page.waitForURL(/checkout/);
-    await page.fill('#name', 'Ada');
+    // an empty form: every required field says what it needs, focus goes to the first (the email)
+    await page.click('[data-pay-btn]');
+    for (const id of ['email', 'firstName', 'lastName', 'address1', 'postcode', 'city', 'country', 'number']) {
+      assert.notEqual((await page.locator(`#${id}-err`).innerText()).trim(), '', `${id} has a message`);
+    }
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'email', 'focus on the first missing field');
+    // contact and address; standard shipping is free over 40 euro, express is 9.90
+    await page.fill('#email', 'ada@example.com');
+    await page.fill('#firstName', 'Ada');
+    await page.fill('#lastName', 'Lovelace');
+    await page.fill('#address1', 'Keizersgracht 1');
+    await page.fill('#postcode', '1015 CJ');
+    await page.fill('#city', 'Amsterdam');
+    await page.selectOption('#country', 'NL');
+    assert.match(await page.locator('[data-sum-shipping]').innerText(), /Free/);
+    assert.match(await page.locator('[data-sum-total]').innerText(), /112\.00/);
+    await page.locator('label.ship:has(input[value="express"])').click();
+    assert.match(await page.locator('[data-sum-shipping]').innerText(), /9\.90/);
+    assert.match(await page.locator('[data-sum-total]').innerText(), /121\.90/);
+    assert.match(await page.locator('[data-sum-eta]').innerText(), /^Arrives \w{3} \d{1,2} \w{3} – \w{3} \d{1,2} \w{3}$/);
+    // a bad card is caught, the test card goes through
+    await page.fill('#name', 'Ada Lovelace');
     await page.fill('#number', '4242 4242 4242 4241');
     await page.fill('#expiry', '12/34');
     await page.fill('#cvc', '123');
     await page.click('[data-pay-btn]');
     assert.match(await page.locator('#number-err').innerText(), /valid card/);
     assert.equal(await page.getAttribute('#number', 'aria-invalid'), 'true');
+    assert.equal((await page.locator('#email-err').innerText()).trim(), '', 'the fixed email has no message');
     await page.click('[data-test-card]');
     await page.click('[data-pay-btn]');
     await page.waitForURL(/success\.html\?order=DN-/);
-    assert.match(await page.locator('[data-total]').innerText(), /112\.00/);
+    assert.match(await page.locator('[data-total]').innerText(), /121\.90/);
+    // the confirmation and the email preview carry the order, the shipping and the address
+    const mail = await page.locator('[data-email]').innerText();
+    for (const want of [/ada@example\.com/, /Your Dolce Nova order DN-/, /Hi Ada/, /Express/, /9\.90/, /121\.90/, /Arriving \w{3} \d{1,2} \w{3} – /, /Keizersgracht 1/, /1015 CJ Amsterdam/, /Netherlands/, /Nyeri Gatomboya/, /preview only/i]) {
+      assert.match(mail, want);
+    }
     const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }));
     assert.ok(!/4242/.test(stored), 'no card digits anywhere in storage');
     assert.equal(await page.evaluate(() => localStorage.getItem('dn-cart')), '[]', 'cart cleared after the order');
