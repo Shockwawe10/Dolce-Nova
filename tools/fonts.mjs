@@ -2,15 +2,15 @@
 // site/assets/css/fonts.css with font-display: swap and size-adjusted local fallbacks
 // (metrics from @capsizecss/metrics, same method as next/font). Usage: node tools/fonts.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import ebGaramond from '@capsizecss/metrics/ebGaramond';
-import figtree from '@capsizecss/metrics/figtree';
+import { entireMetricsCollection as M } from '@capsizecss/metrics/entireMetricsCollection';
 import georgia from '@capsizecss/metrics/georgia';
 import arial from '@capsizecss/metrics/arial';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 const FONTS = [
-  { family: 'EB Garamond', query: 'EB+Garamond:wght@400', file: 'eb-garamond-latin.woff2', weight: '400', metrics: ebGaramond, fallback: ['Georgia', georgia] },
-  { family: 'Figtree', query: 'Figtree:wght@400..500', file: 'figtree-latin.woff2', weight: '400 500', metrics: figtree, fallback: ['Arial', arial] },
+  // 2026-11-17 redesign: a narrow editorial serif for display (the bags' condensed type), its grotesk sibling for text
+  { family: 'Instrument Serif', query: 'Instrument+Serif', file: 'instrument-serif-latin.woff2', weight: '400', metrics: M.instrumentSerif, fallback: ['Georgia', georgia] },
+  { family: 'Instrument Sans', query: 'Instrument+Sans:wght@400..600', file: 'instrument-sans-latin.woff2', weight: '400 600', metrics: M.instrumentSans, fallback: ['Arial', arial] },
 ];
 const pct = (n) => `${(n * 100).toFixed(2)}%`;
 

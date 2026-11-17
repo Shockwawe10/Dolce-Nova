@@ -28,14 +28,14 @@ export function mountDrawer(catalog, manifest) {
     total.textContent = formatEUR(t.totalCents);
     foot.hidden = cart.length === 0;
     if (!cart.length) {
-      lines.innerHTML = `<div class="drawer__empty"><p>Your cart is empty.</p><a class="link-arrow" href="#shop" data-cart-close>Browse the coffees <span aria-hidden="true">→</span></a></div>`;
+      lines.innerHTML = `<div class="drawer__empty"><p>Your cart is empty.</p><a class="link-arrow" href="./#coffees" data-cart-close>Browse the coffees <span aria-hidden="true">→</span></a></div>`;
       return;
     }
     lines.innerHTML = t.lines.map((l, i) => `
       <div class="line">
-        ${picture(manifest, l.product.texture, { sizes: '64px', alt: '' })}
+        ${picture(manifest, l.product.bag, { sizes: '64px', alt: '' })}
         <div>
-          <p class="line__name">${l.product.name}</p>
+          <p class="line__name"><a href="coffee-${l.product.id}.html">${l.product.name}</a></p>
           <p class="line__meta">${catalog.sizes[l.size]} · ${catalog.grinds[l.grind]}</p>
           <div class="qty" role="group" aria-label="Quantity of ${l.product.name}">
             <button class="icon-btn" type="button" data-qty="${i}" data-step="-1" aria-label="One fewer">−</button>

@@ -71,118 +71,6 @@
     "page": "https://commons.wikimedia.org/wiki/File:Row_of_15_grams_of_coffee_roasted_to_different_degrees.jpg",
     "cropped": true
   },
-  "bean-light": {
-    "widths": [
-      420,
-      640,
-      780
-    ],
-    "ratio": [
-      780,
-      780
-    ],
-    "alt": "Whole light roasted coffee beans",
-    "source": "f125379394",
-    "by": "Alorin",
-    "licence": "CC BY 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
-    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
-    "cropped": true
-  },
-  "bean-medium": {
-    "widths": [
-      420,
-      640,
-      840
-    ],
-    "ratio": [
-      840,
-      840
-    ],
-    "alt": "Whole medium roasted coffee beans",
-    "source": "f125379394",
-    "by": "Alorin",
-    "licence": "CC BY 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
-    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
-    "cropped": true
-  },
-  "bean-dark": {
-    "widths": [
-      420,
-      640,
-      840
-    ],
-    "ratio": [
-      840,
-      840
-    ],
-    "alt": "Whole dark roasted coffee beans",
-    "source": "f125379394",
-    "by": "Alorin",
-    "licence": "CC BY 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
-    "page": "https://commons.wikimedia.org/wiki/File:15_grams_of_coffee_roasted_to_different_degrees.jpg",
-    "cropped": true
-  },
-  "grind-espresso": {
-    "widths": [
-      420,
-      640,
-      840
-    ],
-    "ratio": [
-      900,
-      900
-    ],
-    "alt": "Fine espresso grind, soft as cocoa powder",
-    "source": "f197293151",
-    "by": "Shixart1985",
-    "licence": "CC BY 2.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
-    "page": "https://commons.wikimedia.org/wiki/File:A_black_container_filled_with_finely_ground_coffee.jpg",
-    "cropped": true
-  },
-  "grind-filter": {
-    "widths": [
-      420,
-      640,
-      840,
-      1000
-    ],
-    "ratio": [
-      1000,
-      1000
-    ],
-    "alt": "Medium filter grind, like coarse sand",
-    "source": "f56710941",
-    "by": "-Abe",
-    "licence": "CC BY-SA 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
-    "page": "https://commons.wikimedia.org/wiki/File:Caf%C3%A9_molido.jpg",
-    "cropped": true
-  },
-  "hero": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920,
-      2560,
-      3456
-    ],
-    "ratio": [
-      3456,
-      2298
-    ],
-    "alt": "Green, unroasted coffee beans spilling from an open burlap sack onto a wooden floor",
-    "source": "c69",
-    "by": "DeaPeaJay",
-    "licence": "CC BY-SA 2.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
-    "page": "https://commons.wikimedia.org/wiki/File:Green_Bean_Coffee.jpg",
-    "cropped": false
-  },
   "origin": {
     "widths": [
       640,
@@ -221,26 +109,6 @@
     "licence": "CC0",
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "page": "https://commons.wikimedia.org/wiki/File:Manual_drip_(pour-over)_coffee.jpg",
-    "cropped": false
-  },
-  "featured": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920,
-      2560
-    ],
-    "ratio": [
-      6000,
-      3884
-    ],
-    "alt": "A spoonful of freshly roasted coffee beans lifted over a basket full of beans",
-    "source": "c75",
-    "by": "Jameswasswa",
-    "licence": "CC BY-SA 4.0",
-    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "page": "https://commons.wikimedia.org/wiki/File:Another_closer_look_at_the_roasted_coffee_beans.jpg",
     "cropped": false
   },
   "close": {
@@ -319,6 +187,204 @@
     "licence": "CC BY-SA 3.0",
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "page": "https://commons.wikimedia.org/wiki/File:Roasted_Coffee_Beans_Texture.jpg",
+    "cropped": false
+  },
+  "bag-cerrado": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Cerrado Natural: white, with gold line engraving and a lion emblem, on a black ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-cerrado-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Cerrado Natural: white, with gold line engraving and a lion emblem, on a black ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "bag-yirgacheffe": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Yirgacheffe Konga: kraft paper, with gold engraving of a hillside farm, on a dark teal ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-yirgacheffe-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Yirgacheffe Konga: kraft paper, with gold engraving of a hillside farm, on a dark teal ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "bag-nyeri": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Nyeri Gatomboya: terracotta, with navy engraving of a village and coffee branches, on a dark teal ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-nyeri-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Nyeri Gatomboya: terracotta, with navy engraving of a village and coffee branches, on a dark teal ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "bag-huila": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Huila La Plata: forest green, with copper engraving and a lion emblem, on a brown ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-huila-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Huila La Plata: forest green, with copper engraving and a lion emblem, on a brown ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "bag-huehuetenango": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Huehuetenango: navy, with gold engraving of mountains and a village, on a dark grey ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-huehuetenango-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Huehuetenango: navy, with gold engraving of mountains and a village, on a dark grey ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "bag-decaf": {
+    "widths": [
+      240,
+      480,
+      760
+    ],
+    "ratio": [
+      760,
+      950
+    ],
+    "alt": "A 340 g bag of Dolce Nova Sugarcane Decaf: burgundy, with gold engraving and a lion emblem, on a dark grey ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
+    "cropped": true
+  },
+  "bag-decaf-sq": {
+    "widths": [
+      640,
+      1024
+    ],
+    "ratio": [
+      1024,
+      1024
+    ],
+    "alt": "A 340 g bag of Dolce Nova Sugarcane Decaf: burgundy, with gold engraving and a lion emblem, on a dark grey ground",
+    "source": "owner-bags",
+    "owner": true,
+    "by": "Dolce Nova (the owner)",
+    "licence": "supplied by the owner for this site",
     "cropped": false
   }
 }

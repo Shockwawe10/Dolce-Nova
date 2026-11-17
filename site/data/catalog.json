@@ -1,13 +1,98 @@
 {
-  "currency": "EUR",
-  "sizes": { "250g": "250\u00a0g", "1kg": "1\u00a0kg" },
-  "grinds": { "whole": "Whole bean", "espresso": "Espresso", "filter": "Filter" },
-  "products": [
-    { "id": "yirgacheffe", "name": "Yirgacheffe Konga", "origin": "Ethiopia", "process": "Washed", "roast": "Light", "texture": "bean-light", "notes": "Bergamot, apricot, black tea", "prices": { "250g": 1450, "1kg": 4900 } },
-    { "id": "nyeri", "name": "Nyeri Gatomboya", "origin": "Kenya", "process": "Washed", "roast": "Light", "texture": "bean-light", "notes": "Blackcurrant, grapefruit, cane sugar", "prices": { "250g": 1650, "1kg": 5600 } },
-    { "id": "huila", "name": "Huila La Plata", "origin": "Colombia", "process": "Washed", "roast": "Medium", "texture": "bean-medium", "notes": "Red apple, panela, cocoa", "prices": { "250g": 1250, "1kg": 4200 } },
-    { "id": "huehuetenango", "name": "Huehuetenango", "origin": "Guatemala", "process": "Washed", "roast": "Medium", "texture": "bean-medium", "notes": "Milk chocolate, plum, almond", "prices": { "250g": 1300, "1kg": 4400 } },
-    { "id": "decaf", "name": "Sugarcane Decaf", "origin": "Colombia", "process": "Sugarcane EA", "roast": "Medium", "texture": "bean-medium", "notes": "Toffee, orange, soft cocoa", "prices": { "250g": 1350, "1kg": 4500 } },
-    { "id": "cerrado", "name": "Cerrado Natural", "origin": "Brazil", "process": "Natural", "roast": "Medium-dark", "texture": "bean-dark", "notes": "Hazelnut, dark chocolate, molasses", "prices": { "250g": 1150, "1kg": 3800 } }
-  ]
+ "currency": "EUR",
+ "sizes": {
+  "340g": "340 g",
+  "1kg": "1 kg"
+ },
+ "grinds": {
+  "whole": "Whole bean",
+  "espresso": "Espresso",
+  "filter": "Filter"
+ },
+ "products": [
+  {
+   "id": "cerrado",
+   "name": "Cerrado Natural",
+   "origin": "Brazil",
+   "process": "Natural",
+   "roast": "Medium-dark",
+   "notes": "Hazelnut, dark chocolate, molasses",
+   "prices": {
+    "340g": 1550,
+    "1kg": 3800
+   },
+   "about": "Dried in the whole cherry on the high plateau of Minas Gerais, Brazil. Our darkest roast: nutty, chocolatey and low in acidity.",
+   "bag": "bag-cerrado"
+  },
+  {
+   "id": "yirgacheffe",
+   "name": "Yirgacheffe Konga",
+   "origin": "Ethiopia",
+   "process": "Washed",
+   "roast": "Light",
+   "notes": "Bergamot, apricot, black tea",
+   "prices": {
+    "340g": 1950,
+    "1kg": 4900
+   },
+   "about": "Grown by smallholders around Konga in Yirgacheffe, where the coffee is washed and dried on raised beds. A light roast keeps it floral and tea-like.",
+   "bag": "bag-yirgacheffe"
+  },
+  {
+   "id": "nyeri",
+   "name": "Nyeri Gatomboya",
+   "origin": "Kenya",
+   "process": "Washed",
+   "roast": "Light",
+   "notes": "Blackcurrant, grapefruit, cane sugar",
+   "prices": {
+    "340g": 2250,
+    "1kg": 5600
+   },
+   "about": "From the Gatomboya washing station in Nyeri, on the slopes of Mount Kenya. Kenyan coffee at its brightest: juicy, with a long, sweet finish.",
+   "bag": "bag-nyeri"
+  },
+  {
+   "id": "huila",
+   "name": "Huila La Plata",
+   "origin": "Colombia",
+   "process": "Washed",
+   "roast": "Medium",
+   "notes": "Red apple, panela, cocoa",
+   "prices": {
+    "340g": 1700,
+    "1kg": 4200
+   },
+   "about": "From smallholder farms around La Plata in southern Colombia. A medium roast for a round, sweet cup that works as espresso and as filter.",
+   "bag": "bag-huila"
+  },
+  {
+   "id": "huehuetenango",
+   "name": "Huehuetenango",
+   "origin": "Guatemala",
+   "process": "Washed",
+   "roast": "Medium",
+   "notes": "Milk chocolate, plum, almond",
+   "prices": {
+    "340g": 1750,
+    "1kg": 4400
+   },
+   "about": "Grown high in the western highlands of Guatemala, near the Mexican border. Chocolate and stone fruit, easy every morning.",
+   "bag": "bag-huehuetenango"
+  },
+  {
+   "id": "decaf",
+   "name": "Sugarcane Decaf",
+   "origin": "Colombia",
+   "process": "Sugarcane EA",
+   "roast": "Medium",
+   "notes": "Toffee, orange, soft cocoa",
+   "prices": {
+    "340g": 1850,
+    "1kg": 4500
+   },
+   "about": "Colombian coffee decaffeinated with ethyl acetate made from sugarcane, a gentle process that keeps its sweetness. All of the flavour, none of the late-night buzz.",
+   "bag": "bag-decaf"
+  }
+ ]
 }

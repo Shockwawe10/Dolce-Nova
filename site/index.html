@@ -7,16 +7,16 @@
 <meta name="description" content="Six single-origin coffees from Dolce Nova, roasted in small batches and sold whole or ground for espresso and filter. A demo shop: no payment is taken.">
 <meta name="page-type" content="product">
 <meta name="site-kind" content="other">
-<meta name="theme-color" content="#f6f1e7">
+<meta name="theme-color" content="#1b1b19">
 <meta property="og:title" content="Dolce Nova · Single-origin coffee roasters">
-<meta property="og:description" content="Six single-origin coffees, roasted in small batches. 250 g from €11.50.">
+<meta property="og:description" content="Six single-origin coffees, roasted in small batches. 340 g from €15.50.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/img/hero-1280.webp">
+<meta property="og:image" content="assets/img/bag-cerrado-sq-1024.webp">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/eb-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" fetchpriority="high"
-  imagesrcset="assets/img/hero-640.avif 640w, assets/img/hero-960.avif 960w, assets/img/hero-1280.avif 1280w, assets/img/hero-1920.avif 1920w, assets/img/hero-2560.avif 2560w, assets/img/hero-3456.avif 3456w"
-  imagesizes="(min-aspect-ratio: 3/2) 100vw, 151vh">
+  imagesrcset="assets/img/bag-cerrado-sq-640.avif 640w, assets/img/bag-cerrado-sq-1024.avif 1024w"
+  imagesizes="(min-width: 1024px) 640px, (min-width: 640px) 560px, 100vw">
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <script>document.documentElement.classList.add('js', 'm-enter')</script>
@@ -24,44 +24,123 @@
 <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
-<header class="nav header header--fixed header--over" id="top">
+<!-- @header -->
+<header class="header header--fixed header--over" id="top">
   <div class="wrap header__bar">
     <a class="skip-link" href="#main">Skip to content</a>
-    <a class="wordmark" href="#top" aria-label="Dolce Nova, back to top">Dolce Nova</a>
-    <nav class="menu" aria-label="Main">
-      <div class="nav__links"><a href="#shop">Shop</a><a href="#craft">Craft</a></div>
+    <nav class="header__nav" aria-label="Main"><a href="#coffees">Coffees</a><a href="#roast">Roast</a><a href="#brew">Brew</a></nav>
+    <a class="wordmark" href="#top" aria-label="Dolce Nova, home">Dolce Nova</a>
+    <div class="header__end">
       <button class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart" data-cart-open>
         Cart (<span class="cart-btn__count" data-cart-count aria-live="polite">0</span><span class="visually-hidden"> items</span>)
       </button>
-    </nav>
+    </div>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="main">
-  <!-- 6.1 hero: a full-bleed photograph, the words small in the lower left (both references) -->
-  <section class="hero" aria-labelledby="hero-title" data-enter>
-    <div class="hero__photo">
-      <picture>
-        <source type="image/avif" sizes="(min-aspect-ratio: 3/2) 100vw, 151vh"
-          srcset="assets/img/hero-640.avif 640w, assets/img/hero-960.avif 960w, assets/img/hero-1280.avif 1280w, assets/img/hero-1920.avif 1920w, assets/img/hero-2560.avif 2560w, assets/img/hero-3456.avif 3456w">
-        <img src="assets/img/hero-1280.webp" sizes="(min-aspect-ratio: 3/2) 100vw, 151vh"
-          srcset="assets/img/hero-640.webp 640w, assets/img/hero-960.webp 960w, assets/img/hero-1280.webp 1280w, assets/img/hero-1920.webp 1920w, assets/img/hero-2560.webp 2560w, assets/img/hero-3456.webp 3456w"
-          width="3456" height="2298" alt="Green, unroasted coffee beans spilling from an open burlap sack onto a wooden floor" fetchpriority="high" decoding="async">
-      </picture>
-    </div>
-    <div class="wrap hero-text hero__content">
-      <p class="hero__notice" data-enter style="--i:0">Demo shop: nothing is charged at checkout.</p>
-      <h1 id="hero-title" data-enter style="--i:1">Coffee that starts as a green bean.</h1>
-      <p class="hero__lede" data-enter style="--i:2">250&nbsp;g from €11.50, whole bean or ground for espresso and filter.</p>
-      <div class="hero__cta" data-enter style="--i:3"><a class="btn" href="#shop">Shop the coffees</a></div>
+  <!-- hero (Canyon): the bag as a dark still life, the words low on the left -->
+  <section class="hero on-dark" aria-labelledby="hero-title" data-enter>
+    <div class="wrap hero-text hero__inner">
+      <div class="hero__bag">
+        <picture>
+          <source type="image/avif" sizes="(min-width: 1024px) 640px, (min-width: 640px) 560px, 100vw" srcset="assets/img/bag-cerrado-sq-640.avif 640w, assets/img/bag-cerrado-sq-1024.avif 1024w">
+          <img src="assets/img/bag-cerrado-sq-1024.webp" sizes="(min-width: 1024px) 640px, (min-width: 640px) 560px, 100vw" srcset="assets/img/bag-cerrado-sq-640.webp 640w, assets/img/bag-cerrado-sq-1024.webp 1024w" width="1024" height="1024" alt="A 340 g bag of Dolce Nova Cerrado Natural: white, with gold line engraving and a lion emblem, on a black ground" fetchpriority="high" decoding="async">
+        </picture>
+      </div>
+      <div class="hero__text">
+        <p class="hero__notice" data-enter style="--i:0">Demo shop: nothing is charged at checkout.</p>
+        <h1 id="hero-title" data-enter style="--i:1">Single-origin coffee, roasted in small batches.</h1>
+        <p class="hero__lede" data-enter style="--i:2">Six coffees, whole bean or ground for espresso and filter. 340&nbsp;g from €15.50.</p>
+        <div class="actions" data-enter style="--i:3">
+          <a class="btn btn--light" href="#coffees">Shop the coffees</a>
+          <a class="btn btn--outline" href="#roast">Follow the roast</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 6.2 manifesto (Canyon): one sentence set large, then a collage of the craft -->
+  <!-- the coffees (Canyon's bestsellers row, Coffee Collective's tags): one bag per coffee, each to its own page -->
+  <section class="section coffees" id="coffees" aria-labelledby="coffees-title">
+    <div class="wrap section__head">
+      <h2 id="coffees-title">The coffees</h2>
+      <p class="t-lede">Six single origins, from a bright Kenyan to a chocolatey Brazilian. Each comes whole or ground to order.</p>
+    </div>
+<!-- @coffees -->
+<div class="carousel" data-carousel>
+      <ul class="carousel__track" aria-label="The coffees">
+        <li class="slide">
+          <a class="slide__link" href="coffee-cerrado.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-cerrado-240.avif 240w, assets/img/bag-cerrado-480.avif 480w, assets/img/bag-cerrado-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-cerrado-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-cerrado-240.webp 240w, assets/img/bag-cerrado-480.webp 480w, assets/img/bag-cerrado-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Cerrado Natural: white, with gold line engraving and a lion emblem, on a black ground" decoding="async"></picture></div>
+            <p class="tag">Medium-dark roast · Brazil</p>
+            <h3 class="slide__name">Cerrado Natural</h3>
+            <p class="slide__notes">Hazelnut, dark chocolate, molasses</p>
+            <p class="slide__price">from €15.50</p>
+          </a>
+        </li>
+        <li class="slide">
+          <a class="slide__link" href="coffee-yirgacheffe.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-yirgacheffe-240.avif 240w, assets/img/bag-yirgacheffe-480.avif 480w, assets/img/bag-yirgacheffe-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-yirgacheffe-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-yirgacheffe-240.webp 240w, assets/img/bag-yirgacheffe-480.webp 480w, assets/img/bag-yirgacheffe-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Yirgacheffe Konga: kraft paper, with gold engraving of a hillside farm, on a dark teal ground" decoding="async"></picture></div>
+            <p class="tag">Light roast · Ethiopia</p>
+            <h3 class="slide__name">Yirgacheffe Konga</h3>
+            <p class="slide__notes">Bergamot, apricot, black tea</p>
+            <p class="slide__price">from €19.50</p>
+          </a>
+        </li>
+        <li class="slide">
+          <a class="slide__link" href="coffee-nyeri.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-nyeri-240.avif 240w, assets/img/bag-nyeri-480.avif 480w, assets/img/bag-nyeri-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-nyeri-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-nyeri-240.webp 240w, assets/img/bag-nyeri-480.webp 480w, assets/img/bag-nyeri-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Nyeri Gatomboya: terracotta, with navy engraving of a village and coffee branches, on a dark teal ground" decoding="async"></picture></div>
+            <p class="tag">Light roast · Kenya</p>
+            <h3 class="slide__name">Nyeri Gatomboya</h3>
+            <p class="slide__notes">Blackcurrant, grapefruit, cane sugar</p>
+            <p class="slide__price">from €22.50</p>
+          </a>
+        </li>
+        <li class="slide">
+          <a class="slide__link" href="coffee-huila.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-huila-240.avif 240w, assets/img/bag-huila-480.avif 480w, assets/img/bag-huila-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-huila-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-huila-240.webp 240w, assets/img/bag-huila-480.webp 480w, assets/img/bag-huila-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Huila La Plata: forest green, with copper engraving and a lion emblem, on a brown ground" decoding="async"></picture></div>
+            <p class="tag">Medium roast · Colombia</p>
+            <h3 class="slide__name">Huila La Plata</h3>
+            <p class="slide__notes">Red apple, panela, cocoa</p>
+            <p class="slide__price">from €17.00</p>
+          </a>
+        </li>
+        <li class="slide">
+          <a class="slide__link" href="coffee-huehuetenango.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-huehuetenango-240.avif 240w, assets/img/bag-huehuetenango-480.avif 480w, assets/img/bag-huehuetenango-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-huehuetenango-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-huehuetenango-240.webp 240w, assets/img/bag-huehuetenango-480.webp 480w, assets/img/bag-huehuetenango-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Huehuetenango: navy, with gold engraving of mountains and a village, on a dark grey ground" decoding="async"></picture></div>
+            <p class="tag">Medium roast · Guatemala</p>
+            <h3 class="slide__name">Huehuetenango</h3>
+            <p class="slide__notes">Milk chocolate, plum, almond</p>
+            <p class="slide__price">from €17.50</p>
+          </a>
+        </li>
+        <li class="slide">
+          <a class="slide__link" href="coffee-decaf.html">
+            <div class="slide__media"><picture><source type="image/avif" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-decaf-240.avif 240w, assets/img/bag-decaf-480.avif 480w, assets/img/bag-decaf-760.avif 760w"><img fetchpriority="low" src="assets/img/bag-decaf-480.webp" sizes="(min-width: 1024px) 360px, (min-width: 640px) 40vw, 76vw" srcset="assets/img/bag-decaf-240.webp 240w, assets/img/bag-decaf-480.webp 480w, assets/img/bag-decaf-760.webp 760w" width="760" height="950" alt="A 340 g bag of Dolce Nova Sugarcane Decaf: burgundy, with gold engraving and a lion emblem, on a dark grey ground" decoding="async"></picture></div>
+            <p class="tag">Medium roast · Colombia</p>
+            <h3 class="slide__name">Sugarcane Decaf</h3>
+            <p class="slide__notes">Toffee, orange, soft cocoa</p>
+            <p class="slide__price">from €18.50</p>
+          </a>
+        </li>
+      </ul>
+      <div class="wrap carousel__bar">
+        <div class="carousel__progress" aria-hidden="true"><span></span></div>
+        <div class="carousel__nav">
+          <button type="button" data-prev aria-label="Previous coffees"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
+          <button type="button" data-next aria-label="Next coffees"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
+        </div>
+      </div>
+    </div>
+<!-- /@coffees -->
+  </section>
+
+  <!-- manifesto (Canyon): one sentence set large, then a collage of the craft -->
   <section class="section manifesto" aria-labelledby="about-title">
     <div class="wrap">
       <h2 id="about-title" class="visually-hidden">About Dolce Nova</h2>
-      <p class="statement">Six single-origin coffees, roasted in small batches. Follow one bean from a green seed to your cup, then choose how you brew it.</p>
+      <p class="statement">We buy green coffee from a few farms we know, roast it in small batches, and pack it in bags worth keeping.</p>
       <div class="collage">
         <figure class="collage__a is-mono"><picture>
           <source type="image/avif" sizes="(min-width: 1024px) 36vw, 84vw" srcset="assets/img/col-trier-480.avif 480w, assets/img/col-trier-720.avif 720w, assets/img/col-trier-960.avif 960w, assets/img/col-trier-1280.avif 1280w">
@@ -79,58 +158,25 @@
     </div>
   </section>
 
-  <!-- 6.3 shop: Canyon's list with Coffee Collective's tiles and tags; the grind preview is unchanged -->
-  <section class="section" id="shop" style="--h: 2" aria-labelledby="shop-title">
-    <div class="wrap">
-      <div class="section__head">
-        <h2 id="shop-title">Six coffees. Three grinds.</h2>
-        <p class="t-lede">Open a coffee, choose whole bean, espresso or filter, and see the grind you will get.</p>
-      </div>
-      <div class="coffees" data-coffees>
-        <noscript><p>The shop needs JavaScript to build your cart.</p></noscript>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6.4 featured coffee (Coffee Collective colour block): photograph half, terracotta half -->
-  <section class="block-split block-split--accent" id="featured" aria-labelledby="featured-title">
+  <!-- origin (Coffee Collective colour block): photograph half, forest half -->
+  <section class="block-split block-split--accent" id="origin" aria-labelledby="origin-title">
     <div class="block-split__photo">
       <picture>
-        <source type="image/avif" sizes="(min-width: 1024px) 155vh, max(100vw, 78vh)" srcset="assets/img/featured-640.avif 640w, assets/img/featured-960.avif 960w, assets/img/featured-1280.avif 1280w, assets/img/featured-1920.avif 1920w, assets/img/featured-2560.avif 2560w">
-        <img src="assets/img/featured-1280.webp" sizes="(min-width: 1024px) 155vh, max(100vw, 78vh)" srcset="assets/img/featured-640.webp 640w, assets/img/featured-960.webp 960w, assets/img/featured-1280.webp 1280w, assets/img/featured-1920.webp 1920w, assets/img/featured-2560.webp 2560w" width="6000" height="3884" alt="A spoonful of freshly roasted coffee beans lifted over a basket full of beans" loading="lazy" decoding="async">
+        <source type="image/avif" sizes="(min-width: 1024px) 150vh, max(100vw, 75vh)" srcset="assets/img/origin-640.avif 640w, assets/img/origin-960.avif 960w, assets/img/origin-1280.avif 1280w, assets/img/origin-1920.avif 1920w, assets/img/origin-2560.avif 2560w">
+        <img src="assets/img/origin-1280.webp" sizes="(min-width: 1024px) 150vh, max(100vw, 75vh)" srcset="assets/img/origin-640.webp 640w, assets/img/origin-960.webp 960w, assets/img/origin-1280.webp 1280w, assets/img/origin-1920.webp 1920w, assets/img/origin-2560.webp 2560w" width="4310" height="2875" alt="A hand lifting green coffee beans from a wide basket during sorting" loading="lazy" decoding="async">
       </picture>
     </div>
     <div class="block-split__body">
-      <p class="tag tag--on-colour">Light roast · Kenya</p>
-      <h2 id="featured-title">Nyeri Gatomboya</h2>
-      <p>Blackcurrant, grapefruit and cane sugar. A washed coffee, roasted light to keep its fruit. 250&nbsp;g from €16.50.</p>
-      <p><a class="btn btn--outline" href="#shop" data-open-coffee="nyeri">Choose a grind</a></p>
+      <p class="tag">Origin</p>
+      <h2 id="origin-title">Green coffee, sorted by hand.</h2>
+      <p class="t-lede">Coffee is the seed of a cherry. Picked, washed and dried, it is green, dense and smells of fresh hay.</p>
+      <p>It is sorted by hand before it travels, because a handful of faulty beans can flatten a whole batch. What arrives at the roastery is the seed you see on the next screen.</p>
+      <a class="btn btn--outline" href="#roast">Follow one bean</a>
     </div>
   </section>
 
-  <!-- 6.5 origin -->
-  <section class="section" id="craft" aria-labelledby="origin-title">
-    <div class="wrap split">
-      <div class="split__text">
-        <p class="tag">Origin</p>
-        <h2 id="origin-title">Green coffee, sorted by hand.</h2>
-        <p>Coffee is the seed of a cherry. Picked, washed and dried, it is green, dense and smells of fresh hay.</p>
-        <p>It is sorted by hand before it travels, because a handful of faulty beans can flatten a whole batch.</p>
-      </div>
-      <div class="split__photo">
-        <picture>
-          <source type="image/avif" sizes="(min-width: 1024px) calc(150vh - 288px), (min-width: 640px) 104vw, 100vw"
-            srcset="assets/img/origin-640.avif 640w, assets/img/origin-960.avif 960w, assets/img/origin-1280.avif 1280w, assets/img/origin-1920.avif 1920w, assets/img/origin-2560.avif 2560w">
-          <img src="assets/img/origin-1280.webp" sizes="(min-width: 1024px) calc(150vh - 288px), (min-width: 640px) 104vw, 100vw"
-            srcset="assets/img/origin-640.webp 640w, assets/img/origin-960.webp 960w, assets/img/origin-1280.webp 1280w, assets/img/origin-1920.webp 1920w, assets/img/origin-2560.webp 2560w"
-            width="4310" height="2875" alt="A hand lifting green coffee beans from a wide basket during sorting" loading="lazy" decoding="async">
-        </picture>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6.6 the roast path (ours): the 3D bean, restyled to the same cards, tags and type -->
-  <section class="roastpath" aria-labelledby="roast-title" data-roastpath>
+  <!-- the roast path (ours): the 3D bean, in the same cards, tags and type as the rest of the page -->
+  <section class="roastpath" id="roast" aria-labelledby="roast-title" data-roastpath>
     <div class="roastpath__stage">
       <div class="roastpath__bg roastpath__bg--green" aria-hidden="true"></div>
       <div class="roastpath__bg roastpath__bg--light" aria-hidden="true"></div>
@@ -165,7 +211,7 @@
         <div class="wrap"><div class="roastpath__card">
           <p class="tag">First crack · near 196&nbsp;°C</p>
           <h3>Light</h3>
-          <p>The bean dries, yellows, then cracks open with an audible pop. Stopped soon after, it keeps bright fruit and florals.</p>
+          <p>The bean dries, yellows, then cracks open with an audible pop. Stopped soon after, it keeps bright fruit and florals, like our Nyeri and Yirgacheffe.</p>
         </div></div>
       </div>
       <div class="roastpath__panel" data-roast-stage>
@@ -179,13 +225,13 @@
         <div class="wrap"><div class="roastpath__card">
           <p class="tag">Second crack · near 224&nbsp;°C</p>
           <h3>Dark</h3>
-          <p>Oils rise to the surface and the bean turns glossy, almost black. Cocoa, smoke and a bitter edge.</p>
+          <p>Oils rise to the surface and the bean turns glossy, almost black. Cocoa, smoke and a bitter edge. Our Cerrado stops just before this.</p>
         </div></div>
       </div>
     </div>
   </section>
 
-  <!-- 6.7 brew (Coffee Collective dark block): roast half with the recipe, photograph half -->
+  <!-- brew (Coffee Collective dark block): ink half with the recipe, photograph half -->
   <section class="block-split block-split--ink block-split--flip" id="brew" aria-labelledby="brew-title">
     <div class="block-split__photo">
       <picture>
@@ -194,19 +240,20 @@
       </picture>
     </div>
     <div class="block-split__body">
-      <p class="tag tag--on-colour">At home</p>
-      <h2 id="brew-title">A filter recipe.</h2>
-      <p>The last step is yours. Start here and adjust to taste.</p>
+      <p class="tag">Brew at home</p>
+      <h2 id="brew-title">A filter recipe to start from.</h2>
+      <p class="t-lede">The last step is yours. Start here and adjust to taste.</p>
       <ul class="arrows">
         <li>15&nbsp;g of coffee, ground for filter</li>
         <li>250&nbsp;g of water, just off the boil</li>
+        <li>Bloom with 40&nbsp;g for 30 seconds, then pour the rest slowly</li>
         <li>About 3 minutes, start to finish</li>
       </ul>
-      <p><a class="btn btn--outline" href="#shop">Shop the coffees</a></p>
+      <a class="btn btn--outline" href="#coffees">Choose a coffee</a>
     </div>
   </section>
 
-  <!-- 6.8 close (Canyon): a card over a still life -->
+  <!-- close (Canyon): a card over a still life -->
   <section class="photo-card" aria-labelledby="close-title">
     <div class="photo-card__photo">
       <picture>
@@ -216,40 +263,46 @@
     </div>
     <div class="wrap photo-card__wrap">
       <div class="photo-card__card">
-        <p class="tag">Dolce Nova</p>
-        <h2 id="close-title">Choose your coffee and how you brew it.</h2>
-        <a class="btn" href="#shop">Choose a coffee</a>
+        <p class="tag">Whole bean or ground</p>
+        <h2 id="close-title">Pick a coffee. We grind it for how you brew.</h2>
+        <a class="btn" href="#coffees">Shop the coffees</a>
       </div>
     </div>
   </section>
 </main>
 
-<!-- 6.9 footer: link columns, the demo line, the wordmark across the full width (both references) -->
+<!-- @footer -->
 <footer class="footer">
   <div class="wrap footer__wrap">
     <div class="footer__cols">
-      <nav aria-label="Shop">
-        <p class="tag">Shop</p>
-        <a href="#shop">The coffees</a>
-        <a href="#featured">Nyeri Gatomboya</a>
+      <nav aria-label="Coffees">
+        <p class="tag">Coffees</p>
+        <a href="coffee-cerrado.html">Cerrado Natural</a>
+        <a href="coffee-yirgacheffe.html">Yirgacheffe Konga</a>
+        <a href="coffee-nyeri.html">Nyeri Gatomboya</a>
+        <a href="coffee-huila.html">Huila La Plata</a>
+        <a href="coffee-huehuetenango.html">Huehuetenango</a>
+        <a href="coffee-decaf.html">Sugarcane Decaf</a>
       </nav>
       <nav aria-label="Craft">
         <p class="tag">Craft</p>
-        <a href="#craft">Origin</a>
-        <a href="#roast-title">Roast</a>
+        <a href="#origin">Origin</a>
+        <a href="#roast">Roast</a>
         <a href="#brew">Brew</a>
       </nav>
-      <div>
+      <div class="footer__about">
         <p class="tag">About</p>
         <p><strong>Demo shop.</strong> No payment is taken, nothing is shipped, and card details never leave your browser.</p>
         <p>Dolce Nova is a fictional roastery and a portfolio project.</p>
         <a href="credits.html">Photograph credits</a>
       </div>
     </div>
-    <p class="footer__mark" aria-hidden="true">Dolce Nova</p>
+    <p class="footer__mark" aria-hidden="true">Dolce Nov<span>a</span></p>
   </div>
 </footer>
+<!-- /@footer -->
 
+<!-- @drawer -->
 <div class="scrim" data-scrim hidden></div>
 <aside class="drawer" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1" hidden>
   <div class="drawer__head">
@@ -265,5 +318,6 @@
     <p class="drawer__note">Demo checkout. Nothing is charged.</p>
   </div>
 </aside>
+<!-- /@drawer -->
 </body>
 </html>

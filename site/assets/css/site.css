@@ -1,14 +1,17 @@
-/* Dolce Nova. Tokens are defined once here; see DESIGN.md. Only transform and opacity ever animate. */
+/* Dolce Nova. Tokens are defined once here; see DESIGN.md. Only transform and opacity ever animate.
+   2026-11-17 global redesign: the palette comes from the owner's bags (BRIEF.md), the layout from
+   Coffee Collective and Canyon Coffee (REDESIGN-GUIDE.md). */
 :root {
-  --c-ground: #f6f1e7;
-  --c-surface: #ebe3d4;
-  --c-ink: #2b241e;
-  --c-ink-soft: #6b5f53;
-  --c-line: #d6cbb8;
-  --c-accent: #a3472b;
+  --c-ground: #f7f5f0;      /* paper */
+  --c-surface: #ebe7df;     /* the tile under a bag, the footer */
+  --c-ink: #1b1b19;         /* the black of the bag photographs */
+  --c-ink-soft: #5f5a52;
+  --c-line: #d8d3c9;
+  --c-accent: #2f4a33;      /* the forest green of the Huila bag */
+  --c-ember: #9a6a3a;       /* the bags' gold, darkened: the 3D scene's glow only, never text or a ground */
 
-  --f-display: "EB Garamond", "EB Garamond Fallback", Georgia, serif;   /* REDESIGN-GUIDE D1 = B */
-  --f-text: "Figtree", "Figtree Fallback", Arial, sans-serif;
+  --f-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
+  --f-text: "Instrument Sans", "Instrument Sans Fallback", Arial, sans-serif;
   --fs-1: 13px; --fs-2: 16px; --fs-3: 20px; --fs-4: 25px; --fs-5: 31px;
   --fs-6: 39px; --fs-7: 49px; --fs-8: 61px; --fs-9: 76px;
 
@@ -20,12 +23,10 @@
   --padt: 96px;              /* section top: the header plus air */
   --padb: var(--s-6);
   --screen: 100lvh;          /* a phone section is a large-viewport screen; desktop uses svh */
-
-  /* split lines of the 12-column grid, as track sizes inside any full-width container */
   --col5: calc((100% - 11 * var(--g)) * 5 / 12 + 4 * var(--g));
 
   --r-0: 0; --r-1: 0; --r-pill: 999px;   /* square, like both references; pills only for chips */
-  --shadow: 0 24px 64px -24px rgb(43 36 30 / 0.35);
+  --shadow: 0 24px 64px -24px rgb(27 27 25 / 0.35);
 
   --d-1: 150ms; --d-2: 250ms; --d-3: 400ms; --d-4: 700ms;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -43,13 +44,13 @@ body {
 }
 img, picture { display: block; max-width: 100%; }
 img { height: auto; }
-h1, h2, h3 { margin: 0; font-family: var(--f-display); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
-/* light, large, few (both references): h1 39 / 49 / 61, h2 31 / 39 / 49, h3 25 / 25 / 31 */
-h1 { font-size: var(--fs-6); line-height: 1.05; }
-h2 { font-size: var(--fs-5); line-height: 1.1; }
-h3 { font-size: var(--fs-4); line-height: 1.15; }
-@media (min-width: 640px) { h1 { font-size: var(--fs-7); } h2 { font-size: var(--fs-6); } }
-@media (min-width: 1024px) { h1 { font-size: var(--fs-8); } h2 { font-size: var(--fs-7); } h3 { font-size: var(--fs-5); } }
+h1, h2, h3 { margin: 0; font-family: var(--f-display); font-weight: 400; letter-spacing: -0.01em; text-wrap: balance; }
+/* a narrow serif set large (Canyon's headlines, the bags' condensed names): h1 49 / 61 / 76, h2 39 / 49 / 61 */
+h1 { font-size: var(--fs-7); line-height: 1; }
+h2 { font-size: var(--fs-6); line-height: 1.05; }
+h3 { font-size: var(--fs-4); line-height: 1.1; }
+@media (min-width: 640px) { h1 { font-size: var(--fs-8); } h2 { font-size: var(--fs-7); } }
+@media (min-width: 1024px) { h1 { font-size: var(--fs-9); } h2 { font-size: var(--fs-8); } h3 { font-size: var(--fs-5); } }
 p, ul, ol, dl, dd, figure, fieldset { margin: 0; padding: 0; }
 p { text-wrap: pretty; }
 legend { padding: 0; }
@@ -59,66 +60,74 @@ a { color: inherit; }
 button, input { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: 0; padding: 0; text-align: inherit; }
 ::placeholder { color: var(--c-ink-soft); opacity: 1; }
-:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 [hidden] { display: none !important; }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .wrap { width: min(100% - 2 * var(--gutter), var(--max)); margin-inline: auto; }
-.skip-link { position: absolute; left: 0; top: var(--s-1); z-index: 50; padding: var(--s-1) var(--s-2); background: var(--c-ink); color: var(--c-ground); border-radius: var(--r-1); transform: translateY(-200%); }
+.skip-link { position: absolute; left: 0; top: var(--s-1); z-index: 50; padding: var(--s-1) var(--s-2); background: var(--c-ink); color: var(--c-ground); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
-body > .skip-link { left: var(--gutter); }
 
 /* ---------- type roles ---------- */
-.t-label { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; }
 .t-soft { color: var(--c-ink-soft); }
-.t-lede { font-size: var(--fs-3); line-height: 1.5; max-width: 34ch; }
+.t-lede { font-size: var(--fs-3); line-height: 1.5; max-width: 36ch; }
+/* the small uppercase tag (Coffee Collective): true facts only, from the catalog */
+.tag { font-size: var(--fs-1); line-height: 1.4; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--c-ink-soft); }
+.on-dark .tag, .tag--light { color: var(--c-line); }
 
 /* ---------- buttons and links ---------- */
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--s-1);
-  min-height: 48px; padding: 0 var(--s-3); border-radius: var(--r-1);
+  min-height: 48px; padding: 0 var(--s-4); border-radius: var(--r-1);
   background: var(--c-accent); color: var(--c-ground); font-size: var(--fs-1); font-weight: 500; line-height: 1.2; text-decoration: none;
-  text-transform: uppercase; letter-spacing: 0.06em;
+  text-transform: uppercase; letter-spacing: 0.08em;
   isolation: isolate; overflow: hidden; transition: transform var(--d-1) var(--ease);
 }
 .btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c-ink); opacity: 0; transition: opacity var(--d-1) var(--ease); }
 .btn:active { transform: scale(0.98); }
-@media (hover: hover) { .btn:hover::after { opacity: 0.16; } }
-.btn--ink { background: var(--c-ink); }
-.btn--ink::after { background: var(--c-ground); }
+@media (hover: hover) { .btn:hover::after { opacity: 0.24; } }
+.btn--light { background: var(--c-ground); color: var(--c-ink); }
 .btn--block { width: 100%; }
 /* Coffee Collective's outline button: a 1px line in the text colour, so it works on any ground */
 .btn--outline { background: transparent; color: inherit; border: 1px solid currentColor; }
 .btn--outline::after { background: currentColor; }
 @media (hover: hover) { .btn--outline:hover::after { opacity: 0.12; } }
-/* the small uppercase tag (Coffee Collective): true facts only, from the catalog or the brief */
-.tag { font-size: var(--fs-1); line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; color: var(--c-ink-soft); }
-.tag--on-colour { color: inherit; }   /* full strength: small text on terracotta needs all of its 5.34:1 */
 .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 .link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .link-arrow { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 48px; font-weight: 500; text-decoration: none; }
 .link-arrow span { display: inline-block; transition: transform var(--d-2) var(--ease); }
 @media (hover: hover) { .link-arrow:hover span { transform: translateX(4px); } }
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
 
-/* ---------- notice (utility pages) + header ---------- */
+/* ---------- notice (checkout pages) + header ---------- */
 .notice { background: var(--c-surface); color: var(--c-ink); font-size: var(--fs-1); height: 32px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 var(--s-2); white-space: nowrap; overflow: hidden; }
 .notice__long { display: none; }
 @media (min-width: 640px) { .notice__short { display: none; } .notice__long { display: inline; } }
-.header { position: sticky; top: 0; z-index: 20; background: var(--c-ground); }
+/* Coffee Collective's bar: links left, the wordmark centred, the cart right */
+/* the ground sits on a layer of its own, so it can fade (opacity) as the page scrolls past the hero */
+.header { position: sticky; top: 0; z-index: 20; isolation: isolate; color: var(--c-ink); }
 .header--fixed { position: fixed; left: 0; right: 0; }
+.header::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c-ground); opacity: 1; transition: opacity var(--d-2) var(--ease); }
 .header::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: var(--c-line); opacity: 0; transition: opacity var(--d-2) var(--ease); }
-.header.is-scrolled::after { opacity: 1; }
-.header__bar { position: relative; height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
-/* over the hero the bar is transparent (both references); it takes the ground once the page scrolls */
-.header--over:not(.is-scrolled) { background: transparent; color: var(--c-ground); }   /* over the hero's top scrim */
-.wordmark { font-family: var(--f-text); font-size: var(--fs-2); font-weight: 500; text-decoration: none; line-height: 1; display: inline-flex; align-items: center; min-height: 48px; }
-.menu { display: flex; align-items: center; gap: var(--s-3); }
-.nav__links { display: none; gap: var(--s-2); }
-.nav__links a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-1); text-decoration: none; position: relative; font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-.nav__links a::after { content: ""; position: absolute; left: var(--s-1); right: var(--s-1); bottom: 12px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--d-2) var(--ease); }
-@media (hover: hover) { .nav__links a:hover::after { transform: scaleX(1); } }
-@media (min-width: 640px) { .nav__links { display: flex; } }
-/* "Cart (0)" as quiet text (Canyon); the count still bumps */
-.cart-btn { display: inline-flex; align-items: center; min-height: 48px; min-width: 48px; padding: 0 var(--s-1); font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; transition: transform var(--d-1) var(--ease); }
+.header.is-scrolled::after, .header--solid::after { opacity: 1; }
+/* over the dark hero the bar is clear and its words are paper; it takes the ground once the page scrolls */
+/* the hero is ink under the bar, so the bar carries that ink itself: identical on screen, and focus rings are judged against what is really behind them */
+.header--over:not(.is-scrolled) { color: var(--c-ground); background-color: var(--c-ink); }
+.header--over:not(.is-scrolled)::before { opacity: 0; }
+.header__bar { position: relative; height: var(--header); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s-2); }
+.header__nav { display: flex; gap: var(--s-1); }
+.header__nav a, .header__end > a, .cart-btn {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-1); text-decoration: none; position: relative;
+  font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
+}
+.header__nav a:first-child { margin-left: calc(-1 * var(--s-1)); }
+.header__nav a:not(:first-child) { display: none; }
+.header__nav a::after { content: ""; position: absolute; left: var(--s-1); right: var(--s-1); bottom: 12px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--d-2) var(--ease); }
+@media (hover: hover) { .header__nav a:hover::after { transform: scaleX(1); } }
+@media (min-width: 640px) { .header__nav a:not(:first-child) { display: inline-flex; } }
+/* the bags' wordmark: the serif in spaced capitals */
+.wordmark { font-family: var(--f-display); font-size: var(--fs-3); letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; line-height: 1; display: inline-flex; align-items: center; min-height: 48px; white-space: nowrap; }
+.header__end { display: flex; justify-content: flex-end; }
+.cart-btn { min-width: 48px; margin-right: calc(-1 * var(--s-1)); transition: transform var(--d-1) var(--ease); }
 .cart-btn:active { transform: scale(0.96); }
 .cart-btn__count { display: inline-block; font-variant-numeric: tabular-nums; }
 .cart-btn__count.is-bump { animation: bump var(--d-2) var(--ease); }
@@ -126,32 +135,75 @@ body > .skip-link { left: var(--gutter); }
 
 /* ---------- sections: one or two screens each, content top-aligned under the fixed header ---------- */
 .section { min-height: calc(var(--h, 1) * var(--screen)); padding-block: var(--padt) var(--padb); }
-.section__head { display: grid; gap: var(--s-3); margin-bottom: var(--s-4); }
+.section__head { display: grid; gap: var(--s-2); margin-bottom: var(--s-4); }
 @media (min-width: 1024px) {
-  .section__head { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); align-items: start; margin-bottom: var(--s-8); }
+  .section__head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--g); align-items: end; margin-bottom: var(--s-6); }
+}
+.on-dark { background: var(--c-ink); color: var(--c-ground); }
+.on-dark :focus-visible { outline-color: var(--c-ground); }
+
+/* ---------- hero (Canyon): a bag as a dark still life, the words low on the left ---------- */
+.hero { position: relative; min-height: 100svh; display: grid; padding-block: var(--header) var(--s-3); overflow: hidden; }
+.hero__inner { display: grid; grid-template-rows: auto 1fr; gap: var(--s-3); }
+.hero__bag { margin-inline: calc(-1 * var(--gutter)); }
+/* the photograph's own black meets the page's ink: its edges fade into the ground */
+.hero__bag img { width: 100%; aspect-ratio: 1; -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+.hero__text { display: grid; gap: var(--s-2); justify-items: start; align-content: end; }
+.hero__notice { font-size: var(--fs-1); color: var(--c-line); }
+.hero h1 { max-width: 13ch; }
+.hero__lede { max-width: 38ch; color: var(--c-surface); }
+.hero .actions { padding-top: var(--s-1); }
+/* phones: the bag above, cut to its upper three quarters so the words and buttons stay on the first screen */
+@media (max-width: 639px) {
+  .hero .btn--outline { display: none; }   /* one button on a phone (Coffee Collective), so it sits above the fold */
+  .hero__bag { height: min(100vw, 100svh - 440px); overflow: hidden; }
+  .hero__bag img { -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent); }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero__bag { margin-inline: 0; justify-self: center; width: min(100%, 560px, 100svh - 520px); }
+  .hero__bag img { -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent); mask-image: radial-gradient(closest-side, #000 78%, transparent); }
+}
+@media (min-width: 1024px) {
+  .hero { padding-block: var(--header) var(--s-8); }
+  .hero__inner { grid-template-rows: none; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: end; }
+  .hero__text { grid-column: 1 / span 6; grid-row: 1; gap: var(--s-3); }
+  .hero__bag { grid-column: 7 / span 6; grid-row: 1; align-self: center; justify-self: end; margin: 0; width: min(100%, 640px, 100svh - var(--header) - 96px); }
+  .hero__bag img { -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent); mask-image: radial-gradient(closest-side, #000 78%, transparent); }
 }
 
-/* ---------- hero: a full-bleed photograph, the words small in the lower left (both references) ---------- */
-.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); color: var(--c-ground); }
-.hero__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }   /* light words stay legible if the photo fails */
-/* a top scrim under the transparent header, so its light words read on any part of the photograph */
-.hero__photo::before { content: ""; position: absolute; z-index: 1; inset: 0 0 auto; height: 160px; background: linear-gradient(to bottom, color-mix(in srgb, var(--c-ink) 64%, transparent), transparent); }
-.hero__photo picture { position: absolute; inset: 0; }
-.hero__photo picture.has-depth { inset: -12% 0 0 0; }
-.hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 55%; }
-/* a scrim only under the words (scroll-craft): roast, fading up from the bottom */
-.hero__photo::after { content: ""; position: absolute; inset: 22% 0 0 0; background: linear-gradient(to top, color-mix(in srgb, var(--c-ink) 80%, transparent) 45%, transparent); }
-@media (min-width: 1024px) { .hero__photo::after { inset: 40% 0 0 0; background: linear-gradient(to top, color-mix(in srgb, var(--c-ink) 72%, transparent), transparent); } }
-.hero__content { position: relative; display: grid; gap: var(--s-2); justify-items: start; }
-.hero__notice { font-size: var(--fs-1); font-weight: 500; letter-spacing: 0.02em; }
-.hero h1 { max-width: 14ch; }
-.hero__lede { max-width: 40ch; }
-.hero__cta { padding-top: var(--s-1); }
-@media (min-width: 1024px) { .hero { padding-bottom: var(--s-8); } .hero__content { gap: var(--s-3); } }
+/* ---------- the coffees: Canyon's bestseller carousel with Coffee Collective's tags ---------- */
+.coffees { container-type: inline-size; }
+.carousel { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); --slide: 76cqw; }
+@media (min-width: 640px) { .carousel { --slide: calc((100cqw - 2 * var(--edge) - 2 * var(--g)) / 2.4); } }
+@media (min-width: 1024px) { .carousel { --slide: calc((100cqw - 2 * var(--edge) - 3 * var(--g)) / 3.4); } }
+.carousel__track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: var(--slide); gap: var(--g);
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
+  padding-inline: var(--edge); scrollbar-width: none;
+}
+.carousel__track::-webkit-scrollbar { display: none; }
+.slide { scroll-snap-align: start; min-width: 0; }
+.slide__link { display: grid; gap: var(--s-1); text-decoration: none; }
+.slide__media { overflow: hidden; background: var(--c-ink); margin-bottom: var(--s-1); }
+.slide__media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform var(--d-4) var(--ease); }
+@media (hover: hover) { .slide__link:hover .slide__media img { transform: scale(1.03); } .slide__link:hover .slide__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } }
+.slide__link:focus-visible { outline-offset: 4px; }
+.slide__name { font-size: var(--fs-5); }
+.slide__notes { color: var(--c-ink-soft); }
+.slide__price { font-variant-numeric: tabular-nums; }
+.carousel__bar { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-3); }
+.carousel__progress { flex: 1; height: 1px; background: var(--c-line); overflow: hidden; }
+.carousel__progress span { display: block; height: 100%; background: var(--c-ink); transform-origin: left; transform: scaleX(var(--p, 0.3)); }
+.carousel__nav { display: flex; gap: var(--s-1); }
+.carousel__nav button { display: inline-grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--c-ink); border-radius: var(--r-pill); transition: transform var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }
+.carousel__nav button:active { transform: scale(0.94); }
+.carousel__nav button[disabled] { opacity: 0.3; cursor: default; }
+.carousel__nav svg { width: 16px; height: 16px; }
+html:not(.js) .carousel__nav { display: none; }
 
 /* ---------- manifesto (Canyon): one sentence set large, then a collage ---------- */
 .manifesto > .wrap { display: grid; gap: var(--s-6); }
-.statement { font-family: var(--f-display); font-size: var(--fs-4); line-height: 1.45; letter-spacing: -0.01em; max-width: 34ch; text-wrap: balance; }
+.statement { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1.2; max-width: 30ch; text-wrap: balance; }
 .collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); align-items: start; }
 .collage figure { position: relative; overflow: hidden; background: var(--c-surface); aspect-ratio: 4 / 5; }
 .collage picture { position: absolute; inset: 0; }
@@ -160,106 +212,122 @@ body > .skip-link { left: var(--gutter); }
 .collage__b { display: none; }
 @media (min-width: 1024px) {
   .manifesto > .wrap { gap: var(--s-8); }
-  .statement { font-size: var(--fs-5); text-align: center; justify-self: center; }
+  .statement { font-size: var(--fs-7); text-align: center; justify-self: center; max-width: 24ch; }
   .collage { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
   .collage .collage__a { grid-column: 1 / span 5; aspect-ratio: 3 / 2; }
   .collage .collage__b { display: block; grid-column: 6 / span 4; aspect-ratio: 4 / 3; margin-top: var(--s-12); }
   .collage .collage__c { grid-column: 10 / span 3; aspect-ratio: 1; margin-top: var(--s-6); }
 }
 
-/* ---------- splits: text left on the container line, picture right on the 5/12 line, top-aligned ---------- */
-.split { display: grid; gap: var(--s-4); align-items: start; }
-.split__text { display: grid; gap: var(--s-3); }
-.split__text p { font-size: var(--fs-3); line-height: 1.55; }
-.split__photo { position: relative; overflow: hidden; background: var(--c-surface); aspect-ratio: 4 / 3; }
-.split__photo picture { position: absolute; inset: 0; }
-.split__photo img { width: 100%; height: 100%; object-fit: cover; }
+/* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
+.block-split { display: grid; grid-template-rows: 50svh auto; color: var(--c-ground); container-type: inline-size; }
+.block-split--accent { background: var(--c-accent); }
+.block-split--ink { background: var(--c-ink); }
+.block-split :focus-visible { outline-color: var(--c-ground); }
+.block-split .tag { color: var(--c-line); }
+.block-split__photo { position: relative; overflow: hidden; }
+.block-split__photo picture { position: absolute; inset: 0; }
+.block-split__photo img { width: 100%; height: 100%; object-fit: cover; }
+.block-split__body { display: grid; align-content: start; justify-items: start; gap: var(--s-3); padding: var(--s-6) var(--gutter) var(--s-8); }
+.block-split__body p:not(.tag) { max-width: 40ch; }
+.block-split__body p.t-lede { font-size: var(--fs-3); }
 @media (min-width: 1024px) {
-  .split { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); }
-  .split__photo { aspect-ratio: auto; height: calc(100svh - var(--padt) - var(--padb) - var(--s-1)); }
+  .block-split { grid-template-rows: none; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+  .block-split__body { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); padding: var(--padt) var(--edge) var(--s-8) var(--s-8); }
+  .block-split--flip .block-split__body { padding-inline: var(--edge) var(--s-8); }
+  .block-split--flip .block-split__photo { order: 2; }
 }
+/* our own arrow, a small chevron (never Coffee Collective's glyph); a hanging indent */
+.arrows { display: grid; gap: var(--s-1); }
+.arrows li { position: relative; padding-left: var(--s-3); }
+.arrows li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
 
-/* ---------- shop list ---------- */
-.coffee { border-bottom: 1px solid var(--c-line); }
-.coffee__row { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: var(--s-2); align-items: center; padding-block: var(--s-2); }
-/* Coffee Collective's tile: the coffee's own roast texture on the oat ground */
-.coffee__thumb { grid-column: 1; grid-row: 1 / 3; width: 64px; aspect-ratio: 1; overflow: hidden; background: var(--c-surface); }
-.coffee__thumb img { width: 100%; height: 100%; object-fit: cover; }
-.coffee__name { font-size: var(--fs-4); }
-.coffee__toggle { font: inherit; letter-spacing: inherit; display: inline-flex; align-items: center; min-height: 48px; }
-.coffee__toggle:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; text-decoration: underline 2px var(--c-accent); text-underline-offset: 6px; }
-.coffee__toggle::after { content: ""; position: absolute; inset: 0; }   /* the whole row is the hit area */
-.coffee__name { grid-column: 2; grid-row: 1; }
-.coffee__meta { grid-column: 2 / 4; grid-row: 2; color: var(--c-ink-soft); font-size: var(--fs-1); }
-.coffee__meta .tag { color: var(--c-ink); margin-right: var(--s-1); }
-.coffee__price { grid-column: 3; grid-row: 1; color: var(--c-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.coffee__icon { display: none; }
-/* on the narrowest phones a long single-word name ("Huehuetenango") meets the price: the price goes under the meta */
-.coffees { container: coffees / inline-size; }
-@container coffees (max-width: 340px) {
-  .coffee__row { grid-template-rows: auto auto auto; }
-  .coffee__thumb { grid-row: 1 / 4; }
-  .coffee__price { grid-column: 2; grid-row: 3; }
-}
-@media (hover: hover) { .coffee__row:hover .coffee__toggle { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; } }
+/* ---------- a card over a still life (Canyon) ---------- */
+.photo-card { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); }
+.photo-card__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }
+.photo-card__photo picture { position: absolute; inset: 0; }
+.photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+.photo-card__wrap { position: relative; }
+.photo-card__card { display: grid; gap: var(--s-2); justify-items: start; padding: var(--s-4); background: var(--c-ground); }
+.photo-card__card h2 { font-size: var(--fs-6); }
+@media (min-width: 1024px) { .photo-card { padding-bottom: var(--s-8); } .photo-card__card { width: var(--col5); padding: var(--s-6); } .photo-card__card h2 { font-size: var(--fs-7); } }
+
+/* ---------- footer: link columns, then the wordmark across the full width (both references) ---------- */
+.footer { background: var(--c-surface); padding-block: var(--s-8); overflow: hidden; }
+.footer__wrap { container-type: inline-size; }
+.footer__cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4) var(--g); font-size: var(--fs-1); }
+.footer__cols > * { display: grid; align-content: start; gap: 0; }
+.footer__cols .tag { margin-bottom: var(--s-1); }
+.footer__cols a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.footer__about { grid-column: 1 / -1; gap: var(--s-1) !important; }
+@media (hover: hover) { .footer__cols a:hover { text-decoration: underline; text-underline-offset: 4px; } }
 @media (min-width: 1024px) {
-  .coffee__row { grid-template-columns: 96px minmax(0, 1fr) auto 16px; column-gap: var(--s-3); padding-block: var(--s-3); }
-  .coffee__thumb { width: 96px; }
-  .coffee__name { font-size: var(--fs-5); }
-  .coffee__meta { grid-column: 2 / 3; }
-  .coffee__icon { display: block; grid-column: 4; grid-row: 1 / 3; width: 16px; height: 16px; position: relative; }
-  .coffee__icon::before, .coffee__icon::after { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--c-ink); transition: transform var(--d-2) var(--ease); }
-  .coffee__icon::after { transform: rotate(90deg); }
-  .coffee__row:has([aria-expanded="true"]) .coffee__icon::after { transform: rotate(0deg); }
+  .footer__cols { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .footer__cols > :nth-child(1) { grid-column: 1 / span 3; }
+  .footer__cols > :nth-child(2) { grid-column: 4 / span 2; }
+  .footer__cols > .footer__about { grid-column: 8 / span 5; }
 }
-.coffee__panel { display: grid; gap: var(--s-4); padding-bottom: var(--s-4); transition: opacity var(--d-3) var(--ease), transform var(--d-3) var(--ease); }
-.js .coffee__panel.is-entering { opacity: 0; transform: translateY(8px); }
-@media (min-width: 1024px) { .coffee__panel { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); padding-bottom: var(--s-8); } }
+/* the one type moment: the bags' capitals across the container (R = the word's width at 1px, measured, see DESIGN.md) */
+/* measured 4.864 in WebKit and Chromium with 0.04em tracking after every letter; the last letter's tracking is
+   dropped (the span), so the word is 4.824 wide and ends on the right line under R = 4.84 */
+.footer__mark { --R: 4.84; font-family: var(--f-display); font-size: calc(100cqi / var(--R)); line-height: 0.9; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; margin-top: var(--s-12); }
+.footer__mark span { letter-spacing: 0; }
 
-.preview { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--c-surface); width: 100%; max-width: 480px; }
-@media (min-width: 640px) { .preview { aspect-ratio: 1; } }
-.preview picture { position: absolute; inset: 0; opacity: 0; transition: opacity var(--d-3) var(--ease); }
-.preview picture.is-on { opacity: 1; }
-.preview img { width: 100%; height: 100%; object-fit: cover; }
+/* ---------- product page (both references): the bag large, the choices beside it ---------- */
+.pdp { padding-top: calc(var(--header) + var(--s-4)); }
+.pdp__grid { display: grid; gap: var(--s-4); }
+.pdp__media { background: var(--c-ink); width: 100%; max-width: 640px; }
+.pdp__media img { width: 100%; aspect-ratio: 1; }
+.pdp__info { display: grid; gap: var(--s-3); align-content: start; }
+.crumbs { font-size: var(--fs-1); color: var(--c-ink-soft); }
+.crumbs a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+.pdp__head { display: grid; gap: var(--s-1); }
+.pdp__price { font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
+.pdp__notes { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1.15; }
+.facts { display: grid; grid-template-columns: max-content 1fr; column-gap: var(--s-3); border-top: 1px solid var(--c-line); }
+.facts dt, .facts dd { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
+.facts dt { color: var(--c-ink-soft); }
+@media (min-width: 1024px) {
+  .pdp__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: start; }
+  .pdp__media { grid-column: 1 / span 6; position: sticky; top: calc(var(--header) + var(--s-4)); }
+  .pdp__info { grid-column: 8 / span 5; }
+}
+.more { padding-block: var(--s-12); }
 
-.options { display: grid; gap: var(--s-2); align-content: start; }
-@media (min-width: 640px) { .options { gap: var(--s-3); } .chip { padding: 0 var(--s-3) 0 var(--s-2); } }
-.options__notes { font-size: var(--fs-3); line-height: 1.5; }
-.choice legend { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; margin-bottom: var(--s-2); }
+/* ---------- choices: grind and size ---------- */
+.options { display: grid; gap: var(--s-3); align-content: start; }
+.choice legend { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; margin-bottom: var(--s-1); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-1); }
 /* a pill label holding a real, visible radio dot: focus lands on the dot and nothing covers the text */
-.chip { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 48px; padding: 0 var(--s-2) 0 var(--s-1); border: 1px solid var(--c-ink-soft); border-radius: var(--r-pill); cursor: pointer; font-variant-numeric: tabular-nums; }
+.chip { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 48px; padding: 0 var(--s-2) 0 var(--s-2); border: 1px solid var(--c-ink-soft); border-radius: var(--r-pill); cursor: pointer; font-variant-numeric: tabular-nums; }
 .chip:has(input:checked) { background: var(--c-ink); border-color: var(--c-ink); color: var(--c-ground); }
 .chip input { -webkit-appearance: none; appearance: none; flex: none; width: 16px; height: 16px; margin: 0; border: 2px solid currentColor; border-radius: var(--r-pill); background: transparent; cursor: pointer; }
 .chip input:checked { background: currentColor; }
-.chip input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }  /* cream on a selected pill, roast on an open one */
+.chip input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .chip:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 2px; }
-.add { display: grid; gap: var(--s-2); }
-@media (min-width: 640px) { .add .btn { justify-self: start; min-width: 280px; } }
+.add { display: grid; gap: var(--s-1); }
 .add__status { min-height: 24px; font-size: var(--fs-1); }
 
 /* ---------- the roast path: a sticky 3D stage with five cards scrolling over it (ios-sticky-stage) ---------- */
 :root { --toolbar: calc(100lvh - 100svh); --panel: 100vh; }   /* a full screen per card: the previous card has left before the bean rests */
 @supports (height: 100lvh) { :root { --panel: 100lvh; } }
 @supports not (height: 100lvh) { :root { --toolbar: 0px; } }
-/* stage and cards share one grid cell: the cards scroll over the sticky stage without a negative margin */
 .roastpath { position: relative; display: grid; }
 .roastpath__stage, .roastpath__panels { grid-area: 1 / 1; }
 .roastpath__stage { position: sticky; top: 0; align-self: start; height: 100vh; height: 100lvh; overflow: hidden; }
 .roastpath__bg { position: absolute; inset: 0; opacity: 0; }
+/* paper to ink, the same walk as the bag colours in the carousel; the glow is the bags' gold */
 .roastpath__bg--green { opacity: 1; background: linear-gradient(180deg, var(--c-ground), var(--c-surface)); }
-.roastpath__bg--light { background: radial-gradient(60% 55% at 72% 50%, color-mix(in srgb, var(--c-accent) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
-.roastpath__bg--medium { background: radial-gradient(55% 50% at 72% 55%, color-mix(in srgb, var(--c-accent) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
-.roastpath__bg--dark { background: radial-gradient(50% 45% at 72% 60%, color-mix(in srgb, var(--c-accent) 55%, transparent), transparent 75%), var(--c-ink); }
+.roastpath__bg--light { background: radial-gradient(60% 55% at 72% 50%, color-mix(in srgb, var(--c-ember) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
+.roastpath__bg--medium { background: radial-gradient(55% 50% at 72% 55%, color-mix(in srgb, var(--c-ember) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
+.roastpath__bg--dark { background: radial-gradient(50% 45% at 72% 60%, color-mix(in srgb, var(--c-ember) 50%, transparent), transparent 75%), var(--c-ink); }
 @media (max-width: 1023px) {
-  .roastpath__bg--light { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
-  .roastpath__bg--medium { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
-  .roastpath__bg--dark { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-accent) 55%, transparent), transparent 75%), var(--c-ink); }
+  .roastpath__bg--light { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
+  .roastpath__bg--medium { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
+  .roastpath__bg--dark { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 50%, transparent), transparent 75%), var(--c-ink); }
 }
-.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; transition: opacity var(--d-4) var(--ease); }
+.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; }   /* shown at once when ready: no fade as it scrolls in */
 .roastpath__canvas.is-ready { opacity: 1; }
-
-/* without JavaScript or WebGL: the four real roast photographs, still */
 .roastpath__fallback { display: none; position: absolute; inset: var(--padt) 0 auto; left: 0; right: 0; }
 html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { display: grid; }
 .roastpath--fallback .roastpath__canvas { display: none; }
@@ -271,10 +339,8 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
   .roastpath__frames { grid-column: 2; }
 }
 @media (max-width: 1023px) { .roastpath__frames { width: min(100%, 40svh); } }
-
 .roastpath__panels { position: relative; pointer-events: none; }
-/* Cards are sticky inside their own panel (guide 8.2: no bare half screen): each holds its place until its
-   panel scrolls away, and the next card arrives directly behind it, so one card is always readable. */
+/* Cards are sticky inside their own panel (guide 8.2: no bare half screen) */
 .roastpath__panel { min-height: var(--panel); display: flex; align-items: flex-start; }
 .roastpath__panel > .wrap { width: min(100% - 2 * var(--gutter), var(--max)); position: sticky; top: 30vh; top: 30lvh; }
 .roastpath__panel--intro { min-height: 100vh; min-height: 100lvh; padding-top: var(--padt); }
@@ -282,64 +348,15 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 .roastpath__card { width: var(--col5); display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--c-ground); border-radius: var(--r-1); pointer-events: auto; }
 .roastpath__panel--intro .roastpath__card { padding: 0; background: none; gap: var(--s-3); }
 .roastpath__card p { font-size: var(--fs-3); line-height: 1.5; }
+.roastpath__card h3 { font-size: var(--fs-6); }
 @media (max-width: 1023px) {
-  /* the bean owns the upper half of the stage; the cards dock above Safari's toolbar */
-  /* a full screen per card on phones, so the previous card has left before the bean rests at the next stage */
   .roastpath__panel, .roastpath__panel--intro { align-items: flex-end; padding-top: 0; min-height: 100vh; min-height: 100lvh; }
   .roastpath__panel > .wrap, .roastpath__panel--intro > .wrap { top: auto; bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); margin-bottom: var(--s-3); }
   .roastpath__card, .roastpath__panel--intro .roastpath__card { width: 100%; padding: var(--s-3); background: var(--c-ground); gap: var(--s-1); }
   .roastpath__card p { font-size: var(--fs-2); }
-  .roastpath__panel--intro h2 { font-size: var(--fs-5); }
+  .roastpath__card h3 { font-size: var(--fs-5); }
+  .roastpath__panel--intro h2 { font-size: var(--fs-6); }
 }
-
-/* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
-.block-split { display: grid; grid-template-rows: 50svh auto; color: var(--c-ground); container-type: inline-size; }
-.block-split--accent { background: var(--c-accent); }
-.block-split--ink { background: var(--c-ink); }
-.block-split :focus-visible { outline-color: var(--c-ground); }   /* a ring that shows on every colour (3D guide 8.5) */
-.block-split__photo { position: relative; overflow: hidden; }
-.block-split__photo picture { position: absolute; inset: 0; }
-.block-split__photo img { width: 100%; height: 100%; object-fit: cover; }
-.block-split__body { display: grid; align-content: start; justify-items: start; gap: var(--s-3); padding: var(--s-6) var(--gutter) var(--s-8); }
-.block-split__body p:not(.tag) { max-width: 40ch; }
-@media (min-width: 1024px) {
-  .block-split { grid-template-rows: none; grid-template-columns: 1fr 1fr; min-height: 100svh; }
-  /* the outer edge of the text half sits on the page's .wrap line, like every other section */
-  .block-split__body { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); padding: var(--padt) var(--edge) var(--s-8) var(--s-8); }
-  .block-split--flip .block-split__body { padding-inline: var(--edge) var(--s-8); }
-  .block-split--flip .block-split__photo { order: 2; }
-}
-/* our own arrow, a small chevron (never Coffee Collective's glyph) */
-.arrows { display: grid; gap: var(--s-1); }
-/* a hanging indent: wrapped lines align with the first word (the gate's off-grid finding here is accepted, QA.md) */
-.arrows li { position: relative; padding-left: var(--s-3); }
-.arrows li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
-
-/* ---------- a card over a still life (Canyon) ---------- */
-.photo-card { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); }
-.photo-card__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }
-.photo-card__photo picture { position: absolute; inset: 0; }
-.photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
-.photo-card__wrap { position: relative; }
-.photo-card__card { display: grid; gap: var(--s-2); justify-items: start; padding: var(--s-4); background: var(--c-ground); }
-.photo-card__card h2 { font-size: var(--fs-5); }
-@media (min-width: 1024px) { .photo-card { padding-bottom: var(--s-8); } .photo-card__card { width: var(--col5); } .photo-card__card h2 { font-size: var(--fs-6); } }
-
-/* ---------- footer: link columns, then the wordmark across the full width (both references) ---------- */
-.footer { background: var(--c-surface); padding-block: var(--s-8); overflow: hidden; }   /* room below for the wordmark's whole font box */
-.footer__wrap { container-type: inline-size; }
-.footer__cols { display: grid; gap: var(--s-4); font-size: var(--fs-1); }
-.footer__cols > * { display: grid; align-content: start; gap: var(--s-1); }
-.footer__cols a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
-@media (hover: hover) { .footer__cols a:hover { text-decoration: underline; text-underline-offset: 4px; } }
-@media (min-width: 1024px) {
-  .footer__cols { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
-  .footer__cols > :nth-child(1) { grid-column: 1 / span 5; }
-  .footer__cols > :nth-child(2) { grid-column: 6 / span 2; }
-  .footer__cols > :nth-child(3) { grid-column: 8 / span 5; }
-}
-/* the one type moment: sized to the container width (R = the word's width at 1px, measured, see DESIGN.md) */
-.footer__mark { --R: 4.26; font-family: var(--f-display); font-size: calc(100cqi / var(--R)); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-top: var(--s-8); }
 
 /* ---------- cart drawer ---------- */
 .scrim { position: fixed; inset: 0; z-index: 30; background: var(--c-ink); opacity: 0; transition: opacity var(--d-3) var(--ease); }
@@ -351,15 +368,15 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 }
 .drawer.is-open { transform: none; }
 .drawer__head { display: flex; align-items: center; justify-content: space-between; padding: var(--s-2) var(--s-3); border-bottom: 1px solid var(--c-line); }
-.drawer__head h2 { font-size: var(--fs-4); }
+.drawer__head h2 { font-size: var(--fs-5); }
 .icon-btn { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: var(--r-pill); transition: transform var(--d-1) var(--ease); }
 .icon-btn:active { transform: scale(0.92); }
 .icon-btn svg { width: 20px; height: 20px; }
 .drawer__body { overflow-y: auto; overscroll-behavior: contain; padding: var(--s-1) var(--s-3); }
 .drawer__empty { padding: var(--s-6) 0; display: grid; gap: var(--s-3); justify-items: start; }
 .line { display: grid; grid-template-columns: 64px 1fr auto; gap: var(--s-2); padding: var(--s-2) 0; border-bottom: 1px solid var(--c-line); align-items: start; }
-.line img { width: 64px; height: 64px; object-fit: cover; }
-.line__name { font-family: var(--f-display); font-size: var(--fs-3); line-height: 1.2; }
+.line img { width: 64px; height: 80px; object-fit: cover; }
+.line__name { font-family: var(--f-display); font-size: var(--fs-4); line-height: 1.1; }
 .line__meta { color: var(--c-ink-soft); font-size: var(--fs-1); }
 .line__price { font-variant-numeric: tabular-nums; text-align: right; }
 .qty { display: inline-flex; align-items: center; gap: var(--s-1); margin-top: var(--s-1); }
@@ -372,7 +389,9 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 .lock { position: fixed; left: 0; right: 0; overflow: hidden; }
 
 /* ---------- checkout, success and credits pages ---------- */
-.page { padding-block: var(--s-8) var(--s-12); }
+.page { padding-block: calc(var(--header) + var(--s-6)) var(--s-12); }
+.notice + .header--fixed { top: 32px; }
+.notice + .header--fixed + .page { padding-top: calc(32px + var(--header) + var(--s-6)); }
 .checkout { display: grid; gap: var(--s-8); margin-top: var(--s-6); }
 .checkout > * { min-width: 0; }
 @media (min-width: 1024px) { .checkout { grid-template-columns: 7fr 5fr; gap: var(--s-12); align-items: start; } }
@@ -388,24 +407,24 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
   background: var(--c-ground); font-size: var(--fs-2); font-variant-numeric: tabular-nums;
 }
 .field input:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 0; border-color: var(--c-accent); }
-.field input[aria-invalid="true"] { border-color: var(--c-accent); }
-.field__error { color: var(--c-accent); font-size: var(--fs-1); min-height: 16px; }
+.field input[aria-invalid="true"] { border-color: var(--c-ink); border-width: 2px; }
+.field__error { color: var(--c-ink); font-size: var(--fs-1); font-weight: 500; min-height: 16px; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
 .row-2 > *, .field input { min-width: 0; width: 100%; }
 .summary { display: grid; gap: var(--s-2); padding: var(--s-3); border: 1px solid var(--c-line); border-radius: var(--r-1); }
-.summary h2 { font-size: var(--fs-4); }
+.summary h2 { font-size: var(--fs-5); }
 .summary__line { display: grid; grid-template-columns: 1fr auto; gap: var(--s-2); padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 .summary__total { display: flex; justify-content: space-between; font-size: var(--fs-3); padding-top: var(--s-1); font-variant-numeric: tabular-nums; }
 .done { display: grid; gap: var(--s-3); max-width: 640px; }
 .credits li { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 
-/* ---------- motion: load sequence and scroll reveals (never under reduced motion) ---------- */
+/* ---------- motion: the hero's one entrance (never under reduced motion) ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-enter]:not(section) { animation: rise var(--d-4) var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms + 80ms); }
-  .js .hero__photo img { animation: settle var(--d-4) var(--ease) both; }
+  .js .hero__bag img { animation: settle 1200ms var(--ease) both; }
 }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
-@keyframes settle { from { transform: scale(1.06); } }
+@keyframes settle { from { transform: scale(1.04); } }   /* transform only: the bag is the LCP image, never hidden */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; animation-delay: 0ms !important; }
 }

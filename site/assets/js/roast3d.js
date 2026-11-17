@@ -150,7 +150,7 @@ export async function mount(section) {
   const world = new THREE.Group(); scene.add(world);
 
   // lights: a key that warms with the roast, a rim that turns to ember, a soft sky fill
-  const hemi = new THREE.HemisphereLight(0xfff6ea, 0x2b241e, 0.5); scene.add(hemi);
+  const hemi = new THREE.HemisphereLight(0xfff6ea, 0x1b1b19, 0.5); scene.add(hemi);
   const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(-3, 4, 5); scene.add(key);
   const rim = new THREE.DirectionalLight(0xffffff, 1); rim.position.set(4, 1.5, -4); scene.add(rim);
 
@@ -158,8 +158,8 @@ export async function mount(section) {
   const curve = new THREE.CatmullRomCurve3(PATH.map((q) => new THREE.Vector3(...q)), false, 'centripetal');
   const TUBE_SEG = 360, RAD_SEG = 8;
   const tubeGeo = new THREE.TubeGeometry(curve, TUBE_SEG, 0.011, RAD_SEG, false);
-  const ghost = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: 0xa3472b, transparent: true, opacity: 0.22, depthWrite: false }));
-  const trail = new THREE.Mesh(tubeGeo.clone(), new THREE.MeshBasicMaterial({ color: 0xa3472b }));
+  const ghost = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: 0x9a6a3a, transparent: true, opacity: 0.28, depthWrite: false }));
+  const trail = new THREE.Mesh(tubeGeo.clone(), new THREE.MeshBasicMaterial({ color: 0x9a6a3a }));
   world.add(ghost, trail);
   const markerGeo = new THREE.SphereGeometry(0.045, 24, 16);
   const markers = STAGES.map((s, k) => {
@@ -186,7 +186,7 @@ export async function mount(section) {
   await yieldTask();
 
   // chaff in the air at several depths (parallax only from the desktop camera's follow, never on touch)
-  const SPECKS = 70, speckMat = new THREE.MeshBasicMaterial({ color: 0xd6cbb8, transparent: true, opacity: 0.55, depthWrite: false, side: THREE.DoubleSide });
+  const SPECKS = 70, speckMat = new THREE.MeshBasicMaterial({ color: 0xd8d3c9, transparent: true, opacity: 0.55, depthWrite: false, side: THREE.DoubleSide });
   const specks = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.03, 0.018), speckMat, SPECKS);
   const m4 = new THREE.Matrix4(), qn = new THREE.Quaternion(), e = new THREE.Euler();
   for (let k = 0; k < SPECKS; k++) {
@@ -198,7 +198,7 @@ export async function mount(section) {
   world.add(specks);
 
   // smoke at second crack
-  const puffMat = new THREE.SpriteMaterial({ map: puffTexture(), color: 0xe9e2d6, transparent: true, opacity: 0, depthWrite: false });
+  const puffMat = new THREE.SpriteMaterial({ map: puffTexture(), color: 0xebe7df, transparent: true, opacity: 0, depthWrite: false });
   const puffs = Array.from({ length: 6 }, () => { const s = new THREE.Sprite(puffMat); world.add(s); return s; });
 
   // environment for reflections, without the PMREM main-thread stall

@@ -1,4 +1,4 @@
-// Motion: header state, smooth in-page links, hero depth on fine pointers, and loading the roast path.
+// Motion: header state, smooth in-page links, and loading the roast path.
 // (Scroll reveals were removed on 2026-11-17, the owner's decision D3 in REDESIGN-GUIDE.md.)
 // Every effect writes only opacity or transform. Nothing here runs under prefers-reduced-motion.
 const motionOK = () => matchMedia('(prefers-reduced-motion: no-preference)').matches;
@@ -24,28 +24,6 @@ export function mountHeader() {
   update();
 }
 
-/** A scroll-driven loop that only runs while its element is on screen. */
-function whileVisible(el, frame) {
-  let on = false, queued = false;
-  const tick = () => { queued = false; frame(); };
-  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(tick); } };
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting && !on) { on = true; addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onScroll, { passive: true }); onScroll(); }
-    if (!e.isIntersecting && on) { on = false; removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); frame(); }
-  }).observe(el);
-}
-
-export function mountHeroDepth() {
-  if (!motionOK() || !matchMedia('(hover: hover) and (pointer: fine)').matches) return; // never on touch
-  const hero = document.querySelector('.hero');
-  const pic = hero && hero.querySelector('.hero__photo picture');
-  if (!pic) return;
-  pic.classList.add('has-depth');
-  whileVisible(hero, () => {
-    const y = Math.min(Math.max(window.scrollY, 0), hero.offsetHeight);
-    pic.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`;
-  });
-}
 
 /** The roast path: load three.js and the 3D bean only when the section is about a screen and a half away,
  * so the first screen never pays for it. Any failure (no WebGL, no import maps) shows the photo fallback. */

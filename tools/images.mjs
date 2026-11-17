@@ -11,8 +11,6 @@ const src = JSON.parse(readFileSync('assets-src/sources.json', 'utf8'));
 
 // crop: [x, y, w, h] in original pixels; omitted = full frame.
 export const IMAGES = [
-  { name: 'hero', src: 'c69', widths: [640, 960, 1280, 1920, 2560, 3456],
-    alt: 'Green, unroasted coffee beans spilling from an open burlap sack onto a wooden floor' },
   { name: 'origin', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
     alt: 'A hand lifting green coffee beans from a wide basket during sorting' },
   { name: 'brew', src: 'c96', widths: [640, 960, 1280, 1920, 2560],
@@ -26,18 +24,7 @@ export const IMAGES = [
     alt: 'Medium roasted coffee beans, even chestnut brown' },
   { name: 'roast-dark', src: 'f125379393', crop: [900, 1520, 840, 840], widths: [420, 640, 840],
     alt: 'Dark roasted coffee beans with an oily sheen' },
-  // Shop textures: whole bean per roast (the other Alorin shot, so nothing repeats), espresso and filter grinds.
-  { name: 'bean-light', src: 'f125379394', crop: [2582, 930, 780, 780], widths: [420, 640, 780],
-    alt: 'Whole light roasted coffee beans' },
-  { name: 'bean-medium', src: 'f125379394', crop: [3400, 2380, 840, 840], widths: [420, 640, 840],
-    alt: 'Whole medium roasted coffee beans' },
-  { name: 'bean-dark', src: 'f125379394', crop: [1668, 2340, 840, 840], widths: [420, 640, 840],
-    alt: 'Whole dark roasted coffee beans' },
-  { name: 'grind-espresso', src: 'f197293151', crop: [880, 2150, 900, 900], widths: [420, 640, 840],
-    alt: 'Fine espresso grind, soft as cocoa powder' },
-  // redesign (REDESIGN-GUIDE.md section 7): featured coffee, closing card, collage
-  { name: 'featured', src: 'c75', widths: [640, 960, 1280, 1920, 2560],
-    alt: 'A spoonful of freshly roasted coffee beans lifted over a basket full of beans' },
+  // closing card and collage
   { name: 'close', src: 'm61713103', widths: [640, 960, 1280, 1920, 2560, 3200],
     alt: 'Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light' },
   { name: 'col-trier', src: 'm147143894', widths: [480, 720, 960, 1280],
@@ -46,9 +33,29 @@ export const IMAGES = [
     alt: 'Roasted beans turning in the cooling tray under the stirring arm' },
   { name: 'col-beans', src: 'c65', widths: [480, 720, 960, 1280],
     alt: 'Glossy roasted coffee beans filling the frame' },
-  { name: 'grind-filter', src: 'f56710941', crop: [1120, 750, 1000, 1000], widths: [420, 640, 840, 1000],
-    alt: 'Medium filter grind, like coarse sand' },
+  // The owner's bag renders (dolce_nova_coffee_blends.zip, extracted to assets-src/blends/): a 4:5 crop around the
+  // bag for the carousel, the whole square for product pages and the hero.
+  ...BAGS(),
 ];
+
+function BAGS() {
+  const files = { cerrado: '03_Cerrado_Natural_Lion_Emblem', yirgacheffe: '04_Yirgacheffe_Konga', nyeri: '05_Nyeri_Gatomboya',
+    huila: '07_Huila_La_Plata_Forest_Green', huehuetenango: '08_Huehuetenango_Navy_Gold', decaf: '09_Sugarcane_Decaf_Burgundy_Gold' };
+  const looks = { cerrado: 'white, with gold line engraving and a lion emblem, on a black ground',
+    yirgacheffe: 'kraft paper, with gold engraving of a hillside farm, on a dark teal ground',
+    nyeri: 'terracotta, with navy engraving of a village and coffee branches, on a dark teal ground',
+    huila: 'forest green, with copper engraving and a lion emblem, on a brown ground',
+    huehuetenango: 'navy, with gold engraving of mountains and a village, on a dark grey ground',
+    decaf: 'burgundy, with gold engraving and a lion emblem, on a dark grey ground' };
+  const names = { cerrado: 'Cerrado Natural', yirgacheffe: 'Yirgacheffe Konga', nyeri: 'Nyeri Gatomboya',
+    huila: 'Huila La Plata', huehuetenango: 'Huehuetenango', decaf: 'Sugarcane Decaf' };
+  return Object.entries(files).flatMap(([id, f]) => {
+    const alt = `A 340 g bag of Dolce Nova ${names[id]}: ${looks[id]}`;
+    const own = { file: `assets-src/blends/${f}.png`, owner: true, alt };
+    return [{ name: `bag-${id}`, ...own, crop: [132, 40, 760, 950], widths: [240, 480, 760] },
+      { name: `bag-${id}-sq`, ...own, widths: [640, 1024] }];
+  });
+}
 
 function encode(input, crop, width, out, codec) {
   const vf = [crop ? `crop=${crop[2]}:${crop[3]}:${crop[0]}:${crop[1]}` : null, `scale=${width}:-2:flags=lanczos`]
@@ -65,14 +72,16 @@ const manifestPath = `${OUT}/manifest.json`;
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : {};
 for (const img of IMAGES) {
   if (only.length && !only.includes(img.name)) continue;
-  const s = src[img.src];
+  const s = img.owner ? { width: 1024, height: 1024, by: 'Dolce Nova (the owner)', licence: 'supplied by the owner for this site' } : src[img.src];
   const [cw, ch] = img.crop ? [img.crop[2], img.crop[3]] : [s.width, s.height];
   const widths = img.widths.filter((w) => w <= cw);
   for (const w of widths) {
-    for (const codec of ['avif', 'webp']) encode(`assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec);
+    for (const codec of ['avif', 'webp']) encode(img.file || `assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec);
   }
-  manifest[img.name] = { widths, ratio: [cw, ch], alt: img.alt, source: img.src,
+  manifest[img.name] = { widths, ratio: [cw, ch], alt: img.alt, source: img.src || 'owner-bags', owner: !!img.owner,
     by: s.by, licence: s.licence, licenceUrl: s.licenceUrl, page: s.page, cropped: !!img.crop };
   console.log(img.name, widths.join(','));
 }
+// entries for images no longer in the list are dropped, so the manifest and credits never list unused photographs
+for (const k of Object.keys(manifest)) if (!IMAGES.some((i) => i.name === k)) delete manifest[k];
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));

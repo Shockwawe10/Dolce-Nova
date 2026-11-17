@@ -1,14 +1,17 @@
-// Home page entry: load data, build the shop, wire the drawer and motion.
+// Entry for the home page and the product pages: header, carousels, the roast path (home only),
+// the product form (product pages only) and the cart drawer.
 import { load } from './store.js';
-import { mountShop } from './shop.js';
 import { mountDrawer } from './drawer.js';
-import { mountHeader, mountHeroDepth, mountRoastPath, mountAnchors } from './motion.js';
+import { mountCarousels } from './carousel.js';
+import { mountProduct } from './product.js';
+import { mountHeader, mountRoastPath, mountAnchors } from './motion.js';
 
 mountHeader();
 mountAnchors();
-mountHeroDepth();
+mountCarousels();
 mountRoastPath();
 
 const { catalog, manifest } = await load();
-mountShop(document.querySelector('[data-coffees]'), catalog, manifest);
+const product = document.querySelector('[data-product]');
+if (product) mountProduct(product, catalog);
 mountDrawer(catalog, manifest);

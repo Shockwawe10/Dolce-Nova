@@ -6,23 +6,27 @@
 <title>Checkout · Dolce Nova</title>
 <meta name="description" content="Demo checkout for the Dolce Nova coffee shop. No payment is taken and card details never leave the browser.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#f6f1e7">
+<meta name="theme-color" content="#f7f5f0">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/eb-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <script>document.documentElement.classList.add('js')</script>
 <script type="module" src="assets/js/checkout.js"></script>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
 <p class="notice" role="note"><span class="notice__short">Demo checkout. Nothing is charged.</span><span class="notice__long">Demo checkout. No payment is taken and no card details leave your browser.</span></p>
-<header class="header">
+<!-- @header -->
+<header class="header header--fixed header--solid" id="top">
   <div class="wrap header__bar">
-    <a class="wordmark" href="./">Dolce Nova</a>
-    <a class="link-arrow" href="./#shop"><span aria-hidden="true">←</span> Back to the shop</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <nav class="header__nav" aria-label="Main"><a href="./#coffees">Coffees</a><a href="./#roast">Roast</a><a href="./#brew">Brew</a></nav>
+    <a class="wordmark" href="./" aria-label="Dolce Nova, home">Dolce Nova</a>
+    <div class="header__end"><a href="./#coffees">Back to the coffees</a>
+    </div>
   </div>
 </header>
+<!-- /@header -->
 
 <main id="main" class="page">
   <div class="wrap">

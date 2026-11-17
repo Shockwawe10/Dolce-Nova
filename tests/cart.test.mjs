@@ -7,13 +7,13 @@ import { luhn, checkCard } from '../site/assets/js/card.js';
 
 const catalog = JSON.parse(readFileSync(new URL('../site/data/catalog.json', import.meta.url)));
 // An independent statement of the prices, typed by hand: if the catalog drifts, the random test fails.
-const PRICES = { yirgacheffe: [1450, 4900], nyeri: [1650, 5600], huila: [1250, 4200], huehuetenango: [1300, 4400], decaf: [1350, 4500], cerrado: [1150, 3800] };
+const PRICES = { yirgacheffe: [1950, 4900], nyeri: [2250, 5600], huila: [1700, 4200], huehuetenango: [1750, 4400], decaf: [1850, 4500], cerrado: [1550, 3800] };
 
 test('adding the same variant twice merges into one line', () => {
-  let c = add([], { id: 'huila', size: '250g', grind: 'filter' });
-  c = add(c, { id: 'huila', size: '250g', grind: 'filter' });
-  assert.deepEqual(c, [{ id: 'huila', size: '250g', grind: 'filter', qty: 2 }]);
-  c = add(c, { id: 'huila', size: '250g', grind: 'whole' });
+  let c = add([], { id: 'huila', size: '340g', grind: 'filter' });
+  c = add(c, { id: 'huila', size: '340g', grind: 'filter' });
+  assert.deepEqual(c, [{ id: 'huila', size: '340g', grind: 'filter', qty: 2 }]);
+  c = add(c, { id: 'huila', size: '340g', grind: 'whole' });
   assert.equal(c.length, 2);
 });
 
@@ -37,9 +37,9 @@ test('50 random carts: totals match an independent cents recomputation', () => {
     const lines = 1 + rnd(6);
     for (let j = 0; j < lines; j++) {
       const id = ids[rnd(ids.length)], sizeIx = rnd(2), grind = ['whole', 'espresso', 'filter'][rnd(3)], q = 1 + rnd(3);
-      for (let k = 0; k < q; k++) c = add(c, { id, size: ['250g', '1kg'][sizeIx], grind });
+      for (let k = 0; k < q; k++) c = add(c, { id, size: ['340g', '1kg'][sizeIx], grind });
     }
-    for (const l of c) expected += PRICES[l.id][l.size === '250g' ? 0 : 1] * l.qty;
+    for (const l of c) expected += PRICES[l.id][l.size === '340g' ? 0 : 1] * l.qty;
     const t = totals(c, catalog);
     assert.equal(t.totalCents, expected, `cart ${i}`);
     assert.ok(Number.isInteger(t.totalCents));
@@ -49,14 +49,14 @@ test('50 random carts: totals match an independent cents recomputation', () => {
 
 test('stored carts are re-validated: unknown ids, sizes, grinds and bad quantities are dropped', () => {
   const raw = JSON.stringify([
-    { id: 'huila', size: '250g', grind: 'filter', qty: 2, price: 1 },
-    { id: 'nope', size: '250g', grind: 'filter', qty: 1 },
+    { id: 'huila', size: '340g', grind: 'filter', qty: 2, price: 1 },
+    { id: 'nope', size: '340g', grind: 'filter', qty: 1 },
     { id: 'huila', size: '5kg', grind: 'filter', qty: 1 },
-    { id: 'huila', size: '250g', grind: 'cafetiere', qty: 1 },
-    { id: 'huila', size: '250g', grind: 'whole', qty: 1.5 },
-    { id: 'huila', size: '250g', grind: 'espresso', qty: true },
+    { id: 'huila', size: '340g', grind: 'cafetiere', qty: 1 },
+    { id: 'huila', size: '340g', grind: 'whole', qty: 1.5 },
+    { id: 'huila', size: '340g', grind: 'espresso', qty: true },
   ]);
-  assert.deepEqual(parseCart(raw, catalog), [{ id: 'huila', size: '250g', grind: 'filter', qty: 2 }]);
+  assert.deepEqual(parseCart(raw, catalog), [{ id: 'huila', size: '340g', grind: 'filter', qty: 2 }]);
   assert.deepEqual(parseCart('not json', catalog), []);
   assert.deepEqual(parseCart('{"a":1}', catalog), []);
   assert.deepEqual(parseCart(null, catalog), []);
