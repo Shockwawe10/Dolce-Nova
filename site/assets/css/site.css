@@ -7,7 +7,7 @@
   --c-line: #d6cbb8;
   --c-accent: #a3472b;
 
-  --f-display: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  --f-display: "EB Garamond", "EB Garamond Fallback", Georgia, serif;   /* REDESIGN-GUIDE D1 = B */
   --f-text: "Figtree", "Figtree Fallback", Arial, sans-serif;
   --fs-1: 13px; --fs-2: 16px; --fs-3: 20px; --fs-4: 25px; --fs-5: 31px;
   --fs-6: 39px; --fs-7: 49px; --fs-8: 61px; --fs-9: 76px;
@@ -24,7 +24,7 @@
   /* split lines of the 12-column grid, as track sizes inside any full-width container */
   --col5: calc((100% - 11 * var(--g)) * 5 / 12 + 4 * var(--g));
 
-  --r-0: 0; --r-1: 4px; --r-pill: 999px;
+  --r-0: 0; --r-1: 0; --r-pill: 999px;   /* square, like both references; pills only for chips */
   --shadow: 0 24px 64px -24px rgb(43 36 30 / 0.35);
 
   --d-1: 150ms; --d-2: 250ms; --d-3: 400ms; --d-4: 700ms;
@@ -44,11 +44,12 @@ body {
 img, picture { display: block; max-width: 100%; }
 img { height: auto; }
 h1, h2, h3 { margin: 0; font-family: var(--f-display); font-weight: 400; letter-spacing: -0.02em; text-wrap: balance; }
-h1 { font-size: var(--fs-7); line-height: 1.05; }
-h2 { font-size: var(--fs-6); line-height: 1.1; }
+/* light, large, few (both references): h1 39 / 49 / 61, h2 31 / 39 / 49, h3 25 / 25 / 31 */
+h1 { font-size: var(--fs-6); line-height: 1.05; }
+h2 { font-size: var(--fs-5); line-height: 1.1; }
 h3 { font-size: var(--fs-4); line-height: 1.15; }
-@media (min-width: 640px) { h1 { font-size: var(--fs-8); } h2 { font-size: var(--fs-7); } }
-@media (min-width: 1024px) { h1 { font-size: var(--fs-9); } h2 { font-size: var(--fs-8); } h3 { font-size: var(--fs-5); } }
+@media (min-width: 640px) { h1 { font-size: var(--fs-7); } h2 { font-size: var(--fs-6); } }
+@media (min-width: 1024px) { h1 { font-size: var(--fs-8); } h2 { font-size: var(--fs-7); } h3 { font-size: var(--fs-5); } }
 p, ul, ol, dl, dd, figure, fieldset { margin: 0; padding: 0; }
 p { text-wrap: pretty; }
 legend { padding: 0; }
@@ -74,8 +75,9 @@ body > .skip-link { left: var(--gutter); }
 /* ---------- buttons and links ---------- */
 .btn {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--s-1);
-  min-height: 56px; padding: 0 var(--s-4); border-radius: var(--r-1);
-  background: var(--c-accent); color: var(--c-ground); font-size: var(--fs-2); font-weight: 500; line-height: 1.2; text-decoration: none;
+  min-height: 48px; padding: 0 var(--s-3); border-radius: var(--r-1);
+  background: var(--c-accent); color: var(--c-ground); font-size: var(--fs-1); font-weight: 500; line-height: 1.2; text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.06em;
   isolation: isolate; overflow: hidden; transition: transform var(--d-1) var(--ease);
 }
 .btn::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c-ink); opacity: 0; transition: opacity var(--d-1) var(--ease); }
@@ -84,6 +86,13 @@ body > .skip-link { left: var(--gutter); }
 .btn--ink { background: var(--c-ink); }
 .btn--ink::after { background: var(--c-ground); }
 .btn--block { width: 100%; }
+/* Coffee Collective's outline button: a 1px line in the text colour, so it works on any ground */
+.btn--outline { background: transparent; color: inherit; border: 1px solid currentColor; }
+.btn--outline::after { background: currentColor; }
+@media (hover: hover) { .btn--outline:hover::after { opacity: 0.12; } }
+/* the small uppercase tag (Coffee Collective): true facts only, from the catalog or the brief */
+.tag { font-size: var(--fs-1); line-height: 1.4; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; color: var(--c-ink-soft); }
+.tag--on-colour { color: inherit; }   /* full strength: small text on terracotta needs all of its 5.34:1 */
 .btn[disabled] { opacity: 0.5; cursor: not-allowed; }
 .link { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .link-arrow { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 48px; font-weight: 500; text-decoration: none; }
@@ -99,16 +108,19 @@ body > .skip-link { left: var(--gutter); }
 .header::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: var(--c-line); opacity: 0; transition: opacity var(--d-2) var(--ease); }
 .header.is-scrolled::after { opacity: 1; }
 .header__bar { position: relative; height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
-.wordmark { font-family: var(--f-display); font-size: var(--fs-4); letter-spacing: -0.02em; text-decoration: none; line-height: 1; display: inline-flex; align-items: center; min-height: 48px; }
+/* over the hero the bar is transparent (both references); it takes the ground once the page scrolls */
+.header--over:not(.is-scrolled) { background: transparent; color: var(--c-ground); }   /* over the hero's top scrim */
+.wordmark { font-family: var(--f-text); font-size: var(--fs-2); font-weight: 500; text-decoration: none; line-height: 1; display: inline-flex; align-items: center; min-height: 48px; }
 .menu { display: flex; align-items: center; gap: var(--s-3); }
 .nav__links { display: none; gap: var(--s-2); }
-.nav__links a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-1); text-decoration: none; position: relative; }
+.nav__links a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-1); text-decoration: none; position: relative; font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
 .nav__links a::after { content: ""; position: absolute; left: var(--s-1); right: var(--s-1); bottom: 12px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--d-2) var(--ease); }
 @media (hover: hover) { .nav__links a:hover::after { transform: scaleX(1); } }
 @media (min-width: 640px) { .nav__links { display: flex; } }
-.cart-btn { display: inline-flex; align-items: center; gap: var(--s-1); min-height: 48px; padding: 0 var(--s-2) 0 var(--s-3); border-radius: var(--r-pill); border: 1px solid var(--c-ink); font-weight: 500; transition: transform var(--d-1) var(--ease); }
+/* "Cart (0)" as quiet text (Canyon); the count still bumps */
+.cart-btn { display: inline-flex; align-items: center; min-height: 48px; min-width: 48px; padding: 0 var(--s-1); font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; transition: transform var(--d-1) var(--ease); }
 .cart-btn:active { transform: scale(0.96); }
-.cart-btn__count { display: inline-grid; place-items: center; min-width: 24px; height: 24px; padding: 0 var(--s-1); border-radius: var(--r-pill); background: var(--c-ink); color: var(--c-ground); font-size: var(--fs-1); font-variant-numeric: tabular-nums; }
+.cart-btn__count { display: inline-block; font-variant-numeric: tabular-nums; }
 .cart-btn__count.is-bump { animation: bump var(--d-2) var(--ease); }
 @keyframes bump { 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
 
@@ -119,22 +131,40 @@ body > .skip-link { left: var(--gutter); }
   .section__head { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); align-items: start; margin-bottom: var(--s-8); }
 }
 
-/* ---------- hero: exactly the first screen ---------- */
-.hero { min-height: 100svh; padding-block: var(--padt) var(--s-3); }
-.hero__grid { display: grid; grid-template-rows: auto minmax(240px, 1fr); gap: var(--s-4); min-height: calc(100svh - var(--padt) - var(--s-3)); }
-.hero__text { display: grid; gap: var(--s-2); justify-items: start; }
-.hero__notice { font-size: var(--fs-1); font-weight: 500; letter-spacing: 0.02em; }
-.hero h1 { max-width: 12ch; }
-.hero__cta { padding-top: var(--s-1); }
-.hero__photo { position: relative; overflow: hidden; background: var(--c-surface); }
+/* ---------- hero: a full-bleed photograph, the words small in the lower left (both references) ---------- */
+.hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); color: var(--c-ground); }
+.hero__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }   /* light words stay legible if the photo fails */
+/* a top scrim under the transparent header, so its light words read on any part of the photograph */
+.hero__photo::before { content: ""; position: absolute; z-index: 1; inset: 0 0 auto; height: 160px; background: linear-gradient(to bottom, color-mix(in srgb, var(--c-ink) 64%, transparent), transparent); }
 .hero__photo picture { position: absolute; inset: 0; }
 .hero__photo picture.has-depth { inset: -12% 0 0 0; }
-.hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 60% 60%; }
-@media (min-width: 640px) { .hero__text { gap: var(--s-3); } }
+.hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 55%; }
+/* a scrim only under the words (scroll-craft): roast, fading up from the bottom */
+.hero__photo::after { content: ""; position: absolute; inset: 22% 0 0 0; background: linear-gradient(to top, color-mix(in srgb, var(--c-ink) 80%, transparent) 45%, transparent); }
+@media (min-width: 1024px) { .hero__photo::after { inset: 40% 0 0 0; background: linear-gradient(to top, color-mix(in srgb, var(--c-ink) 72%, transparent), transparent); } }
+.hero__content { position: relative; display: grid; gap: var(--s-2); justify-items: start; }
+.hero__notice { font-size: var(--fs-1); font-weight: 500; letter-spacing: 0.02em; }
+.hero h1 { max-width: 14ch; }
+.hero__lede { max-width: 40ch; }
+.hero__cta { padding-top: var(--s-1); }
+@media (min-width: 1024px) { .hero { padding-bottom: var(--s-8); } .hero__content { gap: var(--s-3); } }
+
+/* ---------- manifesto (Canyon): one sentence set large, then a collage ---------- */
+.manifesto > .wrap { display: grid; gap: var(--s-6); }
+.statement { font-family: var(--f-display); font-size: var(--fs-4); line-height: 1.45; letter-spacing: -0.01em; max-width: 34ch; text-wrap: balance; }
+.collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); align-items: start; }
+.collage figure { position: relative; overflow: hidden; background: var(--c-surface); aspect-ratio: 4 / 5; }
+.collage picture { position: absolute; inset: 0; }
+.collage img { width: 100%; height: 100%; object-fit: cover; }
+.collage .is-mono img { filter: grayscale(1); }
+.collage__b { display: none; }
 @media (min-width: 1024px) {
-  .hero { padding-bottom: var(--s-8); }
-  .hero__grid { grid-template-rows: none; grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); align-items: start; height: calc(100svh - var(--padt) - var(--s-8)); min-height: 0; }
-  .hero__photo { height: 100%; }
+  .manifesto > .wrap { gap: var(--s-8); }
+  .statement { font-size: var(--fs-5); text-align: center; justify-self: center; }
+  .collage { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
+  .collage .collage__a { grid-column: 1 / span 5; aspect-ratio: 3 / 2; }
+  .collage .collage__b { display: block; grid-column: 6 / span 4; aspect-ratio: 4 / 3; margin-top: var(--s-12); }
+  .collage .collage__c { grid-column: 10 / span 3; aspect-ratio: 1; margin-top: var(--s-6); }
 }
 
 /* ---------- splits: text left on the container line, picture right on the 5/12 line, top-aligned ---------- */
@@ -148,26 +178,36 @@ body > .skip-link { left: var(--gutter); }
   .split { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); }
   .split__photo { aspect-ratio: auto; height: calc(100svh - var(--padt) - var(--padb) - var(--s-1)); }
 }
-.recipe { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: var(--s-1) var(--s-3); padding-top: var(--s-2); border-top: 1px solid var(--c-line); }
-.recipe dt { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; grid-row: 1; }
-.recipe dd { font-family: var(--f-display); font-size: var(--fs-5); grid-row: 2; font-variant-numeric: tabular-nums; }
-@media (min-width: 640px) { .recipe { column-gap: var(--s-6); } }
 
 /* ---------- shop list ---------- */
 .coffee { border-bottom: 1px solid var(--c-line); }
-.coffee__row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 var(--s-3); align-items: center; padding-block: var(--s-1); }
+.coffee__row { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: var(--s-2); align-items: center; padding-block: var(--s-2); }
+/* Coffee Collective's tile: the coffee's own roast texture on the oat ground */
+.coffee__thumb { grid-column: 1; grid-row: 1 / 3; width: 64px; aspect-ratio: 1; overflow: hidden; background: var(--c-surface); }
+.coffee__thumb img { width: 100%; height: 100%; object-fit: cover; }
 .coffee__name { font-size: var(--fs-4); }
 .coffee__toggle { font: inherit; letter-spacing: inherit; display: inline-flex; align-items: center; min-height: 48px; }
 .coffee__toggle:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; text-decoration: underline 2px var(--c-accent); text-underline-offset: 6px; }
 .coffee__toggle::after { content: ""; position: absolute; inset: 0; }   /* the whole row is the hit area */
-.coffee__meta { grid-column: 1; grid-row: 2; color: var(--c-ink-soft); }
-.coffee__price { color: var(--c-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.coffee__name { grid-column: 2; grid-row: 1; }
+.coffee__meta { grid-column: 2 / 4; grid-row: 2; color: var(--c-ink-soft); font-size: var(--fs-1); }
+.coffee__meta .tag { color: var(--c-ink); margin-right: var(--s-1); }
+.coffee__price { grid-column: 3; grid-row: 1; color: var(--c-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .coffee__icon { display: none; }
+/* on the narrowest phones a long single-word name ("Huehuetenango") meets the price: the price goes under the meta */
+.coffees { container: coffees / inline-size; }
+@container coffees (max-width: 340px) {
+  .coffee__row { grid-template-rows: auto auto auto; }
+  .coffee__thumb { grid-row: 1 / 4; }
+  .coffee__price { grid-column: 2; grid-row: 3; }
+}
 @media (hover: hover) { .coffee__row:hover .coffee__toggle { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; } }
 @media (min-width: 1024px) {
-  .coffee__row { padding-block: var(--s-3); }
+  .coffee__row { grid-template-columns: 96px minmax(0, 1fr) auto 16px; column-gap: var(--s-3); padding-block: var(--s-3); }
+  .coffee__thumb { width: 96px; }
   .coffee__name { font-size: var(--fs-5); }
-  .coffee__icon { display: block; grid-column: 2; grid-row: 1 / 3; width: 16px; height: 16px; position: relative; }
+  .coffee__meta { grid-column: 2 / 3; }
+  .coffee__icon { display: block; grid-column: 4; grid-row: 1 / 3; width: 16px; height: 16px; position: relative; }
   .coffee__icon::before, .coffee__icon::after { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--c-ink); transition: transform var(--d-2) var(--ease); }
   .coffee__icon::after { transform: rotate(90deg); }
   .coffee__row:has([aria-expanded="true"]) .coffee__icon::after { transform: rotate(0deg); }
@@ -199,8 +239,8 @@ body > .skip-link { left: var(--gutter); }
 .add__status { min-height: 24px; font-size: var(--fs-1); }
 
 /* ---------- the roast path: a sticky 3D stage with five cards scrolling over it (ios-sticky-stage) ---------- */
-:root { --toolbar: calc(100lvh - 100svh); --panel: 90vh; }
-@supports (height: 100lvh) { :root { --panel: 90lvh; } }
+:root { --toolbar: calc(100lvh - 100svh); --panel: 100vh; }   /* a full screen per card: the previous card has left before the bean rests */
+@supports (height: 100lvh) { :root { --panel: 100lvh; } }
 @supports not (height: 100lvh) { :root { --toolbar: 0px; } }
 /* stage and cards share one grid cell: the cards scroll over the sticky stage without a negative margin */
 .roastpath { position: relative; display: grid; }
@@ -242,7 +282,6 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 .roastpath__card { width: var(--col5); display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--c-ground); border-radius: var(--r-1); pointer-events: auto; }
 .roastpath__panel--intro .roastpath__card { padding: 0; background: none; gap: var(--s-3); }
 .roastpath__card p { font-size: var(--fs-3); line-height: 1.5; }
-.roastpath__temp { font-size: var(--fs-1) !important; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; }
 @media (max-width: 1023px) {
   /* the bean owns the upper half of the stage; the cards dock above Safari's toolbar */
   /* a full screen per card on phones, so the previous card has left before the bean rests at the next stage */
@@ -253,16 +292,54 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
   .roastpath__panel--intro h2 { font-size: var(--fs-5); }
 }
 
-/* ---------- closing: the close and the footer, one screen on its own ground ---------- */
-.closing { background: var(--c-surface); }
-.closing__wrap { display: grid; grid-template-rows: auto 1fr; min-height: calc(var(--screen) - var(--padt) - var(--padb)); gap: var(--s-6); }
-.closing__close { display: grid; gap: var(--s-4); justify-items: start; }
-.closing__close h2 { max-width: 16ch; }
-.closing__foot { align-self: end; display: grid; gap: var(--s-3); font-size: var(--fs-1); }
-.closing__links { display: flex; flex-wrap: wrap; gap: 0 var(--s-3); }
-.closing__links a { display: inline-flex; align-items: center; min-height: 48px; min-width: 48px; font-size: var(--fs-2); }
-.closing__legal { display: grid; gap: var(--s-1); max-width: 60ch; }
-@media (min-width: 1024px) { .closing__foot { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); } }
+/* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
+.block-split { display: grid; grid-template-rows: 50svh auto; color: var(--c-ground); container-type: inline-size; }
+.block-split--accent { background: var(--c-accent); }
+.block-split--ink { background: var(--c-ink); }
+.block-split :focus-visible { outline-color: var(--c-ground); }   /* a ring that shows on every colour (3D guide 8.5) */
+.block-split__photo { position: relative; overflow: hidden; }
+.block-split__photo picture { position: absolute; inset: 0; }
+.block-split__photo img { width: 100%; height: 100%; object-fit: cover; }
+.block-split__body { display: grid; align-content: start; justify-items: start; gap: var(--s-3); padding: var(--s-6) var(--gutter) var(--s-8); }
+.block-split__body p:not(.tag) { max-width: 40ch; }
+@media (min-width: 1024px) {
+  .block-split { grid-template-rows: none; grid-template-columns: 1fr 1fr; min-height: 100svh; }
+  /* the outer edge of the text half sits on the page's .wrap line, like every other section */
+  .block-split__body { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); padding: var(--padt) var(--edge) var(--s-8) var(--s-8); }
+  .block-split--flip .block-split__body { padding-inline: var(--edge) var(--s-8); }
+  .block-split--flip .block-split__photo { order: 2; }
+}
+/* our own arrow, a small chevron (never Coffee Collective's glyph) */
+.arrows { display: grid; gap: var(--s-1); }
+/* a hanging indent: wrapped lines align with the first word (the gate's off-grid finding here is accepted, QA.md) */
+.arrows li { position: relative; padding-left: var(--s-3); }
+.arrows li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
+
+/* ---------- a card over a still life (Canyon) ---------- */
+.photo-card { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); }
+.photo-card__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }
+.photo-card__photo picture { position: absolute; inset: 0; }
+.photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
+.photo-card__wrap { position: relative; }
+.photo-card__card { display: grid; gap: var(--s-2); justify-items: start; padding: var(--s-4); background: var(--c-ground); }
+.photo-card__card h2 { font-size: var(--fs-5); }
+@media (min-width: 1024px) { .photo-card { padding-bottom: var(--s-8); } .photo-card__card { width: var(--col5); } .photo-card__card h2 { font-size: var(--fs-6); } }
+
+/* ---------- footer: link columns, then the wordmark across the full width (both references) ---------- */
+.footer { background: var(--c-surface); padding-block: var(--s-8); overflow: hidden; }   /* room below for the wordmark's whole font box */
+.footer__wrap { container-type: inline-size; }
+.footer__cols { display: grid; gap: var(--s-4); font-size: var(--fs-1); }
+.footer__cols > * { display: grid; align-content: start; gap: var(--s-1); }
+.footer__cols a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+@media (hover: hover) { .footer__cols a:hover { text-decoration: underline; text-underline-offset: 4px; } }
+@media (min-width: 1024px) {
+  .footer__cols { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
+  .footer__cols > :nth-child(1) { grid-column: 1 / span 5; }
+  .footer__cols > :nth-child(2) { grid-column: 6 / span 2; }
+  .footer__cols > :nth-child(3) { grid-column: 8 / span 5; }
+}
+/* the one type moment: sized to the container width (R = the word's width at 1px, measured, see DESIGN.md) */
+.footer__mark { --R: 4.26; font-family: var(--f-display); font-size: calc(100cqi / var(--R)); line-height: 0.9; letter-spacing: -0.03em; white-space: nowrap; margin-top: var(--s-8); }
 
 /* ---------- cart drawer ---------- */
 .scrim { position: fixed; inset: 0; z-index: 30; background: var(--c-ink); opacity: 0; transition: opacity var(--d-3) var(--ease); }
@@ -326,8 +403,6 @@ html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { 
 @media (prefers-reduced-motion: no-preference) {
   .js [data-enter]:not(section) { animation: rise var(--d-4) var(--ease) both; animation-delay: calc(var(--i, 0) * 60ms + 80ms); }
   .js .hero__photo img { animation: settle var(--d-4) var(--ease) both; }
-  .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity var(--d-3) var(--ease), transform var(--d-3) var(--ease); transition-delay: calc(var(--i, 0) * 60ms); }
-  .js [data-reveal].is-in { opacity: 1; transform: none; }
 }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
 @keyframes settle { from { transform: scale(1.06); } }

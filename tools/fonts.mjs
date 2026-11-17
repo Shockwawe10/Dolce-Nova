@@ -2,14 +2,14 @@
 // site/assets/css/fonts.css with font-display: swap and size-adjusted local fallbacks
 // (metrics from @capsizecss/metrics, same method as next/font). Usage: node tools/fonts.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import fraunces from '@capsizecss/metrics/fraunces';
+import ebGaramond from '@capsizecss/metrics/ebGaramond';
 import figtree from '@capsizecss/metrics/figtree';
 import georgia from '@capsizecss/metrics/georgia';
 import arial from '@capsizecss/metrics/arial';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36';
 const FONTS = [
-  { family: 'Fraunces', query: 'Fraunces:opsz@9..144', file: 'fraunces-latin.woff2', weight: '400', metrics: fraunces, fallback: ['Georgia', georgia] },
+  { family: 'EB Garamond', query: 'EB+Garamond:wght@400', file: 'eb-garamond-latin.woff2', weight: '400', metrics: ebGaramond, fallback: ['Georgia', georgia] },
   { family: 'Figtree', query: 'Figtree:wght@400..500', file: 'figtree-latin.woff2', weight: '400 500', metrics: figtree, fallback: ['Arial', arial] },
 ];
 const pct = (n) => `${(n * 100).toFixed(2)}%`;
@@ -20,7 +20,9 @@ for (const f of FONTS) {
   const sheet = await (await fetch(`https://fonts.googleapis.com/css2?family=${f.query}&display=swap`, { headers: { 'User-Agent': UA } })).text();
   const latin = sheet.split('/* latin */')[1];
   if (!latin) throw new Error(`no latin block for ${f.family}`);
-  const url = latin.match(/url\((https:[^)]+\.woff2)\)/)[1];
+  const hit = latin.match(/url\((https:[^)]+)\)\s*format\(['"]woff2['"]\)/) || latin.match(/url\((https:[^)]+\.woff2)\)/);
+  if (!hit) throw new Error(`no woff2 URL in the latin block for ${f.family}`);
+  const url = hit[1];
   const range = latin.match(/unicode-range:\s*([^;]+);/)[1];
   const buf = Buffer.from(await (await fetch(url)).arrayBuffer());
   writeFileSync(`site/assets/fonts/${f.file}`, buf);

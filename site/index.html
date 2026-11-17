@@ -13,10 +13,10 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/img/hero-1280.webp">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/eb-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" fetchpriority="high"
   imagesrcset="assets/img/hero-640.avif 640w, assets/img/hero-960.avif 960w, assets/img/hero-1280.avif 1280w, assets/img/hero-1920.avif 1920w, assets/img/hero-2560.avif 2560w, assets/img/hero-3456.avif 3456w"
-  imagesizes="(min-width: 1024px) calc(150vh - 276px), (min-width: 640px) 120vw, 150vw">
+  imagesizes="(min-aspect-ratio: 3/2) 100vw, 151vh">
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">
 <script>document.documentElement.classList.add('js', 'm-enter')</script>
@@ -24,46 +24,67 @@
 <script type="module" src="assets/js/main.js"></script>
 </head>
 <body>
-<header class="nav header header--fixed" id="top">
+<header class="nav header header--fixed header--over" id="top">
   <div class="wrap header__bar">
     <a class="skip-link" href="#main">Skip to content</a>
     <a class="wordmark" href="#top" aria-label="Dolce Nova, back to top">Dolce Nova</a>
     <nav class="menu" aria-label="Main">
       <div class="nav__links"><a href="#shop">Shop</a><a href="#craft">Craft</a></div>
       <button class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart" data-cart-open>
-        Cart <span class="cart-btn__count" data-cart-count aria-live="polite">0</span>
-        <span class="visually-hidden">items</span>
+        Cart (<span class="cart-btn__count" data-cart-count aria-live="polite">0</span><span class="visually-hidden"> items</span>)
       </button>
     </nav>
   </div>
 </header>
 
 <main id="main">
+  <!-- 6.1 hero: a full-bleed photograph, the words small in the lower left (both references) -->
   <section class="hero" aria-labelledby="hero-title" data-enter>
-    <div class="wrap"><div class="hero-text hero__grid">
-      <div class="hero__text">
-        <p class="hero__notice" data-enter style="--i:0">Demo shop: nothing is charged at checkout.</p>
-        <h1 id="hero-title" data-enter style="--i:1">Coffee that starts as a green bean.</h1>
-        <p class="t-lede" data-enter style="--i:2">Six single-origin coffees, roasted in small batches and sold whole or ground. 250&nbsp;g from €11.50.</p>
-        <div class="hero__cta" data-enter style="--i:3"><a class="btn" href="#shop">Shop the coffees</a></div>
-      </div>
     <div class="hero__photo">
       <picture>
-        <source type="image/avif" sizes="(min-width: 1024px) calc(150vh - 276px), (min-width: 640px) 120vw, 150vw"
+        <source type="image/avif" sizes="(min-aspect-ratio: 3/2) 100vw, 151vh"
           srcset="assets/img/hero-640.avif 640w, assets/img/hero-960.avif 960w, assets/img/hero-1280.avif 1280w, assets/img/hero-1920.avif 1920w, assets/img/hero-2560.avif 2560w, assets/img/hero-3456.avif 3456w">
-        <img src="assets/img/hero-1280.webp" sizes="(min-width: 1024px) calc(150vh - 276px), (min-width: 640px) 120vw, 150vw"
+        <img src="assets/img/hero-1280.webp" sizes="(min-aspect-ratio: 3/2) 100vw, 151vh"
           srcset="assets/img/hero-640.webp 640w, assets/img/hero-960.webp 960w, assets/img/hero-1280.webp 1280w, assets/img/hero-1920.webp 1920w, assets/img/hero-2560.webp 2560w, assets/img/hero-3456.webp 3456w"
           width="3456" height="2298" alt="Green, unroasted coffee beans spilling from an open burlap sack onto a wooden floor" fetchpriority="high" decoding="async">
       </picture>
     </div>
-    </div></div>
+    <div class="wrap hero-text hero__content">
+      <p class="hero__notice" data-enter style="--i:0">Demo shop: nothing is charged at checkout.</p>
+      <h1 id="hero-title" data-enter style="--i:1">Coffee that starts as a green bean.</h1>
+      <p class="hero__lede" data-enter style="--i:2">250&nbsp;g from €11.50, whole bean or ground for espresso and filter.</p>
+      <div class="hero__cta" data-enter style="--i:3"><a class="btn" href="#shop">Shop the coffees</a></div>
+    </div>
   </section>
 
+  <!-- 6.2 manifesto (Canyon): one sentence set large, then a collage of the craft -->
+  <section class="section manifesto" aria-labelledby="about-title">
+    <div class="wrap">
+      <h2 id="about-title" class="visually-hidden">About Dolce Nova</h2>
+      <p class="statement">Six single-origin coffees, roasted in small batches. Follow one bean from a green seed to your cup, then choose how you brew it.</p>
+      <div class="collage">
+        <figure class="collage__a is-mono"><picture>
+          <source type="image/avif" sizes="(min-width: 1024px) 36vw, 84vw" srcset="assets/img/col-trier-480.avif 480w, assets/img/col-trier-720.avif 720w, assets/img/col-trier-960.avif 960w, assets/img/col-trier-1280.avif 1280w">
+          <img src="assets/img/col-trier-720.webp" sizes="(min-width: 1024px) 36vw, 84vw" srcset="assets/img/col-trier-480.webp 480w, assets/img/col-trier-720.webp 720w, assets/img/col-trier-960.webp 960w, assets/img/col-trier-1280.webp 1280w" width="2400" height="1600" alt="A steel sample trier drawn from the roasting drum, holding pale beans mid-roast" loading="lazy" decoding="async">
+        </picture></figure>
+        <figure class="collage__b is-mono"><picture>
+          <source type="image/avif" sizes="(min-width: 1024px) 32vw, 84vw" srcset="assets/img/col-tray-480.avif 480w, assets/img/col-tray-720.avif 720w, assets/img/col-tray-960.avif 960w, assets/img/col-tray-1280.avif 1280w">
+          <img src="assets/img/col-tray-720.webp" sizes="(min-width: 1024px) 32vw, 84vw" srcset="assets/img/col-tray-480.webp 480w, assets/img/col-tray-720.webp 720w, assets/img/col-tray-960.webp 960w, assets/img/col-tray-1280.webp 1280w" width="4272" height="2848" alt="Roasted beans turning in the cooling tray under the stirring arm" loading="lazy" decoding="async">
+        </picture></figure>
+        <figure class="collage__c"><picture>
+          <source type="image/avif" sizes="(min-width: 1024px) 32vw, 84vw" srcset="assets/img/col-beans-480.avif 480w, assets/img/col-beans-720.avif 720w, assets/img/col-beans-960.avif 960w, assets/img/col-beans-1280.avif 1280w">
+          <img src="assets/img/col-beans-720.webp" sizes="(min-width: 1024px) 32vw, 84vw" srcset="assets/img/col-beans-480.webp 480w, assets/img/col-beans-720.webp 720w, assets/img/col-beans-960.webp 960w, assets/img/col-beans-1280.webp 1280w" width="1800" height="1200" alt="Glossy roasted coffee beans filling the frame" loading="lazy" decoding="async">
+        </picture></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6.3 shop: Canyon's list with Coffee Collective's tiles and tags; the grind preview is unchanged -->
   <section class="section" id="shop" style="--h: 2" aria-labelledby="shop-title">
     <div class="wrap">
       <div class="section__head">
-        <h2 id="shop-title" data-reveal>Six coffees. Three grinds.</h2>
-        <p class="t-lede" data-reveal style="--i:1">Open a coffee, choose whole bean, espresso or filter, and see the grind you will get.</p>
+        <h2 id="shop-title">Six coffees. Three grinds.</h2>
+        <p class="t-lede">Open a coffee, choose whole bean, espresso or filter, and see the grind you will get.</p>
       </div>
       <div class="coffees" data-coffees>
         <noscript><p>The shop needs JavaScript to build your cart.</p></noscript>
@@ -71,14 +92,32 @@
     </div>
   </section>
 
+  <!-- 6.4 featured coffee (Coffee Collective colour block): photograph half, terracotta half -->
+  <section class="block-split block-split--accent" id="featured" aria-labelledby="featured-title">
+    <div class="block-split__photo">
+      <picture>
+        <source type="image/avif" sizes="(min-width: 1024px) 155vh, max(100vw, 78vh)" srcset="assets/img/featured-640.avif 640w, assets/img/featured-960.avif 960w, assets/img/featured-1280.avif 1280w, assets/img/featured-1920.avif 1920w, assets/img/featured-2560.avif 2560w">
+        <img src="assets/img/featured-1280.webp" sizes="(min-width: 1024px) 155vh, max(100vw, 78vh)" srcset="assets/img/featured-640.webp 640w, assets/img/featured-960.webp 960w, assets/img/featured-1280.webp 1280w, assets/img/featured-1920.webp 1920w, assets/img/featured-2560.webp 2560w" width="6000" height="3884" alt="A spoonful of freshly roasted coffee beans lifted over a basket full of beans" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="block-split__body">
+      <p class="tag tag--on-colour">Light roast · Kenya</p>
+      <h2 id="featured-title">Nyeri Gatomboya</h2>
+      <p>Blackcurrant, grapefruit and cane sugar. A washed coffee, roasted light to keep its fruit. 250&nbsp;g from €16.50.</p>
+      <p><a class="btn btn--outline" href="#shop" data-open-coffee="nyeri">Choose a grind</a></p>
+    </div>
+  </section>
+
+  <!-- 6.5 origin -->
   <section class="section" id="craft" aria-labelledby="origin-title">
     <div class="wrap split">
       <div class="split__text">
-        <h2 id="origin-title" data-reveal>Origin: green coffee, sorted by hand.</h2>
-        <p data-reveal style="--i:1">Coffee is the seed of a cherry. Picked, washed and dried, it is green, dense and smells of fresh hay.</p>
-        <p data-reveal style="--i:2">It is sorted by hand before it travels, because a handful of faulty beans can flatten a whole batch.</p>
+        <p class="tag">Origin</p>
+        <h2 id="origin-title">Green coffee, sorted by hand.</h2>
+        <p>Coffee is the seed of a cherry. Picked, washed and dried, it is green, dense and smells of fresh hay.</p>
+        <p>It is sorted by hand before it travels, because a handful of faulty beans can flatten a whole batch.</p>
       </div>
-      <div class="split__photo" data-reveal style="--i:1">
+      <div class="split__photo">
         <picture>
           <source type="image/avif" sizes="(min-width: 1024px) calc(150vh - 288px), (min-width: 640px) 104vw, 100vw"
             srcset="assets/img/origin-640.avif 640w, assets/img/origin-960.avif 960w, assets/img/origin-1280.avif 1280w, assets/img/origin-1920.avif 1920w, assets/img/origin-2560.avif 2560w">
@@ -90,6 +129,7 @@
     </div>
   </section>
 
+  <!-- 6.6 the roast path (ours): the 3D bean, restyled to the same cards, tags and type -->
   <section class="roastpath" aria-labelledby="roast-title" data-roastpath>
     <div class="roastpath__stage">
       <div class="roastpath__bg roastpath__bg--green" aria-hidden="true"></div>
@@ -109,34 +149,35 @@
     <div class="roastpath__panels">
       <div class="roastpath__panel roastpath__panel--intro">
         <div class="wrap"><div class="roastpath__card">
-          <h2 id="roast-title">The roast, from green bean to dark.</h2>
+          <p class="tag">Roast</p>
+          <h2 id="roast-title">From green bean to dark.</h2>
           <p>About twelve minutes in a hot drum turn a grassy seed into coffee. Follow one bean down the path.</p>
         </div></div>
       </div>
       <div class="roastpath__panel" data-roast-stage>
         <div class="wrap"><div class="roastpath__card">
-          <p class="roastpath__temp">Raw seed · room temperature</p>
+          <p class="tag">Raw seed · room temperature</p>
           <h3>Green</h3>
           <p>Dense, grassy and about 11% water. It smells of fresh hay, not of coffee yet.</p>
         </div></div>
       </div>
       <div class="roastpath__panel" data-roast-stage>
         <div class="wrap"><div class="roastpath__card">
-          <p class="roastpath__temp">First crack · near 196&nbsp;°C</p>
+          <p class="tag">First crack · near 196&nbsp;°C</p>
           <h3>Light</h3>
           <p>The bean dries, yellows, then cracks open with an audible pop. Stopped soon after, it keeps bright fruit and florals.</p>
         </div></div>
       </div>
       <div class="roastpath__panel" data-roast-stage>
         <div class="wrap"><div class="roastpath__card">
-          <p class="roastpath__temp">Development · near 210&nbsp;°C</p>
+          <p class="tag">Development · near 210&nbsp;°C</p>
           <h3>Medium</h3>
           <p>Sugars caramelise and the colour deepens to chestnut. Acidity softens, and sweetness and body take over.</p>
         </div></div>
       </div>
       <div class="roastpath__panel" data-roast-stage>
         <div class="wrap"><div class="roastpath__card">
-          <p class="roastpath__temp">Second crack · near 224&nbsp;°C</p>
+          <p class="tag">Second crack · near 224&nbsp;°C</p>
           <h3>Dark</h3>
           <p>Oils rise to the surface and the bean turns glossy, almost black. Cocoa, smoke and a bitter edge.</p>
         </div></div>
@@ -144,46 +185,68 @@
     </div>
   </section>
 
-  <section class="section" id="brew" aria-labelledby="brew-title">
-    <div class="wrap split">
-      <div class="split__text">
-        <h2 id="brew-title" data-reveal>Brewing at home: a filter recipe.</h2>
-        <p data-reveal style="--i:1">The last step is yours. For a clean filter cup, start here and adjust to taste.</p>
-        <dl class="recipe" data-reveal style="--i:2">
-          <dt>Coffee</dt><dd>15&nbsp;g</dd>
-          <dt>Water</dt><dd>250&nbsp;g</dd>
-          <dt>Time</dt><dd>3&nbsp;min</dd>
-        </dl>
-        <p data-reveal style="--i:3"><a class="btn" href="#shop">Shop the coffees</a></p>
-      </div>
-      <div class="split__photo" data-reveal style="--i:1">
-        <picture>
-          <source type="image/avif" sizes="(min-width: 1024px) calc(150vh - 288px), (min-width: 640px) 104vw, 100vw"
-            srcset="assets/img/brew-640.avif 640w, assets/img/brew-960.avif 960w, assets/img/brew-1280.avif 1280w, assets/img/brew-1920.avif 1920w, assets/img/brew-2560.avif 2560w">
-          <img src="assets/img/brew-1280.webp" sizes="(min-width: 1024px) calc(150vh - 288px), (min-width: 640px) 104vw, 100vw"
-            srcset="assets/img/brew-640.webp 640w, assets/img/brew-960.webp 960w, assets/img/brew-1280.webp 1280w, assets/img/brew-1920.webp 1920w, assets/img/brew-2560.webp 2560w"
-            width="3849" height="2561" alt="Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above" loading="lazy" decoding="async">
-        </picture>
+  <!-- 6.7 brew (Coffee Collective dark block): roast half with the recipe, photograph half -->
+  <section class="block-split block-split--ink block-split--flip" id="brew" aria-labelledby="brew-title">
+    <div class="block-split__photo">
+      <picture>
+        <source type="image/avif" sizes="(min-width: 1024px) 150vh, max(100vw, 75vh)" srcset="assets/img/brew-640.avif 640w, assets/img/brew-960.avif 960w, assets/img/brew-1280.avif 1280w, assets/img/brew-1920.avif 1920w, assets/img/brew-2560.avif 2560w">
+        <img src="assets/img/brew-1280.webp" sizes="(min-width: 1024px) 150vh, max(100vw, 75vh)" srcset="assets/img/brew-640.webp 640w, assets/img/brew-960.webp 960w, assets/img/brew-1280.webp 1280w, assets/img/brew-1920.webp 1920w, assets/img/brew-2560.webp 2560w" width="3849" height="2561" alt="Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="block-split__body">
+      <p class="tag tag--on-colour">At home</p>
+      <h2 id="brew-title">A filter recipe.</h2>
+      <p>The last step is yours. Start here and adjust to taste.</p>
+      <ul class="arrows">
+        <li>15&nbsp;g of coffee, ground for filter</li>
+        <li>250&nbsp;g of water, just off the boil</li>
+        <li>About 3 minutes, start to finish</li>
+      </ul>
+      <p><a class="btn btn--outline" href="#shop">Shop the coffees</a></p>
+    </div>
+  </section>
+
+  <!-- 6.8 close (Canyon): a card over a still life -->
+  <section class="photo-card" aria-labelledby="close-title">
+    <div class="photo-card__photo">
+      <picture>
+        <source type="image/avif" sizes="(min-aspect-ratio: 3/2) 100vw, 150vh" srcset="assets/img/close-640.avif 640w, assets/img/close-960.avif 960w, assets/img/close-1280.avif 1280w, assets/img/close-1920.avif 1920w, assets/img/close-2560.avif 2560w, assets/img/close-3200.avif 3200w">
+        <img src="assets/img/close-1280.webp" sizes="(min-aspect-ratio: 3/2) 100vw, 150vh" srcset="assets/img/close-640.webp 640w, assets/img/close-960.webp 960w, assets/img/close-1280.webp 1280w, assets/img/close-1920.webp 1920w, assets/img/close-2560.webp 2560w, assets/img/close-3200.webp 3200w" width="5472" height="3648" alt="Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light" loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <div class="wrap photo-card__wrap">
+      <div class="photo-card__card">
+        <p class="tag">Dolce Nova</p>
+        <h2 id="close-title">Choose your coffee and how you brew it.</h2>
+        <a class="btn" href="#shop">Choose a coffee</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="section closing" aria-labelledby="close-title">
-  <div class="wrap closing__wrap">
-    <div class="closing__close">
-      <h2 id="close-title" data-reveal>Dolce Nova. Six coffees, roasted in small batches.</h2>
-      <p data-reveal style="--i:1"><a class="btn" href="#shop">Shop the coffees</a></p>
-    </div>
-    <div class="closing__foot">
-      <nav class="closing__links" aria-label="Footer">
-        <a href="#shop">Shop</a><a href="#craft">Craft</a><a href="credits.html">Photograph credits</a>
+<!-- 6.9 footer: link columns, the demo line, the wordmark across the full width (both references) -->
+<footer class="footer">
+  <div class="wrap footer__wrap">
+    <div class="footer__cols">
+      <nav aria-label="Shop">
+        <p class="tag">Shop</p>
+        <a href="#shop">The coffees</a>
+        <a href="#featured">Nyeri Gatomboya</a>
       </nav>
-      <div class="closing__legal">
+      <nav aria-label="Craft">
+        <p class="tag">Craft</p>
+        <a href="#craft">Origin</a>
+        <a href="#roast-title">Roast</a>
+        <a href="#brew">Brew</a>
+      </nav>
+      <div>
+        <p class="tag">About</p>
         <p><strong>Demo shop.</strong> No payment is taken, nothing is shipped, and card details never leave your browser.</p>
         <p>Dolce Nova is a fictional roastery and a portfolio project.</p>
+        <a href="credits.html">Photograph credits</a>
       </div>
     </div>
+    <p class="footer__mark" aria-hidden="true">Dolce Nova</p>
   </div>
 </footer>
 

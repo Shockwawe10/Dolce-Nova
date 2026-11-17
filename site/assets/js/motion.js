@@ -1,18 +1,10 @@
-// Motion: scroll reveals (once), header divider, hero depth on fine pointers, and the roast peak.
+// Motion: header state, smooth in-page links, hero depth on fine pointers, and loading the roast path.
+// (Scroll reveals were removed on 2026-11-17, the owner's decision D3 in REDESIGN-GUIDE.md.)
 // Every effect writes only opacity or transform. Nothing here runs under prefers-reduced-motion.
 const motionOK = () => matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
-export function mountReveals(root = document) {
-  const items = root.querySelectorAll('[data-reveal]:not(.is-in)');
-  if (!motionOK() || !('IntersectionObserver' in window)) { items.forEach((el) => el.classList.add('is-in')); return; }
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.01 });
-  items.forEach((el) => io.observe(el));
-}
-
 /** Smooth scrolling for in-page links only. Not page-wide: keyboard focus must scroll instantly so the
- * focused control is on screen at once. */
+ * focused control is on screen at once (LESSONS.md). */
 export function mountAnchors() {
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href^="#"]');

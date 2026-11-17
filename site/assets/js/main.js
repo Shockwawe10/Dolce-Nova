@@ -2,13 +2,12 @@
 import { load } from './store.js';
 import { mountShop } from './shop.js';
 import { mountDrawer } from './drawer.js';
-import { mountReveals, mountHeader, mountHeroDepth, mountRoastPath, mountAnchors } from './motion.js';
+import { mountHeader, mountHeroDepth, mountRoastPath, mountAnchors } from './motion.js';
 
 mountHeader();
 mountAnchors();
 mountHeroDepth();
 mountRoastPath();
-mountReveals();
 
 const { catalog, manifest } = await load();
 mountShop(document.querySelector('[data-coffees]'), catalog, manifest);

@@ -15,8 +15,10 @@ function row(p, catalog, manifest, open) {
   return `
   <article class="coffee" data-id="${p.id}">
     <div class="coffee__row">
+      <span class="coffee__thumb" aria-hidden="true">${picture(manifest, p.texture, { sizes: '(min-width: 1024px) 96px, 64px', alt: '' })}</span>
       <h3 class="coffee__name"><button class="coffee__toggle" type="button" id="t-${p.id}" aria-expanded="${open}" aria-controls="p-${p.id}">${esc(p.name)}</button></h3>
-      <p class="coffee__meta">${esc(p.origin)} · ${esc(p.process)} · ${esc(p.roast)} roast · <span class="coffee__price">from ${formatEUR(from)}</span></p>
+      <p class="coffee__meta"><span class="tag">${esc(p.roast)} roast</span> ${esc(p.origin)} · ${esc(p.process)}</p>
+      <p class="coffee__price">from ${formatEUR(from)}</p>
       <span class="coffee__icon" aria-hidden="true"></span>
     </div>
     <div class="coffee__panel" id="p-${p.id}" role="region" aria-labelledby="t-${p.id}"${open ? '' : ' hidden'}>
@@ -65,6 +67,18 @@ export function mountShop(root, catalog, manifest) {
     // keep the row the visitor touched where it was, even if a panel above it just closed
     const delta = btn.getBoundingClientRect().top - before;
     if (Math.abs(delta) > 1) window.scrollBy({ top: delta, behavior: 'instant' });
+  });
+
+  // a link elsewhere on the page ("Choose a grind" in the featured block) opens that coffee's row
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('[data-open-coffee]');
+    if (!link) return;
+    const article = root.querySelector(`.coffee[data-id="${link.dataset.openCoffee}"]`);
+    if (!article) return;
+    e.preventDefault();
+    root.querySelectorAll('.coffee').forEach((a) => setOpen(a, a === article));
+    article.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    article.querySelector('.coffee__toggle').focus({ preventScroll: true });
   });
 
   root.addEventListener('change', (e) => {
