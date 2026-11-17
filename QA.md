@@ -18,7 +18,7 @@ client changed scope to a static GitHub Pages site with a demo card checkout and
 | Motion | No `transition: all`, only transform/opacity animated | **PASS** (static scan of CSS and JS) |
 | Motion | Reduced motion: no running animations after load | **PASS** · 0 on 5 page states (scroll reveals were removed by the owner, D3) |
 | Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy with a GPU** (99.0% phone, 98.7% desktop, with the 3D section) · **FAIL with software WebGL** (88.0% to 94.0%) and **in WebKit at 3×** · **not run on a real iPhone** |
-| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS, local server, after the redesign** · home 97, LCP 2.4 s (close to the 2.5 s limit), CLS 0, TBT 50 ms; three.js not requested at load · live re-check after deploy (before the redesign: live 100, LCP 1.2 s) |
+| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS on the live site after the redesign** · home 100 / 100 / 100 / 100, LCP 1.5 s, CLS 0, TBT 40 ms (before: 100, LCP 1.2 s) · local server 97, LCP 2.4 s; three.js not requested at load |
 | Quality | axe WCAG 2.2 AA, no serious issues | **PASS** · 0 violations of any impact in 12 states |
 | Quality | WebKit 390×844, 820×1180, 1440×900, 1920×1080: no clipped text, no horizontal overflow | **PASS** · 0 px overflow at all four; 0 clipped text in the audit; no coffee name overlaps its price at 320 to 430 px (`qa/shop-overlap.mjs`) |
 | Quality | Inputs ≥ 16px, tap targets ≥ 44px | **PASS** · inputs 16px; 0 targets under 44px (inline text links exempt, listed in `qa/out/audit.json`) |
@@ -116,7 +116,7 @@ the scene module) is 757 KB minified, 193 KB gzipped (measured), loaded only nea
 | 8.2 No bare half screen in a pinned section | `qa/roast-coverage.mjs` (121 positions) | **Failed first** (text half bare at 27% of positions on desktop, 17% on a phone); fixed with sticky cards; now 121/121 at both sizes |
 | 7 Compare against HEAD, interleaved | `qa/frames-compare.mjs`, 3 rounds, Chromium + GPU, 4x CPU | tree 98.9% / 98.6% of frames < 20 ms (phone / desktop) against HEAD 98.7% / 98.6%: the off-screen copy costs nothing measurable |
 | 12 Phones at 360, 390 and 430 | `qa/roast-shots.mjs` | read by eye; a sliver of the previous card at 430 fixed (a full screen per card on phones) |
-| 11 Live check in Chrome and WebKit | `BASE=<live> node qa/roast-pixels.mjs chromium` and `webkit` | **PASS** on https://shockwawe10.github.io/Dolce-Nova/ (deploy 430ad79): bean pixels at every stage in both engines, at 1440 and 390, locked and unlocked |
+| 11 Live check in Chrome and WebKit | `BASE=<live> node qa/roast-pixels.mjs chromium` and `webkit` | **PASS** on https://shockwawe10.github.io/Dolce-Nova/ (deploy 430ad79, and again after the redesign, deploy 21d4f0a): bean pixels at every stage in both engines, at 1440 and 390, locked and unlocked |
 
 ## Accessibility (qa/a11y.mjs)
 
