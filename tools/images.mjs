@@ -13,6 +13,19 @@ const src = JSON.parse(readFileSync('assets-src/sources.json', 'utf8'));
 export const IMAGES = [
   { name: 'origin', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
     alt: 'A hand lifting green coffee beans from a wide basket during sorting' },
+  // origin landscapes for the product pages (2026-11-17)
+  { name: 'origin-yirgacheffe', src: 'f105363090', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Cloud filling the valleys between green ridges in the highlands of southern Ethiopia' },
+  { name: 'origin-nyeri', src: 'f137079822', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Green hills of trees and banana plants in the countryside near Nyeri, Kenya' },
+  { name: 'origin-huila', src: 'f194922582', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Coffee branches with ripe red cherries above a deep river valley in Huila, Colombia' },
+  { name: 'origin-huehuetenango', src: 'f102957452', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Morning haze over the valley of Huehuetenango, seen from the Cuchumatanes mountains' },
+  { name: 'origin-cerrado', src: 'f59165026', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Low sun over a dry golden pasture in the Cerrado Mineiro, Brazil' },
+  { name: 'origin-decaf', src: 'f159887397', widths: [960, 1280, 1920, 2560, 2880],
+    alt: 'Cloud over green mountain pastures in Quindío, in Colombia’s coffee region' },
   // brew methods (2026-11-17): the pour-over above, then a moka pot and an espresso machine
   { name: 'brew-moka', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560],
     alt: 'Coffee pouring from the centre column into the top chamber of a moka pot' },

@@ -24,7 +24,7 @@ writeFileSync('site/credits.html', `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Photograph credits · Dolce Nova</title>
-<meta name="description" content="The photographers, licences and source pages of the photographs on the Dolce Nova demo shop.">
+<meta name="description" content="The photographers, licences and source pages of the photographs on the Dolce Nova site.">
 <meta name="theme-color" content="#f7f5f0">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/fonts.css">
@@ -36,7 +36,7 @@ writeFileSync('site/credits.html', `<!doctype html>
 <main id="main" class="page">
   <div class="wrap"><div class="done">
     <h1>Photograph credits</h1>
-    <p class="t-lede">The bags are the owner’s own designs. Dolce Nova is fictional, so every other photograph is a licensed stand-in by the photographers below, not a picture of this shop or its coffee.</p>
+    <p class="t-lede">The bags are our own designs. The other photographs are by the photographers below, used under their licences.</p>
     <ul class="credits">${items}
     </ul>
     <p class="t-soft">The 3D roast path uses <a class="link" href="https://threejs.org/">three.js</a> (MIT licence). Fonts: Instrument Serif and Instrument Sans (SIL Open Font License).</p>

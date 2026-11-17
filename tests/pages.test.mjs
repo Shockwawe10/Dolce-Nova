@@ -30,3 +30,16 @@ test('the bag image named in the catalog exists in both crops', () => {
   const manifest = JSON.parse(read('assets/img/manifest.json'));
   for (const p of catalog.products) { assert.ok(manifest[p.bag], p.bag); assert.ok(manifest[`${p.bag}-sq`], `${p.bag}-sq`); }
 });
+
+test('every coffee page tells where it comes from: its own landscape photograph, title, story and facts', () => {
+  const manifest = JSON.parse(read('assets/img/manifest.json'));
+  for (const p of catalog.products) {
+    const html = read(`coffee-${p.id}.html`);
+    assert.ok(p.region, `${p.id} has a region in the catalog`);
+    assert.ok(manifest[p.region.photo], `${p.region.photo} is built`);
+    assert.ok(html.includes(`assets/img/${p.region.photo}-`), `${p.id} shows ${p.region.photo}`);
+    assert.ok(html.includes(`<h2 id="origin-title">${p.region.title.replace(/’/g, '’')}</h2>`), `${p.id} origin title`);
+    assert.equal(p.region.text.length, 2);
+    assert.ok(p.region.facts.length >= 4);
+  }
+});

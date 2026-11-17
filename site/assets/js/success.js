@@ -18,7 +18,7 @@ if (order && order.ref === ref && order.shipping) {
     `<div class="summary__line"><span>${l.qty} × ${esc(l.name)}<br><span class="t-soft">${esc(l.size)} · ${esc(l.grind)}</span></span><span>${formatEUR(l.lineCents)}</span></div>`).join('');
 
   $('[data-ref]').textContent = order.ref;
-  $('[data-lede]').textContent = `This was a demo order, so nothing was charged and nothing will ship. A live shop would send the confirmation below to ${c.email}.`;
+  $('[data-lede]').textContent = `Nothing was charged and no email was sent: this shop is a showcase. Below is the confirmation ${c.email} would receive.`;
   $('[data-lines]').innerHTML = lineRows;
   $('[data-subtotal]').textContent = formatEUR(order.subtotalCents);
   $('[data-method]').textContent = order.shipping.method;
@@ -39,7 +39,6 @@ if (order && order.ref === ref && order.shipping) {
     <p class="summary__row"><span>Shipping (${esc(order.shipping.method)})</span><span>${ship}</span></p>
     <p class="summary__total"><span>Total</span><span>${formatEUR(order.totalCents)}</span></p>
     <p><strong>Arriving ${win}</strong>, to:<br>${addressLines.map(esc).join('<br>')}</p>
-    <p>Order ${esc(order.ref)}. Questions? Reply to this email.</p>
-    <p class="t-soft">Dolce Nova is a fictional roastery and this was a demo order: nothing was charged and nothing will ship.</p>`;
+    <p>Order ${esc(order.ref)}. Questions? Reply to this email.</p>`;
   $('[data-email]').hidden = false;
 }

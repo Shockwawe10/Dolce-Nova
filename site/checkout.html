@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Checkout · Dolce Nova</title>
-<meta name="description" content="Demo checkout for the Dolce Nova coffee shop. No payment is taken and card details never leave the browser.">
+<meta name="description" content="Checkout for Dolce Nova coffee.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#f7f5f0">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
@@ -15,7 +15,6 @@
 <script type="module" src="assets/js/checkout.js"></script>
 </head>
 <body>
-<p class="notice" role="note"><span class="notice__short">Demo checkout. Nothing is charged.</span><span class="notice__long">Demo checkout. No payment is taken, nothing ships, and nothing you type leaves your browser.</span></p>
 <!-- @header -->
 <header class="header header--fixed header--solid" id="top">
   <div class="wrap header__bar">
@@ -138,10 +137,7 @@
 
         <section class="form__group" aria-labelledby="pay-title">
           <h2 id="pay-title">Payment</h2>
-          <div class="demo-box">
-            <p><strong>This is a demo.</strong> Please do not enter a real card. Card details are checked in your browser and never sent or saved, and no money moves.</p>
-            <p><button class="link" type="button" data-test-card>Use the test card 4242&nbsp;4242&nbsp;4242&nbsp;4242</button></p>
-          </div>
+          <p class="pay-note">No payment is taken here: card details are checked in your browser and never sent or saved. <button class="link" type="button" data-test-card>Use the test card</button></p>
             <div class="field">
               <label for="name">Name on card</label>
               <input id="name" name="name" type="text" autocomplete="off" spellcheck="false" aria-describedby="name-err">
@@ -166,9 +162,8 @@
           </div>
         </section>
 
-        <button class="btn btn--block" type="submit" data-pay-btn disabled>Place demo order</button>
+        <button class="btn btn--block" type="submit" data-pay-btn disabled>Place order</button>
         <p class="drawer__note" role="status" data-pay-status></p>
-        <p class="drawer__note">Your name, email and address stay in this browser tab: this demo has no server and sends no email. The confirmation page shows the email a live shop would send.</p>
       </form>
 
       <aside class="summary" aria-labelledby="sum-title">
@@ -178,7 +173,7 @@
         <p class="summary__row"><span>Shipping <span class="t-soft" data-sum-method>Standard</span></span><span data-sum-shipping>€0.00</span></p>
         <p class="summary__total"><span>Total</span><span data-sum-total>€0.00</span></p>
         <p class="summary__eta" data-sum-eta></p>
-        <p class="drawer__note">Prices in euro, including VAT. Demo only: nothing is shipped.</p>
+        <p class="drawer__note">Prices in euro, including VAT.</p>
       </aside>
     </div>
   </div>

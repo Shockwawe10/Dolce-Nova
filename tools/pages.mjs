@@ -69,8 +69,8 @@ const footer = ({ home }) => `<footer class="footer">
       </nav>
       <div class="footer__about">
         <p class="tag">About</p>
-        <p><strong>Demo shop.</strong> No payment is taken, nothing is shipped, and card details never leave your browser.</p>
-        <p>Dolce Nova is a fictional roastery and a portfolio project.</p>
+        <p>Dolce Nova roasts six single-origin coffees in small batches and sends them out whole or ground for your brewer.</p>
+        <p>Standard shipping is free from €40.</p>
         <a href="credits.html">Photograph credits</a>
       </div>
     </div>
@@ -90,7 +90,7 @@ const drawer = `<div class="scrim" data-scrim hidden></div>
   <div class="drawer__foot" data-cart-foot>
     <p class="drawer__total"><span>Subtotal</span><span data-cart-total>€0.00</span></p>
     <a class="btn btn--block" href="checkout.html" data-checkout>Go to checkout</a>
-    <p class="drawer__note">Demo checkout. Nothing is charged.</p>
+    <p class="drawer__note">Standard shipping is free from €40.</p>
   </div>
 </aside>`;
 
@@ -115,6 +115,32 @@ ${preload.join('\n')}<link rel="stylesheet" href="assets/css/fonts.css">
 </head>`;
 
 // ---------- product pages ----------
+// where the coffee comes from: the land, full width, then the story and the facts (typical of the region)
+function originStory(p) {
+  const r = p.region;
+  if (!r) return '';
+  return `  <section class="origin-story" aria-labelledby="origin-title">
+    <figure class="origin-story__photo">
+      ${picture(manifest, r.photo, { sizes: 'max(100vw, 96vh)' })}   <!-- the band is up to 64vh tall, cropped from 3:2 -->
+      <figcaption class="wrap"><span class="tag">${esc(r.caption)}</span></figcaption>
+    </figure>
+    <div class="wrap origin-story__body">
+      <div class="origin-story__head">
+        <p class="tag">Origin · ${esc(r.country)}</p>
+        <h2 id="origin-title">${esc(r.title)}</h2>
+      </div>
+      <div class="origin-story__text">
+        ${r.text.map((t) => `<p>${esc(t)}</p>`).join('\n        ')}
+        <dl class="facts">
+          ${r.facts.map(([a, b]) => `<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join('\n          ')}
+        </dl>
+        <p class="origin-story__note">Altitude, harvest and varieties are typical of the region.</p>
+      </div>
+    </div>
+  </section>
+`;
+}
+
 function productPage(p) {
   const m = manifest[`${p.bag}-sq`];
   const sizes = '(min-width: 1024px) min(46vw, 628px), (min-width: 640px) 640px, 100vw';
@@ -123,7 +149,7 @@ function productPage(p) {
   const others = catalog.products.filter((o) => o.id !== p.id);
   return `${head({
     title: `${p.name} · ${p.roast} roast from ${p.origin} · Dolce Nova`,
-    description: `${p.name}, a ${p.roast.toLowerCase()} roast from ${p.origin}: ${p.notes.toLowerCase()}. ${catalog.sizes['340g']} from ${formatEUR(from(p))}, whole bean or ground. A demo shop: no payment is taken.`,
+    description: `${p.name}, a ${p.roast.toLowerCase()} roast from ${p.origin}: ${p.notes.toLowerCase()}. ${catalog.sizes['340g']} from ${formatEUR(from(p))}, whole bean or ground.`,
     image: `assets/img/${p.bag}-sq-1024.webp`,
     preload: [`<link rel="preload" as="image" type="image/avif" fetchpriority="high" imagesrcset="${set}" imagesizes="${sizes}">\n`],
   })}
@@ -164,11 +190,12 @@ ${header({ home: './' })}
         <dt>Process</dt><dd>${esc(p.process)}</dd>
         <dt>Roast</dt><dd>${esc(p.roast)}</dd>
         <dt>Bag</dt><dd>${sizesList.map(([, l]) => l).join(' or ')}, resealable</dd>
-        <dt>Shipping</dt><dd>None: this is a demo shop</dd>
+        <dt>Shipping</dt><dd>Standard 3–5 working days, free from €40; Express 1–2 working days</dd>
       </dl>
     </div>
   </div>
 
+${originStory(p)}
   <section class="more coffees" aria-labelledby="more-title">
     <div class="wrap section__head"><h2 id="more-title">More coffees</h2></div>
     ${carousel(others, 'More coffees', true)}

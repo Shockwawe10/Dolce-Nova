@@ -433,5 +433,131 @@
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "page": "https://commons.wikimedia.org/wiki/File:Machine_pouring_coffee_(Unsplash).jpg",
     "cropped": false
+  },
+  "origin-yirgacheffe": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      5882,
+      3921
+    ],
+    "alt": "Cloud filling the valleys between green ridges in the highlands of southern Ethiopia",
+    "source": "f105363090",
+    "owner": false,
+    "by": "Rod Waddington from Kergunyah, Australia",
+    "licence": "CC BY-SA 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Dizi_Highlands,_Sth_Ethiopia_(50647997717).jpg",
+    "cropped": false
+  },
+  "origin-nyeri": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      4743,
+      3162
+    ],
+    "alt": "Green hills of trees and banana plants in the countryside near Nyeri, Kenya",
+    "source": "f137079822",
+    "owner": false,
+    "by": "Ninara",
+    "licence": "CC BY 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Countryside_near_Nyeri_city2.jpg",
+    "cropped": false
+  },
+  "origin-huila": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      3264,
+      2448
+    ],
+    "alt": "Coffee branches with ripe red cherries above a deep river valley in Huila, Colombia",
+    "source": "f194922582",
+    "owner": false,
+    "by": "Mfrancoavellaneda",
+    "licence": "CC0",
+    "licenceUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "page": "https://commons.wikimedia.org/wiki/File:Cultivo_de_caf%C3%A9_San_Agustin_(Huila).jpg",
+    "cropped": false
+  },
+  "origin-huehuetenango": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      5184,
+      3456
+    ],
+    "alt": "Morning haze over the valley of Huehuetenango, seen from the Cuchumatanes mountains",
+    "source": "f102957452",
+    "owner": false,
+    "by": "George Revline",
+    "licence": "CC BY-SA 2.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Huehuetenango_desde_los_Cuchumatanes.jpg",
+    "cropped": false
+  },
+  "origin-cerrado": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      4912,
+      3264
+    ],
+    "alt": "Low sun over a dry golden pasture in the Cerrado Mineiro, Brazil",
+    "source": "f59165026",
+    "owner": false,
+    "by": "Rafael Ribeiro",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Pasto_do_Cerrado_Mineiro_ao_p%C3%B4r_do_sol.jpg",
+    "cropped": false
+  },
+  "origin-decaf": {
+    "widths": [
+      960,
+      1280,
+      1920,
+      2560,
+      2880
+    ],
+    "ratio": [
+      3840,
+      2160
+    ],
+    "alt": "Cloud over green mountain pastures in Quindío, in Colombia’s coffee region",
+    "source": "f159887397",
+    "owner": false,
+    "by": "Daviid Poloche",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Monta%C3%B1as_del_Quindio.jpg",
+    "cropped": false
   }
 }

@@ -1,4 +1,4 @@
-// The desktop hero: the words line up with the bag (the owner, 2026-11-17). Measures the text block (the notice's
+// The desktop hero: the words line up with the bag (the owner, 2026-11-17). Measures the text block (the h1's
 // top to the buttons' bottom) against the bag's printed body, which fills 13.3% to 89.8% of its square photo
 // (measured from the owner's render), and the hero's height against the window.
 // Usage: node tools/serve.mjs & node qa/hero-align.mjs   -> exits 1 if a size is out of line
@@ -17,7 +17,7 @@ for (const [w, h] of [[1024, 768], [1280, 800], [1440, 900], [1876, 960], [1920,
   await page.waitForTimeout(1400);   // the entrance has settled
   const m = await page.evaluate(([b0, b1]) => {
     const img = document.querySelector('.hero__bag img').getBoundingClientRect();
-    const top = document.querySelector('.hero__notice').getBoundingClientRect().top;
+    const top = document.querySelector('.hero h1').getBoundingClientRect().top;
     const bottom = document.querySelector('.hero .actions').getBoundingClientRect().bottom;
     const bag = { top: img.top + img.height * b0, bottom: img.top + img.height * b1 };
     return { text: { top, bottom }, bag, hero: document.querySelector('.hero').getBoundingClientRect().height };

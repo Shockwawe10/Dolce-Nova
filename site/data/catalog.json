@@ -22,7 +22,35 @@
     "1kg": 3800
    },
    "about": "Dried in the whole cherry on the high plateau of Minas Gerais, Brazil. Our darkest roast: nutty, chocolatey and low in acidity.",
-   "bag": "bag-cerrado"
+   "bag": "bag-cerrado",
+   "region": {
+    "country": "Brazil",
+    "title": "The Cerrado Mineiro, Brazil",
+    "caption": "The Cerrado Mineiro at sunset",
+    "text": [
+     "The Cerrado Mineiro is a high, open plateau in western Minas Gerais: savanna, red soil and long, dry winters. Its sharp seasons give coffee one even flowering and a dry spell for the harvest.",
+     "That dryness is what lets farms dry the whole cherry in the sun, the natural process behind Cerrado’s nutty, chocolatey, low-acid cup. In 2013 it became the first coffee region in Brazil with a protected designation of origin."
+    ],
+    "facts": [
+     [
+      "Region",
+      "Cerrado Mineiro, Minas Gerais"
+     ],
+     [
+      "Altitude",
+      "800 to 1,300 m"
+     ],
+     [
+      "Harvest",
+      "May to September"
+     ],
+     [
+      "Varieties",
+      "Mundo Novo, Catuaí, Yellow Bourbon"
+     ]
+    ],
+    "photo": "origin-cerrado"
+   }
   },
   {
    "id": "yirgacheffe",
@@ -36,7 +64,35 @@
     "1kg": 4900
    },
    "about": "Grown by smallholders around Konga in Yirgacheffe, where the coffee is washed and dried on raised beds. A light roast keeps it floral and tea-like.",
-   "bag": "bag-yirgacheffe"
+   "bag": "bag-yirgacheffe",
+   "region": {
+    "country": "Ethiopia",
+    "title": "Yirgacheffe, southern Ethiopia",
+    "caption": "The highlands of southern Ethiopia",
+    "text": [
+     "Coffee was born in the forests of Ethiopia, and in Yirgacheffe it still grows almost as it always has: a few hundred trees in each family’s garden, shaded by taller trees and planted among enset and food crops on the hills above the Rift Valley lakes.",
+     "Ripe cherries are picked by hand and carried to a washing station, where the fruit is removed and the seeds dry slowly on raised beds. The height and the cool nights are where the floral, tea-like cup comes from."
+    ],
+    "facts": [
+     [
+      "Region",
+      "Yirgacheffe, Gedeo Zone"
+     ],
+     [
+      "Altitude",
+      "1,700 to 2,200 m"
+     ],
+     [
+      "Harvest",
+      "October to January"
+     ],
+     [
+      "Varieties",
+      "Ethiopian landraces, known as heirloom"
+     ]
+    ],
+    "photo": "origin-yirgacheffe"
+   }
   },
   {
    "id": "nyeri",
@@ -50,7 +106,35 @@
     "1kg": 5600
    },
    "about": "From the Gatomboya washing station in Nyeri, on the slopes of Mount Kenya. Kenyan coffee at its brightest: juicy, with a long, sweet finish.",
-   "bag": "bag-nyeri"
+   "bag": "bag-nyeri",
+   "region": {
+    "country": "Kenya",
+    "title": "Nyeri, on the slopes of Mount Kenya",
+    "caption": "The countryside near Nyeri",
+    "text": [
+     "Nyeri lies on the south-western slopes of Mount Kenya, where red volcanic soil, high ground and two rainy seasons a year give Kenyan coffee its bright, juicy acidity.",
+     "Smallholders deliver their cherries to washing stations, called factories, run by their cooperative; Gatomboya is one of them. Careful sorting, washing, soaking and slow drying on raised tables are why Kenyan coffees taste so clean."
+    ],
+    "facts": [
+     [
+      "Region",
+      "Nyeri County, central Kenya"
+     ],
+     [
+      "Altitude",
+      "1,700 to 1,900 m"
+     ],
+     [
+      "Harvest",
+      "October to December (main crop)"
+     ],
+     [
+      "Varieties",
+      "SL28, SL34, Ruiru 11, Batian"
+     ]
+    ],
+    "photo": "origin-nyeri"
+   }
   },
   {
    "id": "huila",
@@ -64,7 +148,35 @@
     "1kg": 4200
    },
    "about": "From smallholder farms around La Plata in southern Colombia. A medium roast for a round, sweet cup that works as espresso and as filter.",
-   "bag": "bag-huila"
+   "bag": "bag-huila",
+   "region": {
+    "country": "Colombia",
+    "title": "Huila, southern Colombia",
+    "caption": "Coffee above the valleys of Huila",
+    "text": [
+     "Huila sits in the south of Colombia, where the Andes split around the upper Magdalena valley. Coffee grows on steep slopes between 1,500 and 2,000 metres, on family farms of a few hectares.",
+     "So close to the equator there is no single season: farms pick a main crop and a smaller second one every year, so fresh coffee comes out of Huila for much of the year. Most of it is washed and dried in the sun on the farm."
+    ],
+    "facts": [
+     [
+      "Region",
+      "La Plata, Huila"
+     ],
+     [
+      "Altitude",
+      "1,500 to 2,000 m"
+     ],
+     [
+      "Harvest",
+      "April to June, and October to December"
+     ],
+     [
+      "Varieties",
+      "Caturra, Castillo, Colombia"
+     ]
+    ],
+    "photo": "origin-huila"
+   }
   },
   {
    "id": "huehuetenango",
@@ -78,7 +190,35 @@
     "1kg": 4400
    },
    "about": "Grown high in the western highlands of Guatemala, near the Mexican border. Chocolate and stone fruit, easy every morning.",
-   "bag": "bag-huehuetenango"
+   "bag": "bag-huehuetenango",
+   "region": {
+    "country": "Guatemala",
+    "title": "Huehuetenango, western Guatemala",
+    "caption": "Huehuetenango from the Cuchumatanes",
+    "text": [
+     "Huehuetenango is in the north-west of Guatemala, against the Mexican border, where the Cuchumatanes mountains rise to nearly 4,000 metres. Warm, dry air from the lowlands keeps frost away, so coffee grows higher here than almost anywhere in Central America.",
+     "The farms are small and many are remote, some reached only on foot, so most growers process their own coffee: washing it and drying it in the sun on patios beside the house."
+    ],
+    "facts": [
+     [
+      "Region",
+      "Huehuetenango"
+     ],
+     [
+      "Altitude",
+      "1,500 to 2,000 m"
+     ],
+     [
+      "Harvest",
+      "January to April"
+     ],
+     [
+      "Varieties",
+      "Bourbon, Caturra, Catuai"
+     ]
+    ],
+    "photo": "origin-huehuetenango"
+   }
   },
   {
    "id": "decaf",
@@ -92,7 +232,35 @@
     "1kg": 4500
    },
    "about": "Colombian coffee decaffeinated with ethyl acetate made from sugarcane, a gentle process that keeps its sweetness. All of the flavour, none of the late-night buzz.",
-   "bag": "bag-decaf"
+   "bag": "bag-decaf",
+   "region": {
+    "country": "Colombia",
+    "title": "Colombia’s coffee mountains",
+    "caption": "Quindío, in Colombia’s coffee region",
+    "text": [
+     "Our decaf is Colombian coffee from the mountains of the central Andes. Colombia’s coffee belt runs along the cordilleras, and the hills of Quindío, pictured, are part of its Coffee Cultural Landscape, a UNESCO World Heritage site.",
+     "The green coffee is decaffeinated in Colombia with ethyl acetate made from fermented sugarcane: the beans are steamed, washed in it until the caffeine has gone, then steamed and dried again. It is gentle, and the coffee keeps its sweetness."
+    ],
+    "facts": [
+     [
+      "Origin",
+      "Colombia, central Andes"
+     ],
+     [
+      "Altitude",
+      "1,400 to 1,900 m"
+     ],
+     [
+      "Decaffeination",
+      "Ethyl acetate from sugarcane"
+     ],
+     [
+      "Varieties",
+      "Castillo, Caturra"
+     ]
+    ],
+    "photo": "origin-decaf"
+   }
   }
  ]
 }

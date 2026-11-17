@@ -80,9 +80,11 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     assert.match(await page.locator('[data-total]').innerText(), /121\.90/);
     // the confirmation and the email preview carry the order, the shipping and the address
     const mail = await page.locator('[data-email]').innerText();
-    for (const want of [/ada@example\.com/, /Your Dolce Nova order DN-/, /Hi Ada/, /Express/, /9\.90/, /121\.90/, /Arriving \w{3} \d{1,2} \w{3} – /, /Keizersgracht 1/, /1015 CJ Amsterdam/, /Netherlands/, /Nyeri Gatomboya/, /preview only/i]) {
+    for (const want of [/ada@example\.com/, /Your Dolce Nova order DN-/, /Hi Ada/, /Express/, /9\.90/, /121\.90/, /Arriving \w{3} \d{1,2} \w{3} – /, /Keizersgracht 1/, /1015 CJ Amsterdam/, /Netherlands/, /Nyeri Gatomboya/]) {
       assert.match(mail, want);
     }
+    // the confirmation says plainly that nothing was charged or sent (the one line kept, 2026-11-17)
+    assert.match(await page.locator('[data-lede]').innerText(), /Nothing was charged and no email was sent/);
     const stored = await page.evaluate(() => JSON.stringify({ ...localStorage }) + JSON.stringify({ ...sessionStorage }));
     assert.ok(!/4242/.test(stored), 'no card digits anywhere in storage');
     assert.equal(await page.evaluate(() => localStorage.getItem('dn-cart')), '[]', 'cart cleared after the order');

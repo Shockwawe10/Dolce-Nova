@@ -65,7 +65,7 @@ function renderTotals() {
   out('shipping').textContent = ship === 0 ? 'Free' : formatEUR(ship);
   out('total').textContent = formatEUR(t.totalCents + ship);
   out('eta').textContent = t.lines.length ? `Arrives ${formatWindow(deliveryWindow(m, now))}` : '';
-  if (t.lines.length) payBtn.textContent = `Place demo order · ${formatEUR(t.totalCents + ship)}`;
+  if (t.lines.length) payBtn.textContent = `Place order · ${formatEUR(t.totalCents + ship)}`;
 }
 form.addEventListener('change', (e) => { if (e.target.name === 'shipping' && catalog) renderTotals(); });
 
@@ -83,7 +83,7 @@ form.addEventListener('submit', (e) => {
     return;
   }
   payBtn.disabled = true;
-  status.textContent = 'Placing your demo order…';
+  status.textContent = 'Placing your order…';
   const now = new Date(), m = fields.shipping, ship = shippingCents(m, t.totalCents), win = deliveryWindow(m, now);
   const ref = 'DN-' + [...crypto.getRandomValues(new Uint8Array(3))].map((b) => b.toString(16).padStart(2, '0')).join('').toUpperCase();
   const order = {
