@@ -1,39 +1,20 @@
-// The roast path: one procedural coffee bean travels a drawn path while the page scrolls, turning from green
-// to dark as the light warms. three r185 (vendored, loaded only near the section).
+// The roast, as a still life: one procedural coffee bean on the page's dark studio ground. It gathers from green
+// fragments as the section arrives, then holds one pose while scrolling turns its roast from green to dark.
+// No path, no turning (the owner, 2026-11-17). three r185 (vendored, loaded only near the section).
 // Skills applied: damped-scroll-progress (critically damped spring, pure state(p), render on demand),
 // ios-sticky-stage (lvh stage, ResizeObserver sizing), adaptive-render-quality (EMA + hysteresis, sharp at rest),
 // three-pmrem-async-warmup (GGX/blur materials compiled async before fromScene).
 import * as THREE from 'three';
 import { RoomEnvironment } from '../vendor/addons/RoomEnvironment.js';
-
-const clamp01 = (x) => Math.min(1, Math.max(0, x));
-const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
-const mix = (a, b, t) => a + (b - a) * t;
+import { state, snapReduced, clamp01, smooth, mix, hash, delayAt, FLIGHT, REVEAL_GLSL } from './roast-state.js';
 
 // One row per roast stage. Colours are sRGB; three converts them.
 const STAGES = [
-  { bean: '#7a8065', crease: 1.25, rough: 0.78, coat: 0.0, key: '#eef1ff', rim: '#cdd6ff', rimI: 0.5, env: 0.8, bg: 0 },
-  { bean: '#9a683c', crease: 1.15, rough: 0.62, coat: 0.04, key: '#fff0dc', rim: '#ffd7aa', rimI: 0.9, env: 0.7, bg: 1 },
-  { bean: '#5c361d', crease: 0.75, rough: 0.46, coat: 0.18, key: '#ffd9ac', rim: '#ff9a58', rimI: 1.4, env: 0.6, bg: 2 },
-  { bean: '#22140b', crease: 0.55, rough: 0.24, coat: 0.7, key: '#ffb47c', rim: '#ff6a2c', rimI: 2.4, env: 0.5, bg: 3 },
+  { bean: '#7a8065', crease: 1.25, rough: 0.78, coat: 0.0, key: '#eef1ff', rim: '#cdd6ff', rimI: 1.2, env: 0.8 },
+  { bean: '#9a683c', crease: 1.15, rough: 0.62, coat: 0.04, key: '#fff0dc', rim: '#ffd7aa', rimI: 1.5, env: 0.7 },
+  { bean: '#5c361d', crease: 0.75, rough: 0.46, coat: 0.18, key: '#ffd9ac', rim: '#ffab6e', rimI: 2.0, env: 0.6 },
+  { bean: '#22140b', crease: 0.55, rough: 0.24, coat: 0.7, key: '#ffc596', rim: '#ff8a4c', rimI: 2.8, env: 0.55 },
 ];
-const PATH = [[-0.55, 2.3, 0], [0.75, 1.35, 0.35], [-0.6, 0.35, -0.25], [0.7, -0.75, 0.2], [-0.45, -1.75, -0.1], [0.2, -2.5, 0]];
-
-/** Pure state for scroll progress p in [0, 1]: the intro holds green, then four stages. */
-export function state(p) {
-  const s = Math.max(0, p * 4 - 1);                 // 0..3 across green, light, medium, dark
-  const i = Math.min(2, Math.floor(s));
-  const f = s >= 3 ? 1 : smooth(s - i);             // the bean settles at each stage, moves between them
-  const stageX = i + f;                              // eased, 0..3
-  return {
-    stageX,
-    t: 0.04 + (stageX / 3) * 0.9,                    // where on the path
-    // the flat face and its cut turn toward the camera at green and dark, the dome in between
-    rotY: 0.45 + stageX * 1.05, rotX: -1.0 + 1.75 * Math.sin((stageX * Math.PI) / 3), rotZ: 0.35,
-    smoke: smooth((stageX - 2.55) / 0.45),           // second crack
-    bg: [1 - smooth(stageX), smooth(stageX) - smooth(stageX - 1), smooth(stageX - 1) - smooth(stageX - 2), smooth(stageX - 2)],
-  };
-}
 
 function lerpStage(x) {
   const i = Math.min(2, Math.floor(x)), f = x - i, a = STAGES[i], b = STAGES[i + 1];
@@ -42,11 +23,9 @@ function lerpStage(x) {
     coat: mix(a.coat, b.coat, f), rimI: mix(a.rimI, b.rimI, f), env: mix(a.env, b.env, f) };
 }
 
-function hash(x, y, z) { const s = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return s - Math.floor(s); }
-
 /** A coffee bean: a domed ellipsoid with a flat face and an S-shaped centre cut, with a darker crease. */
 function beanGeometry(touch) {
-  const g = new THREE.SphereGeometry(1, touch ? 96 : 144, touch ? 72 : 108);
+  const g = new THREE.SphereGeometry(1, touch ? 112 : 160, touch ? 84 : 120);
   const pos = g.attributes.position, colors = new Float32Array(pos.count), v = new THREE.Vector3();
   for (let i = 0; i < pos.count; i++) {
     v.fromBufferAttribute(pos, i);
@@ -98,12 +77,14 @@ function puffTexture() {
 
 /** Give the main thread back between setup steps, so no single task runs long. */
 const yieldTask = () => (globalThis.scheduler && scheduler.yield ? scheduler.yield() : new Promise((r) => setTimeout(r, 0)));
+const easeOut = (u) => 1 - (1 - u) ** 3;
 
 export async function mount(section) {
   const stage = section.querySelector('.roastpath__stage');
   const canvas = section.querySelector('.roastpath__canvas');
-  const layers = [...section.querySelectorAll('.roastpath__bg')];
-  const markersEl = [...section.querySelectorAll('[data-roast-stage]')];
+  const warmLayer = section.querySelector('.roastpath__bg--warm');
+  const steps = [...section.querySelectorAll('[data-roast-stage]')];
+  const notes = [...section.querySelectorAll('[data-roast-note]')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
   const qa = new URLSearchParams(location.search).has('qa');
@@ -118,15 +99,13 @@ export async function mount(section) {
     if (!view) throw new Error('no 2d context');
     renderer = new THREE.WebGLRenderer({ canvas: glCanvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
   } catch (e) { section.classList.add('roastpath--fallback'); return null; }
-  // a shader a strict GPU refuses must not leave a bare gradient: switch to the real roast photographs
   let broken = false;
   const fallback = () => { broken = true; section.classList.add('roastpath--fallback'); };
   renderer.debug.onShaderError = (gl, program, vs, fs) => {
     fallback();
-    console.warn('roast path: shader failed, showing photographs', gl.getProgramInfoLog(program), gl.getShaderInfoLog(vs), gl.getShaderInfoLog(fs));
+    console.warn('roast: shader failed, showing photographs', gl.getProgramInfoLog(program), gl.getShaderInfoLog(vs), gl.getShaderInfoLog(fs));
   };
   glCanvas.addEventListener('webglcontextlost', fallback);
-  // draw = render off screen, then copy into the page's canvas in the same task (the buffer is not preserved)
   const REST_PX = 3.2e6;
   function sizeView() {
     let r = Math.min(devicePixelRatio || 1, 3);
@@ -141,65 +120,90 @@ export async function mount(section) {
   }
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.85;
+  renderer.toneMappingExposure = 0.9;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 60);
   camera.position.set(0, 0, 7);
+  camera.lookAt(0, 0, 0);
   const world = new THREE.Group(); scene.add(world);
 
-  // lights: a key that warms with the roast, a rim that turns to ember, a soft sky fill
-  const hemi = new THREE.HemisphereLight(0xfff6ea, 0x1b1b19, 0.5); scene.add(hemi);
-  const key = new THREE.DirectionalLight(0xffffff, 2.4); key.position.set(-3, 4, 5); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xffffff, 1); rim.position.set(4, 1.5, -4); scene.add(rim);
-
-  // the path, the progress drawn over it, and the four stage markers
-  const curve = new THREE.CatmullRomCurve3(PATH.map((q) => new THREE.Vector3(...q)), false, 'centripetal');
-  const TUBE_SEG = 360, RAD_SEG = 8;
-  const tubeGeo = new THREE.TubeGeometry(curve, TUBE_SEG, 0.011, RAD_SEG, false);
-  const ghost = new THREE.Mesh(tubeGeo, new THREE.MeshBasicMaterial({ color: 0x9a6a3a, transparent: true, opacity: 0.28, depthWrite: false }));
-  const trail = new THREE.Mesh(tubeGeo.clone(), new THREE.MeshBasicMaterial({ color: 0x9a6a3a }));
-  world.add(ghost, trail);
-  const markerGeo = new THREE.SphereGeometry(0.045, 24, 16);
-  const markers = STAGES.map((s, k) => {
-    const m = new THREE.Mesh(markerGeo, new THREE.MeshBasicMaterial({ color: new THREE.Color(s.bean) }));
-    m.position.copy(curve.getPointAt(0.04 + (k / 3) * 0.9)); world.add(m); return m;
-  });
+  // studio light: a soft key from the upper left that warms with the roast, a rim behind that turns to ember and
+  // keeps the dark bean's outline against the dark ground, and a low sky fill
+  const hemi = new THREE.HemisphereLight(0xfff6ea, 0x1b1b19, 0.45); scene.add(hemi);
+  const key = new THREE.DirectionalLight(0xffffff, 2.6); key.position.set(-3, 4, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 1.2); rim.position.set(3.5, 2.5, -4); scene.add(rim);
+  const kick = new THREE.DirectionalLight(0xffffff, 0.5); kick.position.set(4, -2, 3); scene.add(kick);
 
   await yieldTask();
-  // the bean
+  // the bean; its surface fills in cell by cell as its fragments land (uReveal < 1)
   const beanMat = new THREE.MeshPhysicalMaterial({ roughness: 0.7, clearcoat: 0, clearcoatRoughness: 0.3,
     bumpMap: noiseTexture(), bumpScale: 1.6, sheen: 0.12, sheenRoughness: 0.8, sheenColor: new THREE.Color(0xfff2e0) });
-  // the crease: lighter silverskin early in the roast, darker once the bean browns (uCrease > 1 lightens)
-  const creaseU = { value: 1 };
+  const creaseU = { value: 1 }, revealU = { value: 1 };
   beanMat.onBeforeCompile = (sh) => {
-    sh.uniforms.uCrease = creaseU;
-    sh.vertexShader = 'attribute float crease;\nvarying float vCrease;\n' + sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvCrease = crease;');
-    sh.fragmentShader = 'uniform float uCrease;\nvarying float vCrease;\n' + sh.fragmentShader.replace('#include <color_fragment>', '#include <color_fragment>\ndiffuseColor.rgb *= mix(1.0, uCrease, clamp(vCrease, 0.0, 1.0));');
+    sh.uniforms.uCrease = creaseU; sh.uniforms.uReveal = revealU;
+    sh.vertexShader = 'attribute float crease;\nvarying float vCrease;\nvarying vec3 vObj;\n' +
+      sh.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvCrease = crease;\nvObj = position;');
+    // the fill-in: the same formula as delayAt in roast-state.js, so the surface appears where its fragments land
+    sh.fragmentShader = 'uniform float uCrease;\nuniform float uReveal;\nvarying float vCrease;\nvarying vec3 vObj;\n' + REVEAL_GLSL +
+      sh.fragmentShader
+        .replace('void main() {', `void main() {
+  if (uReveal < 1.0 && uReveal < dnDelay(vObj) + ${FLIGHT.toFixed(4)}) discard;`)
+        .replace('#include <color_fragment>', '#include <color_fragment>\ndiffuseColor.rgb *= mix(1.0, uCrease, clamp(vCrease, 0.0, 1.0));');
   };
   const beanGeo = beanGeometry(touch);
   await yieldTask();
   const bean = new THREE.Mesh(beanGeo, beanMat);
-  bean.scale.setScalar(0.42);
   world.add(bean);
-  await yieldTask();
 
-  // chaff in the air at several depths (parallax only from the desktop camera's follow, never on touch)
-  const SPECKS = 70, speckMat = new THREE.MeshBasicMaterial({ color: 0xd8d3c9, transparent: true, opacity: 0.55, depthWrite: false, side: THREE.DoubleSide });
-  const specks = new THREE.InstancedMesh(new THREE.PlaneGeometry(0.03, 0.018), speckMat, SPECKS);
-  const m4 = new THREE.Matrix4(), qn = new THREE.Quaternion(), e = new THREE.Euler();
-  for (let k = 0; k < SPECKS; k++) {
-    e.set(hash(k, 1, 2) * 6, hash(k, 3, 4) * 6, hash(k, 5, 6) * 6); qn.setFromEuler(e);
-    const sc = 0.6 + hash(k, 7, 8) * 1.4;
-    m4.compose(new THREE.Vector3((hash(k, 9, 1) - 0.5) * 7, (hash(k, 2, 9) - 0.5) * 7, -3.5 + hash(k, 4, 4) * 5), qn, new THREE.Vector3(sc, sc, sc));
-    specks.setMatrixAt(k, m4);
+  // the fragments: small green chips, each flying to a point on the bean's surface (in the bean's own space,
+  // so they follow its pose), landing as the surface fills in there
+  const FRAGS = touch ? 800 : 1600;
+  const fragMat = new THREE.MeshStandardMaterial({ color: new THREE.Color(STAGES[0].bean), roughness: 0.85 });
+  const frags = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1, 1), fragMat, FRAGS);
+  frags.frustumCulled = false;
+  const fragData = [];
+  {
+    const p = beanGeo.attributes.position, nrm = beanGeo.attributes.normal, tint = new THREE.Color();
+    for (let k = 0; k < FRAGS; k++) {
+      const vi = Math.floor(hash(k, 13.1, 2.7) * p.count);
+      const target = new THREE.Vector3().fromBufferAttribute(p, vi);
+      const normal = new THREE.Vector3().fromBufferAttribute(nrm, vi);
+      const dir = normal.clone().add(new THREE.Vector3(hash(k, 1, 7) - 0.5, hash(k, 2, 8) - 0.5, hash(k, 3, 9) - 0.5).multiplyScalar(1.6)).normalize();
+      const start = target.clone().addScaledVector(dir, 0.45 + hash(k, 4, 1) * 0.95);   // a cloud around the bean, clear of the text
+      fragData.push({ target, start, delay: delayAt(target.x, target.y, target.z), size: 0.012 + hash(k, 5, 2) * 0.022,
+        spin: new THREE.Vector3(hash(k, 6, 3), hash(k, 7, 4), hash(k, 8, 5)).multiplyScalar(6), swirl: (hash(k, 9, 6) - 0.5) * 2.4 });
+      frags.setColorAt(k, tint.set(STAGES[0].bean).multiplyScalar(1.5 + hash(k, 3, 3) * 0.4));   // the lit bean's tone
+    }
   }
-  world.add(specks);
+  bean.add(frags);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), eul = new THREE.Euler(), sc = new THREE.Vector3(), at = new THREE.Vector3();
+  let lastAssemble = -1;
+  function placeFragments(a) {
+    if (a === lastAssemble) return;
+    lastAssemble = a;
+    frags.visible = a < 1;
+    revealU.value = a;
+    if (a >= 1) return;
+    for (let k = 0; k < FRAGS; k++) {
+      const f = fragData[k];
+      const u = clamp01((a - f.delay) / FLIGHT), e = easeOut(u);
+      at.lerpVectors(f.start, f.target, e);
+      // a gentle swirl around the bean's long axis while in flight, none on landing
+      const ang = f.swirl * (1 - e), c = Math.cos(ang), s = Math.sin(ang);
+      at.set(at.x * c - at.y * s, at.x * s + at.y * c, at.z);
+      eul.set(f.spin.x * (1 - e), f.spin.y * (1 - e), f.spin.z * (1 - e)); q.setFromEuler(eul);
+      const size = f.size * (1 - smooth((u - 0.82) / 0.18));          // shrinks into the surface as it lands
+      sc.set(size * 1.4, size * 0.7, size);
+      m4.compose(at, q, sc); frags.setMatrixAt(k, m4);
+    }
+    frags.instanceMatrix.needsUpdate = true;
+  }
 
-  // smoke at second crack
+  // a wisp of smoke near second crack
   const puffMat = new THREE.SpriteMaterial({ map: puffTexture(), color: 0xebe7df, transparent: true, opacity: 0, depthWrite: false });
-  const puffs = Array.from({ length: 6 }, () => { const s = new THREE.Sprite(puffMat); world.add(s); return s; });
+  const puffs = Array.from({ length: 5 }, () => { const s = new THREE.Sprite(puffMat); world.add(s); return s; });
 
   // environment for reflections, without the PMREM main-thread stall
   async function buildEnvironment() {
@@ -218,27 +222,22 @@ export async function mount(section) {
     renderer.toneMapping = tm; scene.environment = envRT.texture; room.dispose(); pm.dispose();
   }
 
-  // ---- layout: desktop keeps the bean on the right split and follows it; touch frames the whole path, camera still
-  let W = 1, H = 1, follow = !touch, wide = true;
+  // ---- layout: desktop sets the bean in the right half, a phone above the text
+  let W = 1, H = 1, home = new THREE.Vector3(), beanScale = 1;
   const halfH = () => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
   function layout() {
     W = stage.clientWidth; H = stage.clientHeight;
     camera.aspect = W / H; camera.updateProjectionMatrix();
-    wide = W >= 1024;
     const vh = halfH() * 2, vw = vh * camera.aspect;
-    if (wide) {
-      world.scale.setScalar(1);
-      world.position.set(vw * 0.19, 0, 0);
-      bean.scale.setScalar(0.42);
-      follow = !touch;
+    if (W >= 1024) {
+      home.set(vw * 0.23, -vh * 0.02, 0);
+      beanScale = Math.min(1.0, vw * 0.2);
     } else {
-      // the whole path between the header and the card: 12% to 66% of the stage height, camera still
-      const s = (vh * 0.54) / 5.4;
-      world.scale.setScalar(s);
-      world.position.set(0, vh / 2 - vh * 0.39 - s * -0.1, 0);
-      bean.scale.setScalar(0.6);
-      follow = false;
+      // the stage above the text block: the bean centred in the top 45% of the screen
+      home.set(0, vh * 0.25, 0);
+      beanScale = Math.min(vh * 0.16, vw * 0.36);
     }
+    bean.scale.setScalar(beanScale);
   }
 
   // ---- quality (adaptive-render-quality)
@@ -255,35 +254,38 @@ export async function mount(section) {
   }
 
   // ---- apply one state (pure in p)
-  const tmp = new THREE.Vector3();
-  let lastBg = '';
+  let lastWarm = '', lastStep = -1;
+  const setOpacity = (el, o) => { const v = o.toFixed(3); if (el._o !== v) { el.style.opacity = v; el._o = v; } };
   function apply(p) {
     const st = state(p), look = lerpStage(st.stageX);
-    curve.getPointAt(st.t, tmp);
-    bean.position.copy(tmp);
+    bean.position.set(home.x, home.y + st.lift * beanScale, home.z);
     bean.rotation.set(st.rotX, st.rotY, st.rotZ);
-    beanMat.color.copy(look.bean).multiplyScalar(1);
+    placeFragments(reduced ? 1 : st.assemble);
+    beanMat.color.copy(look.bean);
     beanMat.roughness = look.rough; beanMat.clearcoat = look.coat;
     beanMat.sheen = 0.12 * (1 - st.stageX / 3);
     creaseU.value = look.crease;
     key.color.copy(look.key); rim.color.copy(look.rim); rim.intensity = look.rimI;
     scene.environmentIntensity = look.env;
-    hemi.intensity = mix(0.55, 0.25, st.stageX / 3);
-    const segs = Math.round(clamp01((st.t - 0.0) / 1) * TUBE_SEG);
-    trail.geometry.setDrawRange(0, segs * RAD_SEG * 6);
-    markers.forEach((m, k) => m.scale.setScalar(st.stageX >= k - 0.02 ? 1.5 : 1));
+    hemi.intensity = mix(0.5, 0.3, st.stageX / 3);
     puffs.forEach((s, k) => {
-      const rise = st.smoke * (0.4 + k * 0.22);
-      s.position.set(tmp.x + Math.sin(k * 2.1 + st.stageX) * 0.18, tmp.y + 0.25 + rise, tmp.z - 0.1);
-      s.scale.setScalar(0.35 + k * 0.08 + st.smoke * 0.3);
+      const rise = st.smoke * (0.3 + k * 0.2) * beanScale;
+      s.position.set(home.x + Math.sin(k * 2.1 + st.stageX) * 0.15 * beanScale, home.y + (0.55 + rise) * beanScale, home.z - 0.2);
+      s.scale.setScalar((0.5 + k * 0.12 + st.smoke * 0.3) * beanScale);
     });
-    puffMat.opacity = st.smoke * 0.32;
-    speckMat.opacity = mix(0.35, 0.6, st.stageX / 3);
-    camera.position.y = follow ? tmp.y * world.scale.y + world.position.y : 0;
-    camera.lookAt(0, camera.position.y, 0);
-    const bg = st.bg.map((o) => o.toFixed(3)).join();
-    if (bg !== lastBg) { layers.forEach((el, k) => { el.style.opacity = st.bg[k].toFixed(3); }); lastBg = bg; }
-    markersEl.forEach((el, k) => el.classList.toggle('is-on', Math.round(st.stageX) === k));
+    puffMat.opacity = st.smoke * 0.22;
+    const warm = st.warm.toFixed(3);
+    if (warm !== lastWarm && warmLayer) { warmLayer.style.opacity = warm; lastWarm = warm; }
+    // the list and the notes follow the same eased roast as the bean, continuously (no timed fades): the current
+    // row at full strength, the others at 0.56 (5:1 on ink), each note fading out before the next fades in
+    steps.forEach((el, k) => setOpacity(el, 0.56 + 0.44 * clamp01(1 - Math.abs(st.stageX - k) * 2)));
+    notes.forEach((el, k) => setOpacity(el, clamp01(1 - Math.abs(st.stageX - k) * 2.2)));
+    const step = Math.round(st.stageX);
+    if (step !== lastStep) {
+      steps.forEach((el, k) => { el.classList.toggle('is-on', k === step); if (k === step) el.setAttribute('aria-current', 'step'); else el.removeAttribute('aria-current'); });
+      notes.forEach((el, k) => el.classList.toggle('is-on', k === step));
+      lastStep = step;
+    }
   }
 
   // ---- damped progress and render on demand (damped-scroll-progress)
@@ -292,7 +294,7 @@ export async function mount(section) {
   const readScroll = () => {
     const span = section.offsetHeight - stage.clientHeight;
     const raw = clamp01((scrollY - section.offsetTop) / (span || 1));
-    goalP = reduced ? Math.round(raw * 4) / 4 : raw;
+    goalP = reduced ? snapReduced(raw) : raw;
   };
   function frame(now) {
     raf = 0;
@@ -314,26 +316,23 @@ export async function mount(section) {
     if (vel !== 0 || shownP !== goalP) raf = requestAnimationFrame(frame);
     else { last = 0; clearTimeout(sharpTimer); sharpTimer = setTimeout(sharpPass, 140); }
   }
-  const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+  const go = () => { if (!raf) raf = requestAnimationFrame(frame); };
   // sharp at rest: one redraw at the full device pixel ratio, then back to the motion level
   let sharpLevel = 0, active = false;
-  // The resize and the redraw happen together inside an animation frame: setSize clears the canvas, and WebKit
-  // showed a blank canvas when the pair ran from a timer (guide 13: a quality change must redraw).
   function sharpPass() {
     if (!ready || raf || !active || broken) return;
     const full = Math.min(devicePixelRatio || 1, 3);
     if (full <= LEVELS[level] + 0.01) return;
     raf = requestAnimationFrame(() => {
       raf = 0;
-      if (shownP !== goalP || vel !== 0) { kick(); return; }   // motion resumed: the normal loop draws
+      if (shownP !== goalP || vel !== 0) { go(); return; }
       applySize(full); apply(shownP); draw(); sharpLevel = full;
     });
   }
-  // render only while the section is on screen, and only when the progress actually moved
   const onScroll = () => {
     if (!active) return;
     const before = goalP; readScroll();
-    if (goalP !== before || shownP !== goalP || vel !== 0 || dirty) kick();
+    if (goalP !== before || shownP !== goalP || vel !== 0 || dirty) go();
   };
 
   // ---- build, warm up, start
@@ -341,23 +340,23 @@ export async function mount(section) {
   await yieldTask();
   try { await buildEnvironment(); } catch (e) { /* lights alone still read well */ }
   await yieldTask();
+  placeFragments(0.5);                                   // compile with the fragments and the cut-out on screen
   await renderer.compileAsync(scene, camera);
   await yieldTask();
-  readScroll(); shownP = goalP; apply(shownP); draw();
+  readScroll(); shownP = goalP; lastAssemble = -1; apply(shownP); draw();
   if (broken) return null;
   ready = true; canvas.classList.add('is-ready');
   addEventListener('scroll', onScroll, { passive: true });
-  new IntersectionObserver(([e]) => { active = e.isIntersecting; if (active) { readScroll(); dirty = true; kick(); } }).observe(section);
-  new ResizeObserver(() => { layout(); applySize(sharpLevel || LEVELS[level]); readScroll(); dirty = true; if (active) kick(); }).observe(stage);
+  new IntersectionObserver(([e]) => { active = e.isIntersecting; if (active) { readScroll(); dirty = true; go(); } }).observe(section);
+  new ResizeObserver(() => { layout(); applySize(sharpLevel || LEVELS[level]); readScroll(); lastAssemble = -1; dirty = true; if (active) go(); }).observe(stage);
   sharpTimer = setTimeout(sharpPass, 140);
 
   const api = {
     get p() { return shownP; },
     get quality() { return { level, pixelRatio: renderer.getPixelRatio(), dpr: devicePixelRatio, locked: qa }; },
     _debug: { renderer, redraw: () => { apply(shownP); draw(); }, sizes: () => ({ W, H, pr: renderer.getPixelRatio(), cw: canvas.width, ch: canvas.height }) },
-    // test hook: one quality step down at rest, exactly as the adaptive loop would take it (it must redraw)
-    stepQuality() { if (level < LEVELS.length - 1) { level++; applySize(LEVELS[level]); sharpLevel = 0; dirty = true; kick(); } },
-    settled: () => new Promise((res) => { readScroll(); kick(); let n = 0; const chk = () => (++n > 2 && !raf && shownP === goalP ? setTimeout(res, 200) : requestAnimationFrame(chk)); requestAnimationFrame(chk); }),
+    stepQuality() { if (level < LEVELS.length - 1) { level++; applySize(LEVELS[level]); sharpLevel = 0; dirty = true; go(); } },
+    settled: () => new Promise((res) => { readScroll(); go(); let n = 0; const chk = () => (++n > 2 && !raf && shownP === goalP ? setTimeout(res, 200) : requestAnimationFrame(chk)); requestAnimationFrame(chk); }),
   };
   window.__roast = api;
   return api;

@@ -220,7 +220,8 @@ html:not(.js) .carousel__nav { display: none; }
 }
 
 /* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
-.block-split { display: grid; grid-template-rows: 50svh auto; color: var(--c-ground); container-type: inline-size; }
+/* a chapter, not a screen: shorter than the viewport (the owner found the full-screen origin block "very big") */
+.block-split { display: grid; grid-template-rows: 36svh auto; color: var(--c-ground); container-type: inline-size; }
 .block-split--accent { background: var(--c-accent); }
 .block-split--ink { background: var(--c-ink); }
 .block-split :focus-visible { outline-color: var(--c-ground); }
@@ -232,8 +233,8 @@ html:not(.js) .carousel__nav { display: none; }
 .block-split__body p:not(.tag) { max-width: 40ch; }
 .block-split__body p.t-lede { font-size: var(--fs-3); }
 @media (min-width: 1024px) {
-  .block-split { grid-template-rows: none; grid-template-columns: 1fr 1fr; min-height: 100svh; }
-  .block-split__body { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); padding: var(--padt) var(--edge) var(--s-8) var(--s-8); }
+  .block-split { grid-template-rows: none; grid-template-columns: 1fr 1fr; min-height: clamp(560px, 72svh, 720px); }
+  .block-split__body { --edge: max(var(--gutter), (100cqw - var(--max)) / 2); padding: var(--s-12) var(--edge) var(--s-12) var(--s-8); align-content: center; }
   .block-split--flip .block-split__body { padding-inline: var(--edge) var(--s-8); }
   .block-split--flip .block-split__photo { order: 2; }
 }
@@ -308,54 +309,65 @@ html:not(.js) .carousel__nav { display: none; }
 .add { display: grid; gap: var(--s-1); }
 .add__status { min-height: 24px; font-size: var(--fs-1); }
 
-/* ---------- the roast path: a sticky 3D stage with five cards scrolling over it (ios-sticky-stage) ---------- */
-:root { --toolbar: calc(100lvh - 100svh); --panel: 100vh; }   /* a full screen per card: the previous card has left before the bean rests */
-@supports (height: 100lvh) { :root { --panel: 100lvh; } }
+/* ---------- the roast, as a still life: one sticky screen inside a three-screen section (ios-sticky-stage) ---------- */
+:root { --toolbar: calc(100lvh - 100svh); }
 @supports not (height: 100lvh) { :root { --toolbar: 0px; } }
-.roastpath { position: relative; display: grid; }
-.roastpath__stage, .roastpath__panels { grid-area: 1 / 1; }
-.roastpath__stage { position: sticky; top: 0; align-self: start; height: 100vh; height: 100lvh; overflow: hidden; }
-.roastpath__bg { position: absolute; inset: 0; opacity: 0; }
-/* paper to ink, the same walk as the bag colours in the carousel; the glow is the bags' gold */
-.roastpath__bg--green { opacity: 1; background: linear-gradient(180deg, var(--c-ground), var(--c-surface)); }
-.roastpath__bg--light { background: radial-gradient(60% 55% at 72% 50%, color-mix(in srgb, var(--c-ember) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
-.roastpath__bg--medium { background: radial-gradient(55% 50% at 72% 55%, color-mix(in srgb, var(--c-ember) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
-.roastpath__bg--dark { background: radial-gradient(50% 45% at 72% 60%, color-mix(in srgb, var(--c-ember) 50%, transparent), transparent 75%), var(--c-ink); }
+.roastpath { position: relative; height: 300vh; height: 300lvh; }
+.roastpath__stage { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; background: var(--c-ink); color: var(--c-ground); }
+.roastpath__stage :focus-visible { outline-color: var(--c-ground); }
+/* the hero's studio: ink, a soft pool of light where the bean sits, warming with the roast (opacity only) */
+.roastpath__bg { position: absolute; inset: 0; }
+.roastpath__bg--base { background: radial-gradient(34% 48% at 73% 52%, color-mix(in srgb, var(--c-ground) 10%, var(--c-ink)), var(--c-ink) 100%); }
+.roastpath__bg--warm { opacity: 0; background: radial-gradient(30% 42% at 73% 52%, color-mix(in srgb, var(--c-ember) 42%, transparent), transparent 100%); }
 @media (max-width: 1023px) {
-  .roastpath__bg--light { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 22%, transparent), transparent 70%), linear-gradient(180deg, var(--c-surface), color-mix(in srgb, var(--c-surface) 70%, var(--c-ink-soft))); }
-  .roastpath__bg--medium { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 40%, transparent), transparent 72%), linear-gradient(180deg, var(--c-ink-soft), var(--c-ink)); }
-  .roastpath__bg--dark { background: radial-gradient(70% 40% at 50% 30%, color-mix(in srgb, var(--c-ember) 50%, transparent), transparent 75%), var(--c-ink); }
+  .roastpath__bg--base { background: radial-gradient(62% 30% at 50% 30%, color-mix(in srgb, var(--c-ground) 10%, var(--c-ink)), var(--c-ink) 100%); }
+  .roastpath__bg--warm { background: radial-gradient(56% 26% at 50% 30%, color-mix(in srgb, var(--c-ember) 42%, transparent), transparent 100%); }
 }
-.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; }   /* shown at once when ready: no fade as it scrolls in */
-.roastpath__canvas.is-ready { opacity: 1; }
-.roastpath__fallback { display: none; position: absolute; inset: var(--padt) 0 auto; left: 0; right: 0; }
-html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { display: grid; }
-.roastpath--fallback .roastpath__canvas { display: none; }
+.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; }
+.roastpath__canvas.is-ready { opacity: 1; }   /* shown at once when ready: no fade as it scrolls in */
+
+/* the words: on the left at 1440, under the bean on a phone */
+.roastpath__text { position: relative; z-index: 1; padding-top: var(--padt); }
+.roastpath__copy { display: grid; gap: var(--s-3); width: var(--col5); }
+.roastpath__stage .tag { color: var(--c-line); }
+.roastpath__intro { font-size: var(--fs-3); line-height: 1.5; color: var(--c-surface); max-width: 32ch; }
+.roast-steps { border-top: 1px solid var(--c-ink-soft); counter-reset: none; }
+.roast-steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--s-2); padding-block: var(--s-2); border-bottom: 1px solid var(--c-ink-soft); opacity: 0.56; }   /* before the 3D loads; then roast3d.js writes it from the roast */
+.roast-steps li.is-on { opacity: 1; }
+.roast-steps__n { font-size: var(--fs-1); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+.roast-steps__name { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1; }
+.roast-steps__temp { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; text-align: right; }
+/* one note per stage, stacked in one place: changing stage never moves the layout */
+.roast-notes { display: grid; }
+.roast-notes p { grid-area: 1 / 1; opacity: 0; font-size: var(--fs-3); line-height: 1.5; max-width: 36ch; }
+.roast-notes p.is-on { opacity: 1; }
+@media (max-width: 1023px) {
+  .roastpath__text { position: absolute; left: 0; right: 0; bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); padding-top: 0; }
+  .roastpath__copy { width: 100%; gap: var(--s-2); }
+  .roastpath__copy h2 { font-size: var(--fs-6); }
+  .roastpath__intro { display: none; }   /* the phone keeps the list and the note; the bean needs the room */
+  .roast-steps li { padding-block: var(--s-1); }
+  .roast-steps__name { font-size: var(--fs-4); }
+  .roast-notes p { font-size: var(--fs-2); }
+}
+
+/* without JavaScript or WebGL: the four real roast photographs and every note, as a plain section */
+.roastpath__fallback { display: none; }
+html:not(.js) .roastpath, .roastpath--fallback { height: auto; }
+html:not(.js) .roastpath__stage, .roastpath--fallback .roastpath__stage { position: relative; height: auto; padding-bottom: var(--s-8); }
+html:not(.js) .roastpath__canvas, .roastpath--fallback .roastpath__canvas { display: none; }
+html:not(.js) .roastpath__text, .roastpath--fallback .roastpath__text { position: relative; bottom: auto; padding-top: var(--padt); }
+html:not(.js) .roast-steps li, .roastpath--fallback .roast-steps li { opacity: 1 !important; }   /* over the inline opacity the 3D wrote before it failed */
+html:not(.js) .roast-notes p, .roastpath--fallback .roast-notes p { grid-area: auto; opacity: 1 !important; margin-bottom: var(--s-1); }
+html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { display: block; position: relative; z-index: 1; padding-top: var(--padt); }
 .roastpath__frames { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); width: min(100%, 504px); }
 .roastpath__frames picture { aspect-ratio: 1; overflow: hidden; background: var(--c-surface); }
 .roastpath__frames img { width: 100%; height: 100%; object-fit: cover; }
 @media (min-width: 1024px) {
-  .roastpath__fallback { grid-template-columns: var(--col5) minmax(0, 1fr); column-gap: var(--g); }
-  .roastpath__frames { grid-column: 2; }
-}
-@media (max-width: 1023px) { .roastpath__frames { width: min(100%, 40svh); } }
-.roastpath__panels { position: relative; pointer-events: none; }
-/* Cards are sticky inside their own panel (guide 8.2: no bare half screen) */
-.roastpath__panel { min-height: var(--panel); display: flex; align-items: flex-start; }
-.roastpath__panel > .wrap { width: min(100% - 2 * var(--gutter), var(--max)); position: sticky; top: 30vh; top: 30lvh; }
-.roastpath__panel--intro { min-height: 100vh; min-height: 100lvh; padding-top: var(--padt); }
-.roastpath__panel--intro > .wrap { top: var(--padt); }
-.roastpath__card { width: var(--col5); display: grid; gap: var(--s-2); padding: var(--s-4); background: var(--c-ground); border-radius: var(--r-1); pointer-events: auto; }
-.roastpath__panel--intro .roastpath__card { padding: 0; background: none; gap: var(--s-3); }
-.roastpath__card p { font-size: var(--fs-3); line-height: 1.5; }
-.roastpath__card h3 { font-size: var(--fs-6); }
-@media (max-width: 1023px) {
-  .roastpath__panel, .roastpath__panel--intro { align-items: flex-end; padding-top: 0; min-height: 100vh; min-height: 100lvh; }
-  .roastpath__panel > .wrap, .roastpath__panel--intro > .wrap { top: auto; bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); margin-bottom: var(--s-3); }
-  .roastpath__card, .roastpath__panel--intro .roastpath__card { width: 100%; padding: var(--s-3); background: var(--c-ground); gap: var(--s-1); }
-  .roastpath__card p { font-size: var(--fs-2); }
-  .roastpath__card h3 { font-size: var(--fs-5); }
-  .roastpath__panel--intro h2 { font-size: var(--fs-6); }
+  html:not(.js) .roastpath__stage, .roastpath--fallback .roastpath__stage { display: grid; grid-template-columns: 1fr 1fr; }
+  html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { grid-column: 2; grid-row: 1; width: auto; margin: 0; }
+  html:not(.js) .roastpath__text, .roastpath--fallback .roastpath__text { grid-column: 1; grid-row: 1; width: auto; margin: 0 0 0 max(var(--gutter), (100vw - var(--max)) / 2); }
+  html:not(.js) .roastpath__copy, .roastpath--fallback .roastpath__copy { width: auto; max-width: 520px; }
 }
 
 /* ---------- cart drawer ---------- */
