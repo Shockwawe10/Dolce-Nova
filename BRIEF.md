@@ -144,6 +144,17 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   slider (20 to 230 C, stretched so the cracks at 196, 210 and 224 C get room), each pulled at its stage (raw, first
   crack, 210 C, second crack), so sliding shows the change and the end shows the four roasts side by side. The
   section is one screen; the pinned scroll is gone.
+- **2026-11-17**, "go through this side and removes all mark that this is a demo shop everywhere. Just remove them.
+  And then I want you to add to the each Coffe pages ... the quick like information about the country ... a high
+  quality image of this country, of the land perhaps, and ... nice put together text."
+  Removed: the hero notice, the footer's demo and "fictional roastery" lines, the drawer note, the checkout and
+  confirmation banners, "demo" in page descriptions and buttons, "fictional / stand-in" on the credits page.
+  **Kept on purpose, one line each:** at the payment step ("No payment is taken here: card details are checked in
+  your browser and never sent or saved") and on the order confirmation ("Nothing was charged and no email was sent:
+  this shop is a showcase"). The site is public and asks for card details; without these a visitor could believe
+  they had paid for coffee that will never arrive. The photograph credits link stays: CC BY and CC BY-SA require it.
+  Added to every product page: the origin, a full-width licensed landscape of the region, a two-paragraph story and
+  four facts typical of the region (altitude, harvest, varieties), labelled as typical.
 
 ### Tell-someone sentence
 
