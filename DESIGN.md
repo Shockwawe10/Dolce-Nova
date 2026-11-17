@@ -6,6 +6,7 @@
 |---|---|---|
 | 2026-11-16 | First build: flour and terracotta, Fraunces/Figtree, a split hero, a shop list | Three dealt comps (section 4) |
 | 2026-11-17 | Adjustment after Coffee Collective and Canyon Coffee: EB Garamond, colour blocks, full-bleed sack hero | REDESIGN-GUIDE.md, owner decisions D1 to D5 |
+| 2026-11-17 | The roast path becomes a still life: one bean, no path, no turning; the origin block shortened | The owner, after seeing the path (BRIEF.md) |
 | **2026-11-17** | **Global redesign (this document)**: the owner's bag renders, a carousel, a product page per coffee, a palette and type taken from the bags | The owner: "global redesign based on that two references ... replace the Coffe selection with the like carousel"; four answers recorded in BRIEF.md |
 
 The owner judged the second version "an old version of the site with a bit of changes". What changed
@@ -41,8 +42,7 @@ Not taken: either brand's logo, wordmark, glyphs, photographs, colours or copy (
 | `--c-line` | `#d8d3c9` | rules; tags on ink and forest | 11.57:1 on ink |
 | `--c-accent` | `#2f4a33` forest | the primary button, the origin block. From the Huila bag (`#344d2f`) | ground on it 8.97:1 |
 
-`--c-ember` (`#9a6a3a`, the bags' gold darkened) colours only the glow gradients behind the 3D bean; the
-3D path itself is the same bronze (in `roast3d.js`). It is never text, a ground or a border, so the design
+`--c-ember` (`#9a6a3a`, the bags' gold darkened) colours only the warm glow behind the 3D bean as it roasts. It is never text, a ground or a border, so the design
 audit's colour count (6) does not include it. The bags' own colours (kraft, terracotta, navy, burgundy)
 appear only in the photographs: the page stays quiet so six different bags can sit side by side.
 
@@ -87,7 +87,9 @@ round carousel arrows (`--r-pill`). One shadow, the cart drawer's.
 Only `transform` and `opacity` animate. No scroll reveals. The hero's words rise once on load and the bag
 settles from 1.04 scale (transform only: it is the largest image, never hidden). The carousel moves by native
 scrolling; its arrows scroll one slide (smooth unless reduced motion), its progress line is a `scaleX`. The 3D
-canvas appears at once when ready (no fade as it scrolls in). Under `prefers-reduced-motion: reduce` nothing
+canvas appears at once when ready (no fade as it scrolls in). The bean never turns: its one pose is a constant
+(`POSE` in `roast-state.js`); during the intro, green grains fly in and the surface fills in exactly where they land
+(one formula in JS and in the shader), then scrolling changes only the roast, held at each stage while its note is read. Under `prefers-reduced-motion: reduce` nothing
 moves; the roast path snaps between its five states.
 
 ## 3. Pages
@@ -100,8 +102,8 @@ moves; the roast path snaps between its five states.
 | Hero | 1 screen, ink | 1440: the words on columns 1–6 at the foot (notice, h1, lede, a paper button and an outline button); the Cerrado bag on 7–12, 640px, its edges faded into the ink. Phone: the bag above, cut and faded, the words under it, one button |
 | The coffees | 1 screen | h2 and lede in a head row; the carousel: 3.4 slides at 1440, 2.4 on a tablet, 1.3 on a phone; each slide a 4:5 bag on its own backdrop, the roast tag, the name, the notes, "from" price; each links to its product page |
 | Manifesto | 1 screen | one centred serif sentence, then three photographs (two in black and white) |
-| Origin | 1 screen | photograph half and forest half (Coffee Collective) |
-| Roast path (peak) | 5 screens | the sticky 3D bean on a bronze path; the ground walks from paper to ink with a gold glow; square paper cards with tags |
+| Origin | 72% of a screen (560 to 720px) | photograph half and forest half (Coffee Collective), one paragraph; a chapter, not a full screen |
+| Roast (peak) | 3 screens, one pinned | a still life on the hero's ink: one large 3D bean (right half; top on a phone) that gathers from green grains, then turns from green to dark as you scroll, a warm glow rising behind it; beside it the tag, h2, a numbered stage list (01 Green to 04 Dark, the current one at full strength) and that stage's note. No path, no turning. Without WebGL or script: the four roast photographs and every note |
 | Brew at home | 1 screen | ink half with the recipe as a chevron list; photograph half |
 | Close | 1 screen | a paper card over a still life: tag, h2, the forest button |
 | Footer | auto | three columns (the six coffees, craft, about and the demo lines), then the wordmark across the page |

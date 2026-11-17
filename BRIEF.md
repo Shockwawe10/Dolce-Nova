@@ -111,6 +111,15 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
     accent, gold only inside photographs and the 3D path. Terracotta and the Garamond/Figtree pair are retired
     (type: Instrument Serif for display, Instrument Sans for text, my recommendation).
   The 3D roast path stays (earlier instruction) and takes the new palette.
+- **2026-11-17**, the roast section: "I don't need the bean to be turned around. I need to him to be smooth. And on
+  the beginning stage, it just appears like combining from the little particles ... Also the section before that
+  is very big when you say bring coffee sorted by hand." Then: "think about whether we need the 3D section and
+  whether it really fits in the whole conception of the design ... using just the 3D model of the bin itself, but
+  made it more refined, maybe with no path ... still appears while scrolling, but just changing the color itself".
+  Offered: a still-life bean (recommended) or the four roast photographs without 3D. Chosen: "still life".
+  Built: one large bean on the hero's dark ground, one fixed pose, gathering from green grains during the intro,
+  then only its roast changes; a numbered stage list beside it; three screens instead of five; no path, markers,
+  chaff or turning. The origin block is shorter (72% of a screen at most, one paragraph).
 
 ### Tell-someone sentence
 

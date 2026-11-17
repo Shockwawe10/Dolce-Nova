@@ -19,15 +19,24 @@ scripts were moved to the new purchase path (carousel → product page → cart 
 | Design | Images never distorted; natural width ≥ 1.5× displayed (DPR 2) | **PASS** · 73 images, max distortion 0%, min density 1.58×. The bag renders are 1024px, so the hero bag is held to 640px and the product-page bag to 628px |
 | Motion | No `transition: all`; only transform/opacity animate | **PASS** (static scan; the header's colour change is instant, not animated) |
 | Motion | Reduced motion: nothing running | **PASS** · 0 animations on 5 page states |
-| Motion | ≥ 95% of frames < 20 ms | **PASS with a GPU** (Chromium proxy, 4× CPU: 98.5% phone, 98.7% desktop, first visit with the 3D setup) · **FAIL with software WebGL**: phone 88.3% / 91.4%, desktop 98.6% first visit and **77.1% steady state** (94.0% before this redesign; not investigated, see Motion) · WebKit 1× 96.6% (PASS), 3× 15.4% (FAIL, software-rendered here) · **not run on a real iPhone** |
+| Motion | ≥ 95% of frames < 20 ms | **PASS with a GPU** (Chromium proxy, 4× CPU: 98.4% phone, 98.6% desktop, first visit with the 3D setup; still-life bean) · **FAIL with software WebGL**: phone 91.1% / 94.8%, desktop 98.2% first visit and **82.1% steady state** (77.1% with the path, 94.0% before the global redesign; not investigated) · WebKit 1× 96.2% (PASS), 3× 15.4% (FAIL, software-rendered here) · **not run on a real iPhone** |
 | Quality | Lighthouse mobile ≥ 90, LCP < 2.5 s, CLS < 0.05 | Local server: home 98, LCP 2.2 s, CLS 0 · product page 97, **LCP 2.6 s (FAIL locally)**: Lighthouse attributes 600 ms to render-blocking CSS sent uncompressed by the local server (GitHub Pages compresses). Live results in "Live checks" below. three.js is not requested at load on either page |
 | Quality | axe WCAG 2.2 AA | **PASS** · 0 violations in 12 states (home, a product page with a grind chosen, a product page with the drawer open, checkout with errors, confirmation, credits; at 390 and 1440) |
 | Quality | No horizontal overflow at 390, 820, 1440, 1920 | **PASS** · 0px on the home page and a product page at all four |
 | Quality | Captions never overlap, 320 to 430px | **PASS** · `qa/shop-overlap.mjs` (carousel captions and the product title) |
-| Logic | Cart totals in integer cents; pages agree with the catalog | **PASS** · `node --test`: 11/11 (the hand-typed price table moved to 340 g; `tests/pages.test.mjs` checks every product page and the carousel against `catalog.json`) |
+| Logic | Cart totals in integer cents; pages agree with the catalog | **PASS** · `node --test`: 16/16 (11 shop and page tests, 5 roast-state tests) (the hand-typed price table moved to 340 g; `tests/pages.test.mjs` checks every product page and the carousel against `catalog.json`) |
 | Flow | Home → carousel → product page → espresso, 1 kg, ×2 → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900 (desktop uses the next arrow; phone swipes) |
-| 3D | Bean pixels, no bare half screen, fallback | **PASS** · `qa/roast-pixels.mjs` in WebKit and Chromium, 1440 and 390, locked and unlocked with a forced quality step; `qa/roast-coverage.mjs` 121/121 at both sizes; `qa/roast-fallback.mjs` 4/4 photos |
-| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 55** (67 → 59 → 55); see below |
+| 3D (still-life bean, 2026-11-17) | The bean never turns; it gathers at the start; pixels; words always whole; fallback | **PASS** · `tests/roast-state.test.mjs` (5: one pose at 1,001 positions, assembly 0 to 1 by p = 0.2, stages reached exactly, every grain lands before the assembly ends, reduced motion snaps to the four stages; written first and failing). Bean pixels in WebKit and Chromium, 1440 and 390, locked and unlocked with a forced quality step (89k to 133k pixels, about five times the old path's bean). `qa/roast-coverage.mjs` rewritten for the new layout: the words whole under the header, one stage marked and its own note shown, 61/61 positions at 1440×900, 390×844 and 360×640. Fallback 4/4 photos |
+| 3D smoothness against the previous commit | Guide rule 7: tree vs HEAD, interleaved, Chromium + GPU, 4× CPU, 3 rounds | tree 98.2% / 98.5% of frames < 20 ms (phone / desktop) against HEAD 98.8% / 98.6%: the larger bean and the grains cost 0.6 points on the phone proxy, 0.1 on desktop, both above 95% |
+| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 60** after the still-life roast (63 → 61 → 60; the version before: OPEN 55); see below |
+
+**Gate session after the still-life roast (2026-11-17): 63 → 61 → OPEN 60.** One real finding, fixed: the stage
+list faded on a timer whenever the stage changed, which the kit reads as a scroll reveal; the list and the notes
+now follow the bean's eased roast continuously (no timed fades), so the words and the bean move as one. The five
+findings more than the version before come from the two changes asked for: the shorter origin block lets 64px of
+the roast section show under it (`neighbour`, plus `section-air`, `one-section`, `sparse`), and the pinned
+bean screen is flagged at 390 as well as 1440 (`pinned`; one waiver names one finding, and five are allowed).
+`section-tile`: the carousel section is 1.09 screens at 1440 (before this change too).
 
 **Gate session for this version.** Real defects it found, all fixed: the carousel's off-screen bags were
 lazy and never loaded at 390 (they now load with the page at low priority; lazy only on product pages,
@@ -290,7 +299,8 @@ node qa/audit.mjs                        # design audit (add --engine chromium, 
 node qa/motion.mjs                       # motion criteria
 node qa/webkit-baseline.mjs              # WebKit frame-time floor on this machine
 node qa/a11y.mjs                         # axe
-node qa/shop-overlap.mjs                 # no coffee name over its price, 320 to 430 px
+node qa/shop-overlap.mjs                 # no caption or title overlaps, 320 to 430 px
+node qa/roast-coverage.mjs               # the roast words whole and in step at every scroll position
 node tools/shoot.mjs                     # WebKit screenshots, 4 sizes -> qa/out/shots (add --reduced)
 CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") \
   npx lighthouse http://localhost:4600/Dolce-Nova/ --only-categories=performance,accessibility,best-practices,seo
