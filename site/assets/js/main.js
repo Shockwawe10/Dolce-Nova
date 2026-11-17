@@ -5,11 +5,13 @@ import { load } from './store.js';
 import { mountDrawer } from './drawer.js';
 import { mountCarousels } from './carousel.js';
 import { mountProduct } from './product.js';
+import { mountBrew } from './brew.js';
 import { mountHeader, mountRoastPath, mountAnchors } from './motion.js';
 
 mountHeader();
 mountAnchors();
 mountCarousels();
+mountBrew();
 mountRoastPath();
 
 const ready = load();

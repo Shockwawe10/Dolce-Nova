@@ -137,7 +137,9 @@
       480,
       720,
       960,
-      1280
+      1280,
+      1920,
+      2400
     ],
     "ratio": [
       2400,
@@ -145,6 +147,7 @@
     ],
     "alt": "A steel sample trier drawn from the roasting drum, holding pale beans mid-roast",
     "source": "m147143894",
+    "owner": false,
     "by": "Jameswasswa",
     "licence": "CC BY-SA 4.0",
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
@@ -156,7 +159,8 @@
       480,
       720,
       960,
-      1280
+      1280,
+      1920
     ],
     "ratio": [
       4272,
@@ -164,6 +168,7 @@
     ],
     "alt": "Roasted beans turning in the cooling tray under the stirring arm",
     "source": "m61712989",
+    "owner": false,
     "by": "Alex Jones",
     "licence": "CC0",
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -385,6 +390,48 @@
     "owner": true,
     "by": "Dolce Nova (the owner)",
     "licence": "supplied by the owner for this site",
+    "cropped": false
+  },
+  "brew-moka": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560
+    ],
+    "ratio": [
+      6016,
+      4010
+    ],
+    "alt": "Coffee pouring from the centre column into the top chamber of a moka pot",
+    "source": "f143766326",
+    "owner": false,
+    "by": "Vee Satayamas",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0",
+    "page": "https://commons.wikimedia.org/wiki/File:Coffee_squirted_from_a_moka_pot.jpg",
+    "cropped": false
+  },
+  "brew-espresso": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560
+    ],
+    "ratio": [
+      4272,
+      2848
+    ],
+    "alt": "Two streams of espresso running into a white cup at a dark machine",
+    "source": "m61716670",
+    "owner": false,
+    "by": "Gold Coast Media Lab",
+    "licence": "CC0",
+    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Machine_pouring_coffee_(Unsplash).jpg",
     "cropped": false
   }
 }

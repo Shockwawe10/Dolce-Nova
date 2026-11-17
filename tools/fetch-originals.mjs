@@ -5,7 +5,8 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { execFileSync } from 'node:child_process';
 
 const IDS = ['c69', 'm62054123', 'c96', 'f84555762', 'f125379393', 'f125379394', 'f197293151', 'f56710941',
-  'c75', 'm61713103', 'm147143894', 'm61712989', 'c65'];   // redesign: featured coffee, close, collage
+  'c75', 'm61713103', 'm147143894', 'm61712989', 'c65',   // redesign: featured coffee, close, collage
+  'f143766326', 'm61716670'];   // brew methods (2026-11-17): moka pot, espresso
 const lib = JSON.parse(readFileSync('.claude/skills/design-taste-frontend/assets/photos/photos.json', 'utf8'));
 const found = JSON.parse(readFileSync('.taste-skill/found.json', 'utf8'));
 const flat = (x) => (Array.isArray(x) ? x : x.photos || Object.values(x).flat());

@@ -211,19 +211,20 @@ html:not(.js) .carousel__nav { display: none; }
 /* ---------- manifesto (Canyon): one sentence set large, then a collage ---------- */
 .manifesto > .wrap { display: grid; gap: var(--s-6); }
 .statement { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1.2; max-width: 30ch; text-wrap: balance; }
-.collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); align-items: start; }
-.collage figure { position: relative; overflow: hidden; background: var(--c-surface); aspect-ratio: 4 / 5; }
+/* the craft in black and white, large: one tall frame and two beside it (Canyon's collage) */
+.collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); }
+.collage figure { position: relative; overflow: hidden; background: var(--c-surface); }
 .collage picture { position: absolute; inset: 0; }
-.collage img { width: 100%; height: 100%; object-fit: cover; }
-.collage .is-mono img { filter: grayscale(1); }
-.collage__b { display: none; }
+.collage img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.06); }
+.collage .collage__a { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
+.collage .collage__b, .collage .collage__c { aspect-ratio: 1; }
 @media (min-width: 1024px) {
   .manifesto > .wrap { gap: var(--s-8); }
   .statement { font-size: var(--fs-7); text-align: center; justify-self: center; max-width: 24ch; }
-  .collage { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
-  .collage .collage__a { grid-column: 1 / span 5; aspect-ratio: 3 / 2; }
-  .collage .collage__b { display: block; grid-column: 6 / span 4; aspect-ratio: 4 / 3; margin-top: var(--s-12); }
-  .collage .collage__c { grid-column: 10 / span 3; aspect-ratio: 1; margin-top: var(--s-6); }
+  .collage { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto; gap: var(--g); }
+  .collage .collage__a { grid-column: 1 / span 7; grid-row: 1 / 3; aspect-ratio: auto; }
+  .collage .collage__b { grid-column: 8 / span 5; grid-row: 1; aspect-ratio: 3 / 2; }
+  .collage .collage__c { grid-column: 8 / span 5; grid-row: 2; aspect-ratio: 3 / 2; }
 }
 
 /* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
@@ -245,6 +246,32 @@ html:not(.js) .carousel__nav { display: none; }
   .block-split--flip .block-split__body { padding-inline: var(--edge) var(--s-8); }
   .block-split--flip .block-split__photo { order: 2; }
 }
+/* ---------- brew at home: three methods as tabs in the dark block; the photograph follows the tab ---------- */
+@media (min-width: 1024px) { .block-split--brew { min-height: min(100svh, 960px); } }
+.brew__photo { position: absolute; inset: 0; opacity: 0; transition: opacity var(--d-3) var(--ease); }
+.brew__photo.is-on { opacity: 1; }
+.brew__photo img { object-position: var(--pos, 50% 50%); }
+.brew__tabs { display: flex; flex-wrap: wrap; gap: var(--s-1); }
+.brew__tab { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-3); border: 1px solid var(--c-ink-soft); font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500; transition: transform var(--d-1) var(--ease); }
+.brew__tab:active { transform: scale(0.97); }
+.brew__tab[aria-selected="true"] { background: var(--c-ground); border-color: var(--c-ground); color: var(--c-ink); }
+@media (hover: hover) { .brew__tab:not([aria-selected="true"]):hover { border-color: var(--c-ground); } }
+/* the three recipes share one place: switching never moves the page; the tallest sets the height */
+.brew__panels { display: grid; width: 100%; }
+.recipe { grid-area: 1 / 1; display: grid; gap: var(--s-3); align-content: start; visibility: hidden; }
+.recipe.is-on { visibility: visible; }
+.recipe:focus-visible { outline-offset: 8px; }
+.recipe__specs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2) var(--s-3); padding-block: var(--s-2); border-block: 1px solid var(--c-ink-soft); }
+.recipe__specs dt { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-line); }
+.recipe__specs dd { font-size: var(--fs-3); line-height: 1.3; }
+.recipe__steps { display: grid; gap: var(--s-1); counter-reset: step; max-width: 46ch; }
+.recipe__steps li { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: baseline; counter-increment: step; }
+.recipe__steps li::before { content: counter(step, decimal-leading-zero); font-size: var(--fs-1); letter-spacing: 0.08em; color: var(--c-line); font-variant-numeric: tabular-nums; }
+.recipe__coffee .link { font-weight: 500; }
+/* without script: every recipe in turn, the first photograph */
+html:not(.js) .brew__tabs { display: none; }
+html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var(--s-6); }
+
 /* our own arrow, a small chevron (never Coffee Collective's glyph); a hanging indent */
 .arrows { display: grid; gap: var(--s-1); }
 .arrows li { position: relative; padding-left: var(--s-3); }

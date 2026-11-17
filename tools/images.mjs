@@ -13,6 +13,11 @@ const src = JSON.parse(readFileSync('assets-src/sources.json', 'utf8'));
 export const IMAGES = [
   { name: 'origin', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
     alt: 'A hand lifting green coffee beans from a wide basket during sorting' },
+  // brew methods (2026-11-17): the pour-over above, then a moka pot and an espresso machine
+  { name: 'brew-moka', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560],
+    alt: 'Coffee pouring from the centre column into the top chamber of a moka pot' },
+  { name: 'brew-espresso', src: 'm61716670', widths: [640, 960, 1280, 1920, 2560],
+    alt: 'Two streams of espresso running into a white cup at a dark machine' },
   { name: 'brew', src: 'c96', widths: [640, 960, 1280, 1920, 2560],
     alt: 'Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above' },
   // The roast peak: one bean scale, four stages. Green from Roger Burger; light/medium/dark from one Alorin shot.
@@ -27,9 +32,9 @@ export const IMAGES = [
   // closing card and collage
   { name: 'close', src: 'm61713103', widths: [640, 960, 1280, 1920, 2560, 3200],
     alt: 'Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light' },
-  { name: 'col-trier', src: 'm147143894', widths: [480, 720, 960, 1280],
+  { name: 'col-trier', src: 'm147143894', widths: [480, 720, 960, 1280, 1920, 2400],
     alt: 'A steel sample trier drawn from the roasting drum, holding pale beans mid-roast' },
-  { name: 'col-tray', src: 'm61712989', widths: [480, 720, 960, 1280],
+  { name: 'col-tray', src: 'm61712989', widths: [480, 720, 960, 1280, 1920],
     alt: 'Roasted beans turning in the cooling tray under the stirring arm' },
   { name: 'col-beans', src: 'c65', widths: [480, 720, 960, 1280],
     alt: 'Glossy roasted coffee beans filling the frame' },
