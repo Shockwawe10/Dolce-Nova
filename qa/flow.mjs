@@ -8,6 +8,9 @@ const browser = await webkit.launch();
 let failed = 0;
 for (const [w, h] of [[390, 844], [1440, 900]]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: w < 1024 });
+  // the catalog arrives late, as on a slow network: every choice must work before it has loaded
+  // (found live 2026-11-17: a size picked early left the old price on the button)
+  await ctx.route('**/data/catalog.json', async (r) => { await new Promise((s) => setTimeout(s, 1500)); await r.continue(); });
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));
@@ -25,10 +28,11 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     const form = page.locator('form[data-add]');
     await form.locator('label:has-text("Espresso")').click();
     await form.locator('label:has-text("1")').filter({ hasText: 'kg' }).click();
-    assert.match(await form.locator('[data-price]').innerText(), /56\.00/);
+    assert.match(await form.locator('[data-add-price]').innerText(), /56\.00/);
     await form.locator('button[type=submit]').click();
     await form.locator('button[type=submit]').click();
-    assert.equal(await page.locator('[data-cart-count]').innerText(), '2');
+    // both presses count, even the ones made while the catalog was still on its way
+    await page.waitForFunction(() => document.querySelector('[data-cart-count]').textContent === '2', null, { timeout: 5000 });
     // drawer: dialog semantics, inert page, Esc closes and returns focus
     await page.click('[data-cart-open]');
     await page.waitForSelector('#cart.is-open');
@@ -62,6 +66,21 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     console.log(`FAIL flow ${w}x${h}: ${e.message}`);
     await page.screenshot({ path: `qa/out/flow-fail-${w}.png` }).catch(() => {});
   }
+  await ctx.close();
+}
+// before (or without) the checkout script, Enter in a card field must not submit the form natively:
+// a GET would put the card number in the URL. The pay button ships disabled, which blocks implicit submission.
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await ctx.route('**/assets/js/checkout.js', (r) => r.abort());
+  const page = await ctx.newPage();
+  await page.goto(URL + 'checkout.html', { waitUntil: 'networkidle' });
+  await page.fill('#number', '4242 4242 4242 4242');
+  await page.press('#number', 'Enter');
+  await page.waitForTimeout(800);
+  const leaked = /4242/.test(page.url());
+  console.log(`${leaked ? 'FAIL' : 'PASS'} no native submit before the checkout script: ${leaked ? 'card digits in the URL: ' + page.url() : 'URL unchanged'}`);
+  if (leaked) failed++;
   await ctx.close();
 }
 await browser.close();

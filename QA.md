@@ -49,7 +49,25 @@ Waived (5): `pinned` and `moment-none` (the roast path), `effect-kind` (the 3D t
 `copy-headings` (the slide headings are the coffees' names), `product-shown` (the kit wants the hero product
 at 80% of the content width; the bag renders are 1024px, so that would upscale past the 1.5× rule).
 
-**Live checks** (after deploy): see the end of this section once run.
+**Live checks** (deploy 343a00d, https://shockwawe10.github.io/Dolce-Nova/): Lighthouse mobile, home
+94 / 100 / 100 / 100, LCP 1.5 s, CLS 0, TBT 280 ms; product page (Nyeri) 98 / 100 / 100 / 100, LCP 1.4 s,
+CLS 0. Bean pixels PASS in Chromium and WebKit (8 runs); no caption overlaps at six phone widths.
+**The flow FAILED at 1440 live:** the price on the Add button stayed at €22.50 after choosing 1 kg.
+
+**Two real bugs found by that failure, both fixed, both older than this redesign in part:**
+
+1. *Product page:* the form's listeners attached only after `catalog.json` had downloaded, so a size picked
+   on a slow connection left the old price on the button (and an early Add did nothing). Each size now
+   carries its price in the markup, the listeners attach at once, and Add waits for the catalog.
+2. *Checkout (present since the first build):* before `checkout.js` ran, pressing Enter in a card field
+   submitted the form natively as a GET and **put the typed card number in the page URL**
+   (`checkout.html?number=4242+4242+4242+4242`), into history and server logs. The pay button now ships
+   `disabled` in the HTML, which blocks implicit submission, and the script enables it once the order is
+   ready.
+
+`qa/flow.mjs` now delays `catalog.json` by 1.5 s on every run (it failed at both sizes without fix 1) and
+blocks `checkout.js` once to press Enter in the card field (it showed the card number in the URL without
+fix 2; with it, the URL is unchanged). Re-checked live after the fix deploy: see the line below.
 
 ## Previous versions (kept for the record)
 

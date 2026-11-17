@@ -151,10 +151,10 @@ ${header({ home: './' })}
           ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${esc(label)}</label>`).join('\n          ')}
         </div></fieldset>
         <fieldset class="choice"><legend>Size</legend><div class="chips">
-          ${sizesList.map(([s, label], i) => `<label class="chip"><input type="radio" name="size" value="${s}"${i === 0 ? ' checked' : ''}>${esc(label)} · ${formatEUR(p.prices[s])}</label>`).join('\n          ')}
+          ${sizesList.map(([s, label], i) => `<label class="chip"><input type="radio" name="size" value="${s}" data-price="${formatEUR(p.prices[s])}"${i === 0 ? ' checked' : ''}>${esc(label)} · ${formatEUR(p.prices[s])}</label>`).join('\n          ')}
         </div></fieldset>
         <div class="add">
-          <button class="btn btn--block" type="submit"><span data-add-label>Add to cart</span> · <span data-price>${formatEUR(p.prices[sizesList[0][0]])}</span></button>
+          <button class="btn btn--block" type="submit"><span data-add-label>Add to cart</span> · <span data-add-price>${formatEUR(p.prices[sizesList[0][0]])}</span></button>
           <p class="add__status" role="status" aria-live="polite"></p>
           <noscript><p>The cart needs JavaScript.</p></noscript>
         </div>
