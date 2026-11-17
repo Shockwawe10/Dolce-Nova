@@ -6,12 +6,14 @@ import { mountDrawer } from './drawer.js';
 import { mountCarousels } from './carousel.js';
 import { mountProduct } from './product.js';
 import { mountBrew } from './brew.js';
+import { mountRoastUI } from './roast-ui.js';
 import { mountHeader, mountRoastPath, mountAnchors } from './motion.js';
 
 mountHeader();
 mountAnchors();
 mountCarousels();
 mountBrew();
+mountRoastUI();
 mountRoastPath();
 
 const ready = load();

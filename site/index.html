@@ -174,39 +174,58 @@
     </div>
   </section>
 
-  <!-- the roast, as a still life (ours): one 3D bean on the hero's dark ground. It gathers from green fragments,
-       then holds still while scrolling turns its roast; the stage list beside it follows (owner, 2026-11-17) -->
-  <section class="roastpath" id="roast" aria-labelledby="roast-title" data-roastpath>
-    <div class="roastpath__stage">
-      <div class="roastpath__bg roastpath__bg--base" aria-hidden="true"></div>
-      <div class="roastpath__bg roastpath__bg--warm" aria-hidden="true"></div>
-      <canvas class="roastpath__canvas" role="img" aria-label="One coffee bean, held still, turning from green to light, medium and dark brown as you scroll"></canvas>
-      <div class="wrap roastpath__fallback">
-      <div class="roastpath__frames">
-        <picture><source type="image/avif" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-green-420.avif 420w, assets/img/roast-green-640.avif 640w, assets/img/roast-green-840.avif 840w"><img src="assets/img/roast-green-640.webp" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-green-420.webp 420w, assets/img/roast-green-640.webp 640w, assets/img/roast-green-840.webp 840w" width="840" height="840" alt="Green, unroasted coffee beans" loading="lazy" decoding="async"></picture>
-        <picture><source type="image/avif" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-light-420.avif 420w, assets/img/roast-light-640.avif 640w, assets/img/roast-light-760.avif 760w"><img src="assets/img/roast-light-640.webp" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-light-420.webp 420w, assets/img/roast-light-640.webp 640w, assets/img/roast-light-760.webp 760w" width="760" height="760" alt="Light roasted beans, pale cinnamon brown" loading="lazy" decoding="async"></picture>
-        <picture><source type="image/avif" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-medium-420.avif 420w, assets/img/roast-medium-640.avif 640w, assets/img/roast-medium-840.avif 840w"><img src="assets/img/roast-medium-640.webp" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-medium-420.webp 420w, assets/img/roast-medium-640.webp 640w, assets/img/roast-medium-840.webp 840w" width="840" height="840" alt="Medium roasted beans, even chestnut brown" loading="lazy" decoding="async"></picture>
-        <picture><source type="image/avif" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-dark-420.avif 420w, assets/img/roast-dark-640.avif 640w, assets/img/roast-dark-840.avif 840w"><img src="assets/img/roast-dark-640.webp" sizes="(min-width: 1024px) 504px, 92vw" srcset="assets/img/roast-dark-420.webp 420w, assets/img/roast-dark-640.webp 640w, assets/img/roast-dark-840.webp 840w" width="840" height="840" alt="Dark roasted beans with an oily sheen" loading="lazy" decoding="async"></picture>
-      </div>
-      </div>
-      <div class="wrap roastpath__text">
-        <div class="roastpath__copy">
+  <!-- the roast (ours): four batches roast together under one temperature slider; each is pulled at its stage
+       (the owner, 2026-11-17). 3D beans over the four slots; without WebGL or script, the four roast photographs -->
+  <section class="roast on-dark" id="roast" aria-labelledby="roast-title" data-roastpath>
+    <div class="roast__glow" aria-hidden="true"></div>
+    <div class="wrap roast__wrap">
+      <div class="section__head roast__head">
+        <div>
           <p class="tag">Roast</p>
           <h2 id="roast-title">From green bean to dark.</h2>
-          <p class="roastpath__intro">About twelve minutes in a hot drum turn a grassy seed into coffee.</p>
-          <ol class="roast-steps">
-            <li class="is-on" data-roast-stage aria-current="step"><span class="roast-steps__n">01</span><span class="roast-steps__name">Green</span><span class="roast-steps__temp">Room temperature</span></li>
-            <li data-roast-stage><span class="roast-steps__n">02</span><span class="roast-steps__name">Light</span><span class="roast-steps__temp">First crack · 196&nbsp;°C</span></li>
-            <li data-roast-stage><span class="roast-steps__n">03</span><span class="roast-steps__name">Medium</span><span class="roast-steps__temp">Near 210&nbsp;°C</span></li>
-            <li data-roast-stage><span class="roast-steps__n">04</span><span class="roast-steps__name">Dark</span><span class="roast-steps__temp">Second crack · 224&nbsp;°C</span></li>
-          </ol>
-          <div class="roast-notes">
-            <p class="is-on" data-roast-note><span class="visually-hidden">Green: </span>Dense, grassy and about 11% water. It smells of fresh hay, not of coffee yet.</p>
-            <p data-roast-note><span class="visually-hidden">Light: </span>The bean dries, yellows, then cracks open with a pop. Stopped soon after, it keeps bright fruit, like our Nyeri.</p>
-            <p data-roast-note><span class="visually-hidden">Medium: </span>Sugars caramelise and the colour deepens to chestnut. Sweetness and body take over.</p>
-            <p data-roast-note><span class="visually-hidden">Dark: </span>Oils rise and the bean turns glossy, almost black. Cocoa and smoke; our Cerrado stops just before.</p>
+        </div>
+        <p class="t-lede">Four batches go into the drum together. Turn up the heat and watch each one pulled at its stage.</p>
+      </div>
+      <div class="roast__stage">
+        <canvas class="roast__canvas" role="img" aria-label="Four coffee beans roasting together, from green to light, medium and dark, as the temperature rises"></canvas>
+        <ol class="roast__beans">
+          <li class="roast__bean" data-bean="0">
+            <div class="roast__slot" data-bean-slot><picture class="roast__photo"><source type="image/avif" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-green-420.avif 420w, assets/img/roast-green-640.avif 640w, assets/img/roast-green-840.avif 840w"><img src="assets/img/roast-green-420.webp" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-green-420.webp 420w, assets/img/roast-green-640.webp 640w, assets/img/roast-green-840.webp 840w" width="1470" height="1470" alt="Green, unroasted coffee beans filling the frame" loading="lazy" decoding="async"></picture></div>
+            <p class="roast__name">Green</p>
+            <p class="roast__meta"><span class="roast__pull-long">Raw, for comparison</span><span class="roast__pull-short">Raw</span> <span class="roast__status" data-bean-status></span></p>
+          </li>
+          <li class="roast__bean" data-bean="1">
+            <div class="roast__slot" data-bean-slot><picture class="roast__photo"><source type="image/avif" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-light-420.avif 420w, assets/img/roast-light-640.avif 640w, assets/img/roast-light-760.avif 760w"><img src="assets/img/roast-light-420.webp" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-light-420.webp 420w, assets/img/roast-light-640.webp 640w, assets/img/roast-light-760.webp 760w" width="760" height="760" alt="Light roasted coffee beans, pale cinnamon brown" loading="lazy" decoding="async"></picture></div>
+            <p class="roast__name">Light</p>
+            <p class="roast__meta"><span class="roast__pull-long">Pulled at first crack, 196 °C</span><span class="roast__pull-short">196 °C</span> <span class="roast__status" data-bean-status>Waiting</span></p>
+          </li>
+          <li class="roast__bean" data-bean="2">
+            <div class="roast__slot" data-bean-slot><picture class="roast__photo"><source type="image/avif" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-medium-420.avif 420w, assets/img/roast-medium-640.avif 640w, assets/img/roast-medium-840.avif 840w"><img src="assets/img/roast-medium-420.webp" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-medium-420.webp 420w, assets/img/roast-medium-640.webp 640w, assets/img/roast-medium-840.webp 840w" width="840" height="840" alt="Medium roasted coffee beans, even chestnut brown" loading="lazy" decoding="async"></picture></div>
+            <p class="roast__name">Medium</p>
+            <p class="roast__meta"><span class="roast__pull-long">Pulled at 210 °C</span><span class="roast__pull-short">210 °C</span> <span class="roast__status" data-bean-status>Waiting</span></p>
+          </li>
+          <li class="roast__bean" data-bean="3">
+            <div class="roast__slot" data-bean-slot><picture class="roast__photo"><source type="image/avif" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-dark-420.avif 420w, assets/img/roast-dark-640.avif 640w, assets/img/roast-dark-840.avif 840w"><img src="assets/img/roast-dark-420.webp" sizes="(min-width: 1024px) 296px, 44vw" srcset="assets/img/roast-dark-420.webp 420w, assets/img/roast-dark-640.webp 640w, assets/img/roast-dark-840.webp 840w" width="840" height="840" alt="Dark roasted coffee beans with an oily sheen" loading="lazy" decoding="async"></picture></div>
+            <p class="roast__name">Dark</p>
+            <p class="roast__meta"><span class="roast__pull-long">Pulled at second crack, 224 °C</span><span class="roast__pull-short">224 °C</span> <span class="roast__status" data-bean-status>Waiting</span></p>
+          </li>
+        </ol>
+      </div>
+      <div class="roast__control" data-roast-control>
+        <div class="roast__readout">
+          <label for="roast-temp">Bean temperature</label>
+          <output for="roast-temp" data-roast-temp>20 °C</output>
+        </div>
+        <div class="roast__track">
+          <input id="roast-temp" class="roast__range" type="range" min="0" max="100" step="0.5" value="0" aria-valuetext="20 °C, raw" aria-describedby="roast-note">
+          <div class="roast__ticks">
+            <button type="button" class="roast__tick" style="--u: 0" data-roast-tick="0" aria-label="Set to 20 °C: raw">20°</button>
+            <button type="button" class="roast__tick" style="--u: 60" data-roast-tick="60" aria-label="Set to 196 °C: light batch pulled">196°</button>
+            <button type="button" class="roast__tick" style="--u: 75" data-roast-tick="75" aria-label="Set to 210 °C: medium batch pulled">210°</button>
+            <button type="button" class="roast__tick" style="--u: 90" data-roast-tick="90" aria-label="Set to 224 °C: dark batch pulled">224°</button>
           </div>
         </div>
+        <p class="roast__note" id="roast-note" aria-live="polite" data-roast-note><strong>Raw.</strong> Green coffee at room temperature: dense, grassy and about 11% water.</p>
       </div>
     </div>
   </section>

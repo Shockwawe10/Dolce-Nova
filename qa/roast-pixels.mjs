@@ -1,4 +1,4 @@
-// Guide 6 and 10.2: check pixels, not state. At p = 0.25, 0.625 and 1, compare the stage with the canvas shown
+// Guide 6 and 10.2: check pixels, not state. With the slider at 20, 196 and 230 C, compare the section with the canvas shown
 // and hidden; the bean must change at least MIN_PIXELS pixels. Runs locked (?qa) and unlocked, including after a
 // forced quality step at rest (setSize clears the canvas; a missed redraw would leave it blank).
 // Usage: node tools/serve.mjs & node qa/roast-pixels.mjs [chromium|webkit]     BASE=<url> for the live site
@@ -13,9 +13,9 @@ let failed = 0;
 
 async function changed(page) {
   const on = (await page.screenshot()).toString('base64');
-  await page.evaluate(() => { document.querySelector('.roastpath__canvas').style.visibility = 'hidden'; });
+  await page.evaluate(() => { document.querySelector('.roast__canvas').style.visibility = 'hidden'; });
   const off = (await page.screenshot()).toString('base64');
-  await page.evaluate(() => { document.querySelector('.roastpath__canvas').style.visibility = ''; });
+  await page.evaluate(() => { document.querySelector('.roast__canvas').style.visibility = ''; });
   return page.evaluate(async ([a, b]) => {
     const load = (s) => new Promise((r) => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/png;base64,' + s; });
     const [ia, ib] = await Promise.all([load(a), load(b)]);
@@ -33,12 +33,11 @@ for (const [w, h] of [[1440, 900], [390, 844]]) {
   for (const locked of [true, false]) {
     const page = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: w < 1024 ? 2 : 1 });
     await page.goto(BASE + (locked ? '?qa' : ''), { waitUntil: 'networkidle' });
-    const top = await page.evaluate(() => { const s = document.querySelector('[data-roastpath]'); return { top: s.offsetTop, span: s.offsetHeight - s.querySelector('.roastpath__stage').clientHeight }; });
-    await page.evaluate((y) => scrollTo(0, y), top.top - 300);
+    await page.evaluate(() => document.querySelector('#roast').scrollIntoView());
     await page.waitForFunction(() => window.__roast, null, { timeout: 60000 }).catch(() => {});
     const counts = [];
-    for (const p of [0.25, 0.625, 1]) {
-      await page.evaluate((y) => scrollTo(0, y), Math.round(top.top + top.span * p));
+    for (const u of [0, 60, 100]) {
+      await page.evaluate((v) => { const r = document.querySelector('#roast-temp'); r.value = v; r.dispatchEvent(new Event('input', { bubbles: true })); }, u);
       await page.evaluate(() => window.__roast && window.__roast.settled());
       counts.push(await changed(page));
     }

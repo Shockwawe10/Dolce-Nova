@@ -27,10 +27,10 @@ for (const [w, h] of SIZES) {
   await to('#coffees', 0); await shot('02-coffees');
   await to('.manifesto', 0); await shot('03-manifesto');
   await to('#origin', 0); await shot('04-origin');
-  // the peak: walk the roast section at 0, 1/3, 2/3, 1
-  const roast = await page.evaluate(() => { const s = document.querySelector('[data-roastpath]'); const st = s.querySelector('.roastpath__stage'); return { top: s.getBoundingClientRect().top + scrollY, travel: s.offsetHeight - st.offsetHeight }; });
-  for (const [i, f] of [[0, 0.25], [1, 0.5], [2, 0.75], [3, 1]]) {
-    await page.evaluate((y) => scrollTo({ top: y, behavior: 'instant' }), roast.top + roast.travel * f);
+  // the peak: the roast slider at the four marks
+  await to('#roast', 0);
+  for (const [i, u] of [[0, 0], [1, 60], [2, 75], [3, 100]]) {
+    await page.evaluate((v) => { const r = document.querySelector('#roast-temp'); r.value = v; r.dispatchEvent(new Event('input', { bubbles: true })); }, u);
     await page.evaluate(() => window.__roast && window.__roast.settled());
     await shot(`05-roast-${i}`);
   }

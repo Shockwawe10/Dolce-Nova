@@ -343,65 +343,66 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 .add { display: grid; gap: var(--s-1); }
 .add__status { min-height: 24px; font-size: var(--fs-1); }
 
-/* ---------- the roast, as a still life: one sticky screen inside a three-screen section (ios-sticky-stage) ---------- */
-:root { --toolbar: calc(100lvh - 100svh); }
-@supports not (height: 100lvh) { :root { --toolbar: 0px; } }
-.roastpath { position: relative; height: 300vh; height: 300lvh; }
-.roastpath__stage { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; background: var(--c-ink); color: var(--c-ground); }
-.roastpath__stage :focus-visible { outline-color: var(--c-ground); }
-/* the hero's studio: ink, a soft pool of light where the bean sits, warming with the roast (opacity only) */
-.roastpath__bg { position: absolute; inset: 0; }
-.roastpath__bg--base { background: radial-gradient(34% 48% at 73% 52%, color-mix(in srgb, var(--c-ground) 10%, var(--c-ink)), var(--c-ink) 100%); }
-.roastpath__bg--warm { opacity: 0; background: radial-gradient(30% 42% at 73% 52%, color-mix(in srgb, var(--c-ember) 42%, transparent), transparent 100%); }
-@media (max-width: 1023px) {
-  .roastpath__bg--base { background: radial-gradient(62% 30% at 50% 30%, color-mix(in srgb, var(--c-ground) 10%, var(--c-ink)), var(--c-ink) 100%); }
-  .roastpath__bg--warm { background: radial-gradient(56% 26% at 50% 30%, color-mix(in srgb, var(--c-ember) 42%, transparent), transparent 100%); }
-}
-.roastpath__canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; touch-action: pan-y; }
-.roastpath__canvas.is-ready { opacity: 1; }   /* shown at once when ready: no fade as it scrolls in */
-
-/* the words: on the left at 1440, under the bean on a phone */
-.roastpath__text { position: relative; z-index: 1; padding-top: var(--padt); }
-.roastpath__copy { display: grid; gap: var(--s-3); width: var(--col5); }
-.roastpath__stage .tag { color: var(--c-line); }
-.roastpath__intro { font-size: var(--fs-3); line-height: 1.5; color: var(--c-surface); max-width: 32ch; }
-.roast-steps { border-top: 1px solid var(--c-ink-soft); counter-reset: none; }
-.roast-steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: baseline; column-gap: var(--s-2); padding-block: var(--s-2); border-bottom: 1px solid var(--c-ink-soft); opacity: 0.56; }   /* before the 3D loads; then roast3d.js writes it from the roast */
-.roast-steps li.is-on { opacity: 1; }
-.roast-steps__n { font-size: var(--fs-1); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
-.roast-steps__name { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1; }
-.roast-steps__temp { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; text-align: right; }
-/* one note per stage, stacked in one place: changing stage never moves the layout */
-.roast-notes { display: grid; }
-.roast-notes p { grid-area: 1 / 1; opacity: 0; font-size: var(--fs-3); line-height: 1.5; max-width: 36ch; }
-.roast-notes p.is-on { opacity: 1; }
-@media (max-width: 1023px) {
-  .roastpath__text { position: absolute; left: 0; right: 0; bottom: calc(var(--toolbar) + var(--s-3) + env(safe-area-inset-bottom)); padding-top: 0; }
-  .roastpath__copy { width: 100%; gap: var(--s-2); }
-  .roastpath__copy h2 { font-size: var(--fs-6); }
-  .roastpath__intro { display: none; }   /* the phone keeps the list and the note; the bean needs the room */
-  .roast-steps li { padding-block: var(--s-1); }
-  .roast-steps__name { font-size: var(--fs-4); }
-  .roast-notes p { font-size: var(--fs-2); }
-}
-
-/* without JavaScript or WebGL: the four real roast photographs and every note, as a plain section */
-.roastpath__fallback { display: none; }
-html:not(.js) .roastpath, .roastpath--fallback { height: auto; }
-html:not(.js) .roastpath__stage, .roastpath--fallback .roastpath__stage { position: relative; height: auto; padding-bottom: var(--s-8); }
-html:not(.js) .roastpath__canvas, .roastpath--fallback .roastpath__canvas { display: none; }
-html:not(.js) .roastpath__text, .roastpath--fallback .roastpath__text { position: relative; bottom: auto; padding-top: var(--padt); }
-html:not(.js) .roast-steps li, .roastpath--fallback .roast-steps li { opacity: 1 !important; }   /* over the inline opacity the 3D wrote before it failed */
-html:not(.js) .roast-notes p, .roastpath--fallback .roast-notes p { grid-area: auto; opacity: 1 !important; margin-bottom: var(--s-1); }
-html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { display: block; position: relative; z-index: 1; padding-top: var(--padt); }
-.roastpath__frames { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); width: min(100%, 504px); }
-.roastpath__frames picture { aspect-ratio: 1; overflow: hidden; background: var(--c-surface); }
-.roastpath__frames img { width: 100%; height: 100%; object-fit: cover; }
+/* ---------- the roast: four batches under one temperature slider (the owner, 2026-11-17) ---------- */
+.roast { position: relative; overflow: hidden; padding-block: var(--padt) var(--padb); background: var(--c-ink); }
+.roast :focus-visible { outline-color: var(--c-ground); }
+/* the drum's warmth rises behind the beans as the slider climbs (opacity only, written from the slider) */
+.roast__glow { position: absolute; inset: 0; opacity: 0; pointer-events: none; background: radial-gradient(48% 38% at 50% 56%, color-mix(in srgb, var(--c-ember) 38%, transparent), transparent 100%); }
+.roast__wrap { position: relative; display: grid; gap: var(--s-4); }
+.roast__head { margin-bottom: 0; }
+.roast .tag, .roast__meta { color: var(--c-line); }
+.roast .t-lede { color: var(--c-surface); }
+.roast__stage { position: relative; }
+.roast__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; opacity: 0; }
+.roast__canvas.is-ready { opacity: 1; }
+/* one row of four at every width, so the beans and the slider are on screen together */
+.roast__beans { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-1); }
+.roast__slot { aspect-ratio: 1; position: relative; overflow: hidden; }
+/* the photographs show only without the 3D */
+.roast__photo { position: absolute; inset: 0; opacity: 0; }
+.roast__photo img { width: 100%; height: 100%; object-fit: cover; }
+html:not(.js) .roast__photo, .roastpath--fallback .roast__photo { opacity: 1; }
+.roast__name { font-family: var(--f-display); font-size: var(--fs-3); line-height: 1.1; margin-top: var(--s-1); }
+.roast__meta { font-size: var(--fs-1); letter-spacing: 0.04em; }
+.roast__status { color: var(--c-ground); font-weight: 500; }
+.roast__status:empty { display: none; }
+.roast__status::before { content: "· "; color: var(--c-line); font-weight: 400; }
+.roast__pull-long { display: none; }
+@media (max-width: 639px) { .roast__meta { font-size: var(--fs-1); letter-spacing: 0; } .roast__status { display: block; } .roast__status::before { content: none; } }
+@media (min-width: 640px) { .roast__pull-long { display: inline; } .roast__pull-short { display: none; } .roast__name { font-size: var(--fs-4); } .roast__beans { gap: var(--s-3) var(--s-2); } }
 @media (min-width: 1024px) {
-  html:not(.js) .roastpath__stage, .roastpath--fallback .roastpath__stage { display: grid; grid-template-columns: 1fr 1fr; }
-  html:not(.js) .roastpath__fallback, .roastpath--fallback .roastpath__fallback { grid-column: 2; grid-row: 1; width: auto; margin: 0; }
-  html:not(.js) .roastpath__text, .roastpath--fallback .roastpath__text { grid-column: 1; grid-row: 1; width: auto; margin: 0 0 0 max(var(--gutter), (100vw - var(--max)) / 2); }
-  html:not(.js) .roastpath__copy, .roastpath--fallback .roastpath__copy { width: auto; max-width: 520px; }
+  .roast__beans { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--g); }
+  .roast__name { font-size: var(--fs-5); }
+}
+
+/* the control: the readout, the slider with its four marks, and what is happening now */
+.roast__control { display: grid; gap: var(--s-2); }
+.roast__readout { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2); }
+.roast__readout label { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-line); font-weight: 500; }
+.roast__readout output { font-family: var(--f-display); font-size: var(--fs-6); line-height: 1; font-variant-numeric: tabular-nums; }
+.roast__track { position: relative; padding-bottom: var(--s-6); }
+.roast__range { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 48px; margin: 0; background: transparent; cursor: pointer; touch-action: pan-y; }
+.roast__range::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(var(--c-ground), var(--c-ground)) 0 0 / var(--fill, 0%) 100% no-repeat, var(--c-ink-soft); }
+.roast__range::-moz-range-track { height: 2px; background: var(--c-ink-soft); }
+.roast__range::-moz-range-progress { height: 2px; background: var(--c-ground); }
+.roast__range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; margin-top: -11px; border-radius: var(--r-pill); background: var(--c-ground); border: 0; }
+.roast__range::-moz-range-thumb { width: 24px; height: 24px; border-radius: var(--r-pill); background: var(--c-ground); border: 0; }
+.roast__range:focus-visible { outline: 2px solid var(--c-ground); outline-offset: 4px; }
+/* the marks sit under the track at their slider positions; each is a 48px target */
+.roast__ticks { position: absolute; left: 12px; right: 12px; bottom: 0; height: var(--s-6); }
+.roast__tick { position: absolute; left: calc(var(--u) * 1%); transform: translateX(-50%); min-width: 48px; height: 48px; display: inline-flex; align-items: flex-start; justify-content: center; padding-top: var(--s-1); font-size: var(--fs-1); letter-spacing: 0.04em; color: var(--c-line); font-variant-numeric: tabular-nums; }
+.roast__tick:first-child { transform: translateX(-12px); justify-content: flex-start; }
+.roast__tick::before { content: ""; position: absolute; top: -10px; left: 50%; width: 1px; height: 8px; background: var(--c-ink-soft); }
+.roast__tick:first-child::before { left: 12px; }
+@media (hover: hover) { .roast__tick:hover { color: var(--c-ground); } }
+.roast__note { max-width: 60ch; color: var(--c-surface); min-height: calc(2 * 1.6em); }
+.roast__note strong { color: var(--c-ground); font-weight: 500; }
+html:not(.js) .roast__control { display: none; }
+@media (min-width: 1024px) {
+  .roast__control { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--g); align-items: start; }
+  .roast__readout { grid-column: 1; grid-row: 1; }
+  .roast__note { grid-column: 1; grid-row: 2; }
+  .roast__track { grid-column: 2; grid-row: 1 / 3; }
 }
 
 /* ---------- cart drawer ---------- */

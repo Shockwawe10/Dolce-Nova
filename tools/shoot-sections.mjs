@@ -14,7 +14,7 @@ for (const [w, h] of sizes.length ? sizes : [[1440, 900], [390, 844]]) {
   await page.evaluate(() => document.fonts.ready);
   const tops = await page.evaluate(() => [...document.querySelectorAll('main > section, footer')].map((s, i) => ({
     i, name: (s.id || s.className.split(' ')[0] || s.tagName).toLowerCase(), top: s.getBoundingClientRect().top + scrollY,
-    roast: s.matches('[data-roastpath]') ? s.offsetHeight - s.querySelector('.roastpath__stage').clientHeight : 0,
+    roast: 0,   // the roast is one screen now (a slider, not a pinned scroll)
   })));
   const files = [];
   for (const t of tops) {

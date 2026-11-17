@@ -1,43 +1,68 @@
-// The still-life bean's state as a pure function of scroll progress p in [0, 1] (3D guide rule 3). No three.js
-// here, so node --test can check it (tests/roast-state.test.mjs).
+// The roast as four batches under one temperature slider (the owner, 2026-11-17: "sliders that user can slide and
+// see how coffee roasting changes ... four bins"). Pure functions of the slider position u (0..100) and the one-time
+// assembly a (0..1), so node --test can check them (tests/roast-state.test.mjs; 3D guide rule 3).
 //
-// The owner, 2026-11-17: "I don't need the bean to be turned around. I need him to be smooth", "on the beginning
-// stage, it just appears like combining from the little particles", and then: no path, "just changing the color
-// itself while scrolling". So: p 0 to ASSEMBLED_AT, green fragments gather into the bean; after that the bean
-// holds one pose and only its roast changes, resting on each stage while its text is read.
+// All four beans heat together; each batch is pulled at its own stage and then holds: one stays raw for comparison,
+// one stops at first crack (light), one at 210 C (medium), one at second crack (dark). So sliding up shows the
+// change, and the end of the slider shows the four roasts side by side. No bean ever turns.
 
 export const clamp01 = (x) => Math.min(1, Math.max(0, x));
 export const smooth = (x) => { x = clamp01(x); return x * x * (3 - 2 * x); };
 export const mix = (a, b, t) => a + (b - a) * t;
+const piecewise = (knots, x) => {
+  if (x <= knots[0][0]) return knots[0][1];
+  for (let i = 1; i < knots.length; i++) {
+    const [x0, y0] = knots[i - 1], [x1, y1] = knots[i];
+    if (x <= x1) return y0 + ((x - x0) / (x1 - x0)) * (y1 - y0);
+  }
+  return knots.at(-1)[1];
+};
 
-/** One pose for the whole section: the flat face and its S-shaped cut toward the camera (pitch -90 deg), the length
- *  leaning 0.55 rad on a diagonal, rolled 0.3 rad so a little of the dome shows. The first pose (-0.95, 0.45, 0.35)
- *  rolled the bean about its length and left the cut on its edge; the owner asked to see the cut (2026-11-17). */
-export const POSE = { x: -1.5708, y: 0.55, z: -0.3 };
-export const ASSEMBLED_AT = 0.2;
-/** Where each stage (green, light, medium, dark) is reached exactly. */
-export const STAGE_P = [0, 1, 2, 3].map((k) => ASSEMBLED_AT + ((1 - ASSEMBLED_AT) * k) / 3);
+/** Slider position (0..100) to bean temperature in C: stretched where the cracks are, so they are not crowded. */
+const TEMP_KNOTS = [[0, 20], [20, 100], [40, 160], [60, 196], [75, 210], [90, 224], [100, 230]];
+export const uToTemp = (u) => piecewise(TEMP_KNOTS, u);
+export const tempToU = (t) => piecewise(TEMP_KNOTS.map(([u, T]) => [T, u]), t);
+/** Where each batch is pulled: raw, light (first crack), medium, dark (second crack). */
+export const STOPS = [20, 196, 210, 224];
+export const NAMES = ['Green', 'Light', 'Medium', 'Dark'];
+/** The slider's marks. */
+export const TICKS = STOPS.map((temp, k) => ({ u: tempToU(temp), temp, name: NAMES[k] }));
 
-export function state(p) {
-  p = clamp01(p);
-  const s = (clamp01((p - ASSEMBLED_AT) / (1 - ASSEMBLED_AT))) * 3;   // 0..3
-  const i = Math.min(2, Math.floor(s));
-  const stageX = s >= 3 ? 3 : i + smooth(s - i);                      // holds near each stage, eases between
+/** Roast degree for a bean at a temperature: 0 green, 1 light, 2 medium, 3 dark (general roasting knowledge). */
+const DEGREE_KNOTS = [[20, 0], [100, 0.06], [160, 0.4], [196, 1], [210, 2], [224, 3]];
+export const degreeAt = (t) => piecewise(DEGREE_KNOTS, t);
+
+/** What is happening at a temperature, for the note under the slider. */
+const PHASES = [
+  { from: -Infinity, name: 'Raw', note: 'Green coffee at room temperature: dense, grassy and about 11% water.' },
+  { from: 40, name: 'Drying', note: 'The beans warm through and give up their water. Still green, still grassy.' },
+  { from: 150, name: 'Yellowing', note: 'Sugars start to brown and the drum smells of bread and hay.' },
+  { from: 190, name: 'First crack', note: 'The beans pop open. Pulled here, the light batch keeps its fruit and florals.' },
+  { from: 205, name: 'Development', note: 'Sugars caramelise toward chestnut. Pulled at 210 °C, the medium batch is sweet and round.' },
+  { from: 220, name: 'Second crack', note: 'Oils rise and the beans turn glossy: cocoa, smoke, a bitter edge. The dark batch is done.' },
+];
+export const phaseAt = (t) => PHASES.reduce((cur, p) => (t >= p.from ? p : cur), PHASES[0]);
+
+/** One still pose per bean: the flat face and its S-shaped cut toward the camera, leaning on a diagonal, each
+ *  rolled a little differently so the row looks like beans, not copies. */
+export const POSES = [
+  { x: -1.5708, y: 0.5, z: -0.3 }, { x: -1.5708, y: 0.62, z: -0.18 },
+  { x: -1.5708, y: 0.46, z: -0.36 }, { x: -1.5708, y: 0.58, z: -0.24 },
+];
+
+export function state(u, assemble = 1) {
+  const temp = uToTemp(Math.min(100, Math.max(0, u)));
+  const beans = STOPS.map((stop) => degreeAt(Math.min(temp, stop)));
   return {
-    stageX,
-    rotX: POSE.x, rotY: POSE.y, rotZ: POSE.z,
-    assemble: clamp01(p / ASSEMBLED_AT),                                // 0 scattered, 1 whole
-    lift: Math.sin(p * Math.PI) * 0.05,                                 // a slow rise and settle, a few pixels, never a turn
-    smoke: smooth((stageX - 2.55) / 0.45),                              // a wisp near second crack
-    warm: smooth(stageX / 3),                                           // the light warms with the roast
+    temp,
+    beans,
+    done: STOPS.map((stop, k) => k === 0 || temp >= stop),
+    poses: POSES,
+    smoke: smooth((temp - 218) / 10),               // a wisp over the dark batch near second crack
+    warm: smooth(degreeAt(temp) / 3),               // the light warms with the drum
+    phase: phaseAt(temp),
+    assemble: clamp01(assemble),
   };
-}
-
-/** Under reduced motion the section snaps to the nearest stage (the bean already whole). */
-export function snapReduced(raw) {
-  let best = STAGE_P[0];
-  for (const q of STAGE_P) if (Math.abs(q - raw) < Math.abs(best - raw)) best = q;
-  return best;
 }
 
 /** The same hash in JS and in the bean's shader (GLSL), so each fragment lands where the surface fills in. */
