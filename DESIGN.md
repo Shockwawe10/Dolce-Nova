@@ -1,6 +1,10 @@
 # DESIGN.md — Dolce Nova
 
-## 1. Three comps, one pick
+**Redesign, 2026-11-17.** The layout and type below follow REDESIGN-GUIDE.md, built from two references you
+chose (Coffee Collective and Canyon Coffee) and your decisions D1 to D5. The palette, the spacing grid, the
+motion tokens and the 3D roast path carried over. Section 1 is the history of the first build.
+
+## 1. Three comps, one pick (first build, 2026-11-16)
 
 Built 2026-11-16 in `qa/comps/` from the taste skill's dealt palettes and type pairings (its rule: deal,
 don't choose by taste), one palette, typeface and hero layout each, with identical copy and photographs.
@@ -47,10 +51,20 @@ No pure black or white. Hover states use an `opacity` overlay of an existing col
 
 ### Type: 2 OFL families, self-hosted latin woff2, `font-display: swap`
 
-- **Fraunces** 400 (optical-size axis, automatic): headings and the wordmark. 34 KB.
-- **Figtree** 400–500: everything else. 20 KB.
-- Fallbacks are size-adjusted local fonts (`Fraunces Fallback` = Georgia at 105.20%, `Figtree Fallback` =
+- **EB Garamond** 400: headings, the manifesto statement, product names, the footer wordmark. 24 KB.
+  (Fraunces until 2026-11-17; D1 = B chose a quieter old-style serif, nearer both references.)
+- **Figtree** 400–500: everything else, including the header wordmark (text face, 16 px), tags, buttons. 20 KB.
+- Fallbacks are size-adjusted local fonts (`EB Garamond Fallback` = Georgia at 86.36%, `Figtree Fallback` =
   Arial at 100.72%, with ascent, descent and line-gap overrides) from published metrics (`tools/fonts.mjs`).
+
+**Roles.** Tags (`.tag`): 13 px Figtree 500, uppercase, +0.06em, soft ink (ink on colour blocks). Buttons:
+48 px tall, 13 px uppercase, +0.06em; solid terracotta, or a 1 px outline in the current colour on photos
+and colour blocks.
+
+**The one size off the scale: the footer wordmark.** "Dolce Nova" spans the container exactly:
+`font-size: calc(100cqi / R)` with `R` = the word's width at 1 px. Measured in the browser after the font
+loaded: R = 4.245 (EB Garamond, −0.03em tracking); set to 4.26 so rounding never overflows. `qa/audit.mjs`
+allow-lists this one selector.
 
 **Scale:** major third (×1.25) from 16px, rounded to whole pixels. These nine sizes are the only font sizes:
 
@@ -59,7 +73,8 @@ No pure black or white. Hover states use an `opacity` overlay of an existing col
 | px | 13 | 16 | 20 | 25 | 31 | 39 | 49 | 61 | 76 |
 
 Headings step through the scale at breakpoints instead of `clamp()`, so no in-between size ever
-renders: h1 49 / 61 / 76, h2 39 / 49 / 61, h3 25 / 25 / 31 (phone / tablet / desktop), each level
+renders: h1 39 / 49 / 61, h2 31 / 39 / 49, h3 25 / 25 / 31 (phone / tablet / desktop; one step smaller than the
+first build, because both references set headlines small and let photographs carry the scale), each level
 smaller than the one above. Body copy is in the ink (13.58:1); the soft ink is for labels and metadata only. Headings: line height 1.05 to 1.15, tracking −0.02em, `text-wrap: balance`. Body 16 / 1.6.
 Inputs are 16px.
 
@@ -70,7 +85,8 @@ Page gutter 16 (phone) / 32 (tablet) / 64 (desktop); content width max 1280; 12-
 
 ### Radius (3 at most) and shadow (one)
 
-`--r-0` 0 (photographs) · `--r-1` 4px (buttons, inputs, panels) · `--r-pill` 999px (chips, count badge).
+`--r-0` and `--r-1` 0 (photographs, buttons, inputs, panels and cards are square, like both references) ·
+`--r-pill` 999px (grind and size chips only).
 `--shadow`: `0 24px 64px -24px` roast at 35%, used only by the cart drawer (both references use no shadows).
 
 ### Motion
@@ -79,31 +95,36 @@ Page gutter 16 (phone) / 32 (tablet) / 64 (desktop); content width max 1280; 12-
 |---|---|---|
 | `--d-1` | 150ms | press feedback, hover overlays |
 | `--d-2` | 250ms | count bump, chip and label states |
-| `--d-3` | 400ms | drawer, grind crossfade, scroll reveals |
+| `--d-3` | 400ms | drawer, grind crossfade |
 | `--d-4` | 700ms | hero load sequence |
 | `--ease` | `cubic-bezier(0.22, 1, 0.36, 1)` | every transition and animation (one ease-out) |
 
-Only `transform` and `opacity` animate. Reveals stagger by 60ms at most. Under
-`prefers-reduced-motion: reduce` nothing moves: no hero sequence, no reveals (content is visible at
-once), the roast peak becomes a still grid of four stages, the drawer appears without sliding.
+Only `transform` and `opacity` animate. There are no scroll reveals (removed 2026-11-17, D3): content is
+on the page when it scrolls in. Under `prefers-reduced-motion: reduce` nothing moves: no hero settle, no hero
+depth, the roast path snaps between its five states, the drawer appears without sliding.
 
-## 3. Layout
+## 3. Layout (redesign, 2026-11-17)
 
-Revised after the taste skill's finish gate (QA.md). Every section is one or two screens tall, its h2
-first at 120px (96px on a phone) under a fixed 64px header. Every split uses one line of a 12-column
-grid with 24px gutters: text starts on the container's left edge (80px at 1440), and the picture
-starts on the 5/12 line (623px at 1440). Columns are top-aligned.
+A fixed 64 px header, transparent over the hero with light words on a dark top scrim, the ground colour once
+the page scrolls. Text blocks sit on the `.wrap` line (80 px at 1440); the 12-column grid (24 px gutters)
+places the shop head, the origin split and the footer columns. Full-bleed photographs and colour halves run
+edge to edge, as in both references.
 
-| Section | Screens | Composition |
-|---|---|---|
-| Header | fixed, 64px | wordmark, Shop / Craft anchors, cart button with live count |
-| Hero | 1 | demo notice line, h1, lede, button left; photograph right, ending 64px above the fold; phone: words, then the photograph fills what is left |
-| Shop | 2 | h2 and lede on the split line; six rows on one left edge (name, then origin, process, roast and price); the open row: choices left, grind preview right |
-| Origin | 1 | text left, photograph right (full content height) |
-| Roast path (peak) | 4.6 | a sticky 3D stage: one bean travels a drawn path and turns green → light → medium → dark while the backdrop warms from daylight to ember and smoke rises at second crack; five cards (intro + four stages) scroll over it on the left; phone: the whole path above, cards docked at the bottom; still photographs as the fallback |
-| Brew | 1 | text, recipe and button left, photograph right |
-| Closing | 1 | the close (statement and button) on the oat ground, footer links and the demo/legal lines at its foot |
+| Section | Height | Composition | From |
+|---|---|---|---|
+| Hero | 1 screen | full-bleed green-bean sack; the demo notice, a small h1, the lede and one button in the lower left over a bottom scrim | both (D2, D4) |
+| Manifesto | 1 screen | a centred serif statement, then an asymmetric collage of three photographs (one in black and white) | Canyon |
+| Shop | 2 screens | h2 and lede on the split line; six rows: a 64/96 px roast thumbnail, the name, a roast tag and origin, the price; the open row shows grind and size chips and the grind preview | Coffee Collective |
+| Featured | 1 screen | photo half and a terracotta half: tag, the coffee's name, notes, "Choose a grind", which opens its row in the shop | Coffee Collective |
+| Origin | 1 screen | text left, photograph right on the 5/12 line | first build |
+| Roast path (peak) | 5 screens | kept from the first build and restyled: square cards with tags, the sticky 3D bean on its path, backdrop from oat to ember | first build |
+| Brew | 1 screen | an ink half with the recipe as a chevron list and an outline button; photograph half on the right | Coffee Collective |
+| Close | 1 screen | a ground-coloured card floating over a still life: tag, h2, "Choose a coffee" | Canyon |
+| Footer | auto | three link columns on the grid, the demo and fictional-brand lines, then the wordmark across the full width | both |
 
-Rows of the list close with a 1px rule; sections are told apart by space and the closing ground,
-never by rules. The demo notice also appears in the cart drawer, on the checkout page (a bar and a
-box) and in the closing legal line.
+**How the 3D section fits in.** It keeps its own mechanics (the 3D guide) and takes the redesign's surface: the
+same square cards on the ground colour, the same uppercase tags for stage labels, the same type roles, and a
+backdrop that starts in the page's own oat and ends in the brew block's roast ink, so the page darkens into the
+recipe instead of cutting to a new palette.
+
+The demo notice appears in the hero, the cart drawer, on the checkout page (a bar and a box) and in the footer.

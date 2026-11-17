@@ -1,6 +1,6 @@
 # QA.md — Dolce Nova
 
-Measured 2026-11-16 on Windows 11 against the local Pages-like server (`node tools/serve.mjs`,
+Measured 2026-11-16 and **re-measured 2026-11-17 after the redesign** (REDESIGN-GUIDE.md) on Windows 11 against the local Pages-like server (`node tools/serve.mjs`,
 `http://localhost:4600/Dolce-Nova/`). Every number below comes from a script in `qa/` or `tests/` that
 you can re-run (commands at the end). Failures are reported as failures.
 
@@ -12,20 +12,20 @@ client changed scope to a static GitHub Pages site with a demo card checkout and
 
 | Area | Criterion | Result |
 |---|---|---|
-| Design | ≤ 6 colours, exactly 2 families, scale-only font sizes, ≤ 3 radii, 8-px spacing | **PASS** · 6 colours, 2 families, 0 off-scale sizes, 2 radii, 1 shadow, 0 off-grid spacing (WebKit and Chromium) |
-| Design | Images never distorted (≤ 1%) | **PASS** · max 0% over 44 rendered images |
-| Design | Natural width ≥ 1.5× displayed | **PASS at DPR 2** (min 1.63×) · **FAIL at DPR 1** (min 1.12×, 20 instances; none upscaled) |
+| Design | ≤ 6 colours, exactly 2 families, scale-only font sizes, ≤ 3 radii, 8-px spacing | **PASS** · 6 colours, 2 families (EB Garamond, Figtree), 0 off-scale sizes (one listed exception, the footer wordmark), 1 radius plus square corners, 1 shadow, 0 off-grid spacing (WebKit and Chromium) |
+| Design | Images never distorted (≤ 1%) | **PASS** · max 0% over 106 rendered images |
+| Design | Natural width ≥ 1.5× displayed | **PASS at DPR 2** (min 1.53×) · DPR 1 **not re-run after the redesign** (it failed before, see below) |
 | Motion | No `transition: all`, only transform/opacity animated | **PASS** (static scan of CSS and JS) |
-| Motion | Reduced motion: no running animations after load | **PASS** · 0 on 5 page states, 0 hidden reveal targets |
-| Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy with a GPU** (98.7% phone, 98.8% desktop, with the 3D section) · **FAIL with software WebGL** (82.9% to 93.6%) and **in WebKit at 3×** · **not run on a real iPhone** |
-| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS on the live site** · home 100, LCP 1.2 s, CLS 0, TBT 50 ms · checkout 100, LCP 1.2 s, CLS 0 (local server: 98 / 2.0 s) |
+| Motion | Reduced motion: no running animations after load | **PASS** · 0 on 5 page states (scroll reveals were removed by the owner, D3) |
+| Motion | ≥ 95% of frames < 20 ms, scripted scroll + drawer | **PASS on the Chromium proxy with a GPU** (99.0% phone, 98.7% desktop, with the 3D section) · **FAIL with software WebGL** (88.0% to 94.0%) and **in WebKit at 3×** · **not run on a real iPhone** |
+| Quality | Lighthouse mobile Performance ≥ 90, LCP < 2.5 s, CLS < 0.05 | **PASS, local server, after the redesign** · home 97, LCP 2.4 s (close to the 2.5 s limit), CLS 0, TBT 50 ms; three.js not requested at load · live re-check after deploy (before the redesign: live 100, LCP 1.2 s) |
 | Quality | axe WCAG 2.2 AA, no serious issues | **PASS** · 0 violations of any impact in 12 states |
-| Quality | WebKit 390×844, 820×1180, 1440×900, 1920×1080: no clipped text, no horizontal overflow | **PASS** · 0 px overflow at all four (and reduced motion); 0 clipped text in the audit |
+| Quality | WebKit 390×844, 820×1180, 1440×900, 1920×1080: no clipped text, no horizontal overflow | **PASS** · 0 px overflow at all four; 0 clipped text in the audit; no coffee name overlaps its price at 320 to 430 px (`qa/shop-overlap.mjs`) |
 | Quality | Inputs ≥ 16px, tap targets ≥ 44px | **PASS** · inputs 16px; 0 targets under 44px (inline text links exempt, listed in `qa/out/audit.json`) |
 | Logic | Cart totals in integer cents | **PASS** · `node --test`: 8/8, including 50 random carts against a hand-typed price table |
 | Flow | Add → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900, locally and on the live site (`BASE=https://shockwawe10.github.io/Dolce-Nova/ node qa/flow.mjs`) |
 | Secrets | `git grep` finds no `sk_test_` / `whsec_` | **PASS** · tree clean; full history has no key-shaped strings |
-| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 25** after 3 rounds (37 → 27 → 25); 14 are the brief's reveals; see below |
+| Skill gate | design-taste-frontend `gate.mjs` | **OPEN 64** after the redesign (77 → 64 → 64); most are the kit's grid rules against the reference layout you chose; see below |
 
 ## Design (qa/audit.mjs)
 
@@ -35,7 +35,7 @@ filter grind chosen and the cart drawer open; checkout with errors; confirmation
 
 - Colours (text, backgrounds, visible borders): `#f6f1e7` `#ebe3d4` `#2b241e` `#6b5f53` `#d6cbb8`
   `#a3472b`: 5 + 1 accent. Shadow colour counted separately (one shadow style, the drawer).
-- Families: Fraunces, Figtree. Radii: 4px, 999px. Spacing: every margin, padding and gap a multiple of 8.
+- Families: EB Garamond, Figtree. Radii: square (0) and 999px. Spacing: every margin, padding and gap a multiple of 8.
 - Image resolution is read from the file actually served (`currentSrc`), not `naturalWidth`, which
   WebKit reports density-corrected.
 - **Resolution at DPR 1 fails the literal criterion.** On a 1× screen the browser correctly picks a
@@ -52,14 +52,19 @@ filter grind chosen and the cart drawer open; checkout with errors; confirmation
 
 | Run | Frames < 20 ms | p95 | Worst |
 |---|---|---|---|
-| Chromium 390×844 @3×, 4× CPU, **hardware GPU**, first visit (**iPhone proxy**) | **98.7% of 547 (PASS)** | 16.8 ms | 250 ms (setup) |
-| Chromium 1440×900 @2×, 4× CPU, **hardware GPU**, first visit | **98.8% of 567 (PASS)** | 16.8 ms | 250 ms (setup) |
-| Chromium 390×844 @3×, 4× CPU, software GL, first visit | **82.9% of 426 (FAIL)** | 33.4 ms | 817 ms |
-| Chromium 390×844 @3×, 4× CPU, software GL, already set up | **86.5% of 496 (FAIL)** | 33.4 ms | 183 ms |
-| Chromium 1440×900 @2×, 4× CPU, software GL, first visit | 98.7% of 455 (PASS) | 16.8 ms | 2.3 s (setup) |
-| Chromium 1440×900 @2×, 4× CPU, software GL, already set up | **93.6% of 421 (FAIL)** | 100 ms | 300 ms |
-| WebKit 390×844 @1× | 97.6% of 533 (PASS) | 17.0 ms | 815 ms (setup) |
-| WebKit 390×844 @3× | **23.3% of 245 (FAIL)** | 82 ms | |
+| Chromium 390×844 @3×, 4× CPU, **hardware GPU**, first visit (**iPhone proxy**) | **99.0% of 667 (PASS)** | 16.8 ms | 217 ms (setup) |
+| Chromium 1440×900 @2×, 4× CPU, **hardware GPU**, first visit | **98.7% of 691 (PASS)** | 16.8 ms | 217 ms (setup) |
+| Chromium 390×844 @3×, 4× CPU, software GL, first visit | **89.8% of 451 (FAIL)** | 83.4 ms | 850 ms |
+| Chromium 390×844 @3×, 4× CPU, software GL, already set up | **92.1% of 517 (FAIL)** | 83.3 ms | 233 ms |
+| Chromium 1440×900 @2×, 4× CPU, software GL, first visit | **88.0% of 266 (FAIL)** | 233 ms | 2.3 s (setup) |
+| Chromium 1440×900 @2×, 4× CPU, software GL, already set up | **94.0% of 430 (FAIL)** | 183 ms | 383 ms |
+| WebKit 390×844 @1× | 97.6% of 665 (PASS) | 16.0 ms | 770 ms (setup) |
+| WebKit 390×844 @3× | **18.0% of 239 (FAIL)** | 94 ms | |
+
+Measured after the redesign (2026-11-17). Against the run before it: the GPU proxy held (98.7 / 98.8 → 99.0 /
+98.7), software phone rose (82.9 → 89.8), and **software desktop first visit fell (98.7 → 88.0)**, with the same
+2.3 s setup frame. Not investigated further: no visitor's browser renders WebGL in software, and runs on this
+machine vary widely (see below). It is reported, not explained away.
 
 Each first visit has one long frame while three.js is parsed and the scene is built (up to 0.25 s with a GPU,
 longer in software). The setup starts in idle time after the first scroll, in short tasks, so on a real visit
@@ -124,6 +129,29 @@ focus to the cart button, and the page behind is `inert` (asserted in `qa/flow.m
 
 ## Skill gate (design-taste-frontend)
 
+**Redesign session (2026-11-17), project root, `site/index.html`: 77 → 64 → OPEN 64.** Real defects it found,
+all fixed: the header's ink words over the hero photograph read 3.3:1 on a phone (now light words on a dark
+top scrim); the hero's light words had an oat fallback ground (now roast, readable if the photo fails); the
+recipe block's words started 16 px left of the page line at 1440 (the text half now sits on the `.wrap` line at
+every width); "Huehuetenango" ran over its price at 320 px (the price drops under the meta on the narrowest
+lists; `qa/shop-overlap.mjs` fails without the fix); the closing section had no button; the footer wordmark's
+font box was clipped (room added below). Waivers changed: `product-shown` dropped (the hero is no longer a
+split), `effect-kind` added (you asked for the 3D bean).
+
+What stays open, by cause:
+
+| Open | Count | Why it stays |
+|---|---|---|
+| `edge-left`, `edge-right`, `container-edges`, `split-pair`, `row-lines`, `flush` | 40 | The reference layout you chose: a thumbnail before each coffee name (Coffee Collective), half-and-half colour splits and full-bleed photographs, the asymmetric collage and the floating card (Canyon). The kit wants every block on one left line and inside the container. |
+| `section-height`, `section-gaps`, `section-air`, `screen-height`, `one-section`, `empty-area`, `sparse` | 15 | The roast path is five screens by design (the 3D peak); the colour splits and the photo card are one viewport tall rather than the kit's measured screens; the manifesto on a phone fills 49% of its screen (the aim is 55%). |
+| `shader-lint` | 4 | Reserved words inside three.js's own shader library (vendored, not edited). |
+| `off-grid` | 2 | The recipe's hanging indent (wrapped lines align with the first word) and the second grind chip. |
+| `text-contrast` | 1 | Ground on the terracotta block is 5.34:1: passes WCAG AA (4.5:1), not the kit's 7:1 for body text. Meeting it means dropping the colour block, a REDESIGN-GUIDE decision. |
+| `collide` | 1 | The transparent header over the full-bleed hero (both references). |
+| `scroll-reveal` | 1 | The 3D canvas fades in over the still once three.js is ready (a load crossfade, not a reveal). |
+
+**Earlier sessions (before the redesign):**
+
 Two gate sessions ran, three rounds each (the kit stops after three).
 
 - **`site/` session:** 60 → 60 → **OPEN 35**, which drove the layout restructure.
@@ -152,8 +180,8 @@ flow green.
 
 | Rule | Skill | Override | Reason |
 |---|---|---|---|
-| No fade-in on scroll | taste | Reveals on headings, copy and photos, once, ≤ 60 ms stagger | Your brief, explicitly; your decision on conflicts |
-| Dimensional, layered hero | scroll-craft | One photograph, with slight depth on mouse/trackpad only | Your brief: "one product image", "no parallax on touch" |
+| No fade-in on scroll | taste | None now: reveals were removed on 2026-11-17 | Your decision D3 in REDESIGN-GUIDE.md |
+| Dimensional, layered hero | scroll-craft | One full-bleed photograph, with slight depth on mouse/trackpad only | Your brief ("no parallax on touch") and decision D2 (the sack hero) |
 | Every page deals a kit moment | taste | A bespoke roast peak instead | scroll-craft requires a bespoke signature and peak; the interview chose them |
 | Text left, visual right on every split | taste | Applied everywhere | (followed after round 1) |
 | Product at 80% width on a product page | taste | Split hero | Your brief |
@@ -199,6 +227,7 @@ node qa/audit.mjs                        # design audit (add --engine chromium, 
 node qa/motion.mjs                       # motion criteria
 node qa/webkit-baseline.mjs              # WebKit frame-time floor on this machine
 node qa/a11y.mjs                         # axe
+node qa/shop-overlap.mjs                 # no coffee name over its price, 320 to 430 px
 node tools/shoot.mjs                     # WebKit screenshots, 4 sizes -> qa/out/shots (add --reduced)
 CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") \
   npx lighthouse http://localhost:4600/Dolce-Nova/ --only-categories=performance,accessibility,best-practices,seo

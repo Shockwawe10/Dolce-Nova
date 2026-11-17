@@ -10,7 +10,7 @@ const engine = arg('--engine', 'webkit') === 'chromium' ? chromium : webkit;
 const DPR = Number(arg('--dpr', '2'));
 const BASE = 'http://localhost:4600/Dolce-Nova/';
 const SCALE = [13, 16, 20, 25, 31, 39, 49, 61, 76];
-const FAMILIES = ['Fraunces', 'Figtree'];
+const FAMILIES = ['EB Garamond', 'Figtree'];
 const SIZES = [[390, 844], [820, 1180], [1440, 900], [1920, 1080]];
 
 // Each state: a page plus the setup that makes hidden UI visible (open row, drawer, form errors).
@@ -53,7 +53,8 @@ function walk({ scale, families }) {
         add(out.colors, cs.color, w);
         add(out.families, cs.fontFamily.split(',')[0].replace(/["']/g, '').trim(), w);
         const fs = parseFloat(cs.fontSize);
-        if (!scale.includes(Math.round(fs * 100) / 100)) add(out.sizes, cs.fontSize, w);
+        // the one documented exception (DESIGN.md): the footer wordmark is sized to the container width, not the scale
+        if (!scale.includes(Math.round(fs * 100) / 100) && !el.matches('.footer__mark')) add(out.sizes, cs.fontSize, w);
       }
       if (!isTransparent(cs.backgroundColor)) add(out.colors, cs.backgroundColor, w + ' (bg)');
       for (const side of ['Top', 'Right', 'Bottom', 'Left'])

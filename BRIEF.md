@@ -90,6 +90,13 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
 - **2026-11-16**, working rules: "now you have a new file, 3D, and design guide. There was used on my previous
   projects, analyze it and apply these rules whenever you will be working with 3D animations or design."
   Applied: `3D-AND-DESIGN-GUIDE.md` is loaded by CLAUDE.md for all 3D, animation and design work.
+- **2026-11-17**, the redesign after two references (coffeecollective.dk, canyoncoffee.co): "go with your
+  recommendations and start building I don't want you to also remove the $3D section that we have, but I want
+  to this section to be coexistive and coherent with the rest of the design."
+  Decisions taken from REDESIGN-GUIDE.md section 3: D1 = B (EB Garamond for statements and headings, Figtree for
+  UI), D2 = A (keep the green-bean sack, full-bleed), D3 = remove the scroll reveals (the original brief's reveal
+  criterion is dropped by the owner), D4 = A (demo notice stays in the hero), D5 = yes (two colour-block
+  chapters). The 3D roast path stays and is restyled to match.
 
 ### Tell-someone sentence
 
