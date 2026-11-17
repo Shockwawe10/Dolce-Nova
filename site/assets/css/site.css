@@ -278,7 +278,8 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 .arrows li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); }
 
 /* ---------- a card over a still life (Canyon) ---------- */
-.photo-card { position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); }
+/* a closing chapter, not a full screen (the owner, 2026-11-17: "a little bit smaller") */
+.photo-card { position: relative; min-height: clamp(520px, 72svh, 760px); display: flex; align-items: flex-end; padding-block: var(--padt) var(--s-6); overflow: hidden; }
 .photo-card__photo { position: absolute; inset: 0; overflow: hidden; background: var(--c-ink); }
 .photo-card__photo picture { position: absolute; inset: 0; }
 .photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -531,3 +532,6 @@ html:not(.js) .roast__control { display: none; }
   .origin-story__head { grid-column: 1 / span 5; }
   .origin-story__text { grid-column: 7 / span 6; }
 }
+
+/* parallax frames: the picture is 12% taller at each end so its drift never shows an edge (motion.js) */
+.block-split__photo.has-parallax > picture, .photo-card__photo.has-parallax > picture, .origin-story__photo.has-parallax > picture { inset: -12% 0; }

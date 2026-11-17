@@ -27,11 +27,11 @@ export const IMAGES = [
   { name: 'origin-decaf', src: 'f159887397', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Cloud over green mountain pastures in Quindío, in Colombia’s coffee region' },
   // brew methods (2026-11-17): the pour-over above, then a moka pot and an espresso machine
-  { name: 'brew-moka', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560],
+  { name: 'brew-moka', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Coffee pouring from the centre column into the top chamber of a moka pot' },
-  { name: 'brew-espresso', src: 'm61716670', widths: [640, 960, 1280, 1920, 2560],
+  { name: 'brew-espresso', src: 'm61716670', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Two streams of espresso running into a white cup at a dark machine' },
-  { name: 'brew', src: 'c96', widths: [640, 960, 1280, 1920, 2560],
+  { name: 'brew', src: 'c96', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above' },
   // The roast peak: one bean scale, four stages. Green from Roger Burger; light/medium/dark from one Alorin shot.
   { name: 'roast-green', src: 'f84555762', crop: [753, 1249, 1470, 1470], widths: [420, 640, 840],

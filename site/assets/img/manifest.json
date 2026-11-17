@@ -97,7 +97,9 @@
       960,
       1280,
       1920,
-      2560
+      2560,
+      2880,
+      3600
     ],
     "ratio": [
       3849,
@@ -105,6 +107,7 @@
     ],
     "alt": "Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above",
     "source": "c96",
+    "owner": false,
     "by": "Kim Sanso",
     "licence": "CC0",
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -398,7 +401,9 @@
       960,
       1280,
       1920,
-      2560
+      2560,
+      2880,
+      3600
     ],
     "ratio": [
       6016,
@@ -419,7 +424,9 @@
       960,
       1280,
       1920,
-      2560
+      2560,
+      2880,
+      3600
     ],
     "ratio": [
       4272,

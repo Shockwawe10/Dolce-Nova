@@ -120,8 +120,8 @@ function originStory(p) {
   const r = p.region;
   if (!r) return '';
   return `  <section class="origin-story" aria-labelledby="origin-title">
-    <figure class="origin-story__photo">
-      ${picture(manifest, r.photo, { sizes: 'max(100vw, 96vh)' })}   <!-- the band is up to 64vh tall, cropped from 3:2 -->
+    <figure class="origin-story__photo" data-parallax>
+      ${picture(manifest, r.photo, { sizes: 'max(100vw, 120vh)' })}   <!-- the band is up to 64vh tall (x1.24 with parallax), cropped from 3:2 -->
       <figcaption class="wrap"><span class="tag">${esc(r.caption)}</span></figcaption>
     </figure>
     <div class="wrap origin-story__body">

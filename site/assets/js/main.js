@@ -7,7 +7,7 @@ import { mountCarousels } from './carousel.js';
 import { mountProduct } from './product.js';
 import { mountBrew } from './brew.js';
 import { mountRoastUI } from './roast-ui.js';
-import { mountHeader, mountRoastPath, mountAnchors } from './motion.js';
+import { mountHeader, mountRoastPath, mountAnchors, mountParallax } from './motion.js';
 
 mountHeader();
 mountAnchors();
@@ -15,6 +15,7 @@ mountCarousels();
 mountBrew();
 mountRoastUI();
 mountRoastPath();
+mountParallax();
 
 const ready = load();
 const product = document.querySelector('[data-product]');
