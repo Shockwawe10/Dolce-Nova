@@ -99,7 +99,7 @@ moves; the roast path snaps between its five states.
 | Section | Height | Composition |
 |---|---|---|
 | Header | fixed 64px | Coffees / Roast / Brew left (phone: Coffees only), DOLCE NOVA centred, Cart (0) right; paper words on the hero's ink until the page scrolls, then the paper ground |
-| Hero | 1 screen, ink | 1440: the words on columns 1–6 at the foot (notice, h1, lede, a paper button and an outline button); the Cerrado bag on 7–12, 640px, its edges faded into the ink. Phone: the bag above, cut and faded, the words under it, one button |
+| Hero | as tall as the bag (804px at 1440; a full screen on phones), ink | 1440: the words on columns 1–6, centred on the bag (notice, h1, lede, a paper button and an outline button: the notice starts level with the bag's top, the buttons end near its base); the Cerrado bag on 7–12, 628 to 640px, its edges faded into the ink. Shorter than the window at the owner's request (2026-11-17), so the words and the bag line up on wide screens. Phone: the bag above, cut and faded, the words under it, one button |
 | The coffees | 1 screen | h2 and lede in a head row; the carousel: 3.4 slides at 1440, 2.4 on a tablet, 1.3 on a phone; each slide a 4:5 bag on its own backdrop, the roast tag, the name, the notes, "from" price; each links to its product page |
 | Manifesto | 1 screen | one centred serif sentence, then three photographs (two in black and white) |
 | Origin | 72% of a screen (560 to 720px) | photograph half and forest half (Coffee Collective), one paragraph; a chapter, not a full screen |

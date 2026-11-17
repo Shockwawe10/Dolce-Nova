@@ -164,9 +164,16 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
   .hero__bag img { -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent); mask-image: radial-gradient(closest-side, #000 78%, transparent); }
 }
 @media (min-width: 1024px) {
-  .hero { padding-block: var(--header) var(--s-8); }
-  .hero__inner { grid-template-rows: none; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: end; }
-  .hero__text { grid-column: 1 / span 6; grid-row: 1; gap: var(--s-3); }
+  /* as tall as the bag, not the window (the owner, 2026-11-17: shorter, the words lined up with the bag): the words
+     are centred on the bag, whose printed body fills 13% to 90% of its square, so their centres meet within 1.5% */
+  .hero { min-height: 0; padding-block: calc(var(--header) + var(--s-6)) var(--s-8); }
+  .hero__inner { grid-template-rows: none; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: center; }
+  .hero__text { grid-column: 1 / span 6; grid-row: 1; gap: var(--s-3); align-self: center; align-content: start; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .hero h1 { font-size: var(--fs-8); }   /* a smaller laptop's bag is smaller: one step down keeps the words within its height */
+}
+@media (min-width: 1024px) {
   .hero__bag { grid-column: 7 / span 6; grid-row: 1; align-self: center; justify-self: end; margin: 0; width: min(100%, 640px, 100svh - var(--header) - 96px); }
   .hero__bag img { -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent); mask-image: radial-gradient(closest-side, #000 78%, transparent); }
 }
