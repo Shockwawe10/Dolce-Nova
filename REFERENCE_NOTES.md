@@ -73,6 +73,12 @@ scrolling, so the script clicked "Decline all", as a visitor would, before measu
 6. **Avoid what both do that the brief forbids:** Onyx's `transition: all` (34 elements), its "Scroll" cue,
    marquees, and a 5-second hero drift; La Cabra's linear easing on load.
 
+## Second pair (2026-11-17, chosen by the owner)
+
+Coffee Collective (coffeecollective.dk) and Canyon Coffee (canyoncoffee.co), measured the same way plus
+screen-by-screen frames (`tools/ref-frames.mjs`). Measurements, principles and the build plan are in
+**REDESIGN-GUIDE.md**.
+
 ## Not taken
 
 Anything recognisable: no layout, logo treatment, copy, iconography, photograph or effect from either site.
