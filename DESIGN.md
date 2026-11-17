@@ -87,7 +87,10 @@ round carousel arrows (`--r-pill`). One shadow, the cart drawer's.
 Only `transform` and `opacity` animate. No scroll reveals. The hero's words rise once on load and the bag
 settles from 1.04 scale (transform only: it is the largest image, never hidden). The carousel moves by native
 scrolling; its arrows scroll one slide (smooth unless reduced motion), its progress line is a `scaleX`. The 3D
-canvas appears at once when ready (no fade as it scrolls in). No bean ever turns: each has one constant pose
+canvas appears at once when ready (no fade as it scrolls in). **Parallax** (2026-11-17): the photograph inside
+every [data-parallax] frame drifts against the page by up to 10% of the frame's height (the hero bag 5%, anchored to
+the page top so it is still at rest); the picture is 12% taller at each end so no edge shows; transform only, only
+while on screen, on a mouse or trackpad only, never under reduced motion. No bean ever turns: each has one constant pose
 (`POSES` in `roast-state.js`: face-on, so the S-shaped cut runs down the middle, leaning on a diagonal; the four rolled
 a little differently so the row reads as beans, not copies). The slider value follows a critically damped spring, so a
 tap on a mark glides there; the 3D draws only while it moves or while the grains gather; during the intro, green grains fly in and the surface fills in exactly where they land
@@ -107,7 +110,7 @@ moves; the roast path snaps between its five states.
 | Origin | 72% of a screen (560 to 720px) | photograph half and forest half (Coffee Collective), one paragraph; a chapter, not a full screen |
 | Roast (peak) | one screen (801px at 1440, 768 on a phone) | four batches under one temperature slider: four 3D beans in a row (one row on phones too, so the beans and the slider are on screen together), each over a slot with its name, where it is pulled and its status (Waiting, Roasting, Done); the readout in the display serif; a slider from 20 to 230 °C with marks at 20, 196, 210 and 224; a note naming the phase (raw, drying, yellowing, first crack, development, second crack). The grains gather into the beans once as the section arrives. Without WebGL the slots show the four roast photographs and the slider still drives the words. Replaced the pinned three-screen scroll (owner, 2026-11-17) |
 | Brew at home | up to one screen (928px at 1440) | "Three ways to brew it": pour-over, moka pot and espresso as tabs on the ink half; each recipe has a card (coffee, water, grind, time), five numbered steps and a coffee to try; the photograph half crossfades to the chosen method. The recipes share one place, so switching never moves the page. Without script, all three in turn |
-| Close | 1 screen | a paper card over a still life: tag, h2, the forest button |
+| Close | 520 to 760px (72% of a screen) | a paper card over a still life: tag, h2, the forest button; the photograph drifts (parallax) |
 | Footer | auto | three columns (the six coffees, craft, about and the demo lines), then the wordmark across the page |
 
 ### Product page (`coffee-<id>.html`, generated)

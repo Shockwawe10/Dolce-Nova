@@ -155,6 +155,12 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   they had paid for coffee that will never arrive. The photograph credits link stays: CC BY and CC BY-SA require it.
   Added to every product page: the origin, a full-width licensed landscape of the region, a two-paragraph story and
   four facts typical of the region (altitude, harvest, varieties), labelled as typical.
+- **2026-11-17**, "This section is quite large, I want it to be a little bit narrower, or smaller ... on each like
+  background is to do like the parallax effect. Whenever it's black, green". Built: the closing photo card is 520 to
+  760px tall (72% of the screen) instead of a full screen; every background photograph drifts slower than the page
+  (the green origin block, the black brew block, the closing card, the hero bag, the origin landscape on product
+  pages). On a mouse or trackpad only, as the original brief said "no parallax on touch", and never under reduced
+  motion.
 
 ### Tell-someone sentence
 
