@@ -1,5 +1,10 @@
 # REDESIGN-GUIDE.md — Dolce Nova × two references
 
+> **Status, 2026-11-17.** The measurements of the two references (section 1 and 2) still hold. The build that
+> followed this guide was superseded the same day by a global redesign built around the owner's bag renders:
+> palette and type from the bags, a carousel instead of the list, a product page per coffee. DESIGN.md
+> describes what is built now and maps each idea to its reference.
+
 How to rebuild Dolce Nova so it carries the principles and feeling of **Coffee Collective**
 (coffeecollective.dk) and **Canyon Coffee** (canyoncoffee.co), without copying either. Written so a model or a
 developer can build it step by step and prove each step.

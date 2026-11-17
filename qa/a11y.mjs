@@ -7,8 +7,8 @@ const AXE = readFileSync('node_modules/axe-core/axe.min.js', 'utf8');
 const BASE = 'http://localhost:4600/Dolce-Nova/';
 const STATES = [
   ['home', '', async () => {}],
-  ['home: row open, filter grind', '', async (p) => { await p.click('#t-huila'); await p.locator('#p-huila label:has-text("Filter")').click(); }],
-  ['home: drawer open', '', async (p) => { await p.locator('#p-yirgacheffe button[type=submit]').click(); await p.click('[data-cart-open]'); await p.waitForSelector('#cart.is-open'); }],
+  ['product page, filter grind', 'coffee-huila.html', async (p) => { await p.locator('form[data-add] label:has-text("Filter")').click(); }],
+  ['product page: drawer open', 'coffee-yirgacheffe.html', async (p) => { await p.locator('form[data-add] button[type=submit]').click(); await p.click('[data-cart-open]'); await p.waitForSelector('#cart.is-open'); }],
   ['checkout: errors shown', 'checkout.html', async (p) => { await p.click('[data-pay-btn]'); }],
   ['success', 'success.html', async () => {}],
   ['credits', 'credits.html', async () => {}],
@@ -22,7 +22,7 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     const page = await ctx.newPage();
     await page.goto(BASE, { waitUntil: 'networkidle' });
     await page.evaluate(() => {
-      localStorage.setItem('dn-cart', JSON.stringify([{ id: 'huila', size: '250g', grind: 'filter', qty: 2 }]));
+      localStorage.setItem('dn-cart', JSON.stringify([{ id: 'huila', size: '340g', grind: 'filter', qty: 2 }]));
       sessionStorage.setItem('dn-last-order', JSON.stringify({ ref: 'DN-A11Y', totalCents: 2500, lines: [{ name: 'Huila La Plata', size: '250 g', grind: 'Filter', qty: 2, lineCents: 2500 }] }));
     });
     await page.goto(BASE + path + (path === 'success.html' ? '?order=DN-A11Y' : ''), { waitUntil: 'networkidle' });

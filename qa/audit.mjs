@@ -10,15 +10,15 @@ const engine = arg('--engine', 'webkit') === 'chromium' ? chromium : webkit;
 const DPR = Number(arg('--dpr', '2'));
 const BASE = 'http://localhost:4600/Dolce-Nova/';
 const SCALE = [13, 16, 20, 25, 31, 39, 49, 61, 76];
-const FAMILIES = ['EB Garamond', 'Figtree'];
+const FAMILIES = ['Instrument Serif', 'Instrument Sans'];
 const SIZES = [[390, 844], [820, 1180], [1440, 900], [1920, 1080]];
 
 // Each state: a page plus the setup that makes hidden UI visible (open row, drawer, form errors).
 const STATES = [
   ['home', '', async () => {}],
-  ['home+grind+drawer', '', async (p) => {
-    await p.locator('#p-yirgacheffe label:has-text("Filter")').click();
-    await p.locator('#p-yirgacheffe button[type=submit]').click();
+  ['product+grind+drawer', 'coffee-yirgacheffe.html', async (p) => {
+    await p.locator('form[data-add] label:has-text("Filter")').click();
+    await p.locator('form[data-add] button[type=submit]').click();
     await p.click('[data-cart-open]'); await p.waitForSelector('#cart.is-open'); await p.waitForTimeout(500);
   }],
   ['checkout+errors', 'checkout.html', async (p) => { await p.click('[data-pay-btn]').catch(() => {}); }],
@@ -54,7 +54,7 @@ function walk({ scale, families }) {
         add(out.families, cs.fontFamily.split(',')[0].replace(/["']/g, '').trim(), w);
         const fs = parseFloat(cs.fontSize);
         // the one documented exception (DESIGN.md): the footer wordmark is sized to the container width, not the scale
-        if (!scale.includes(Math.round(fs * 100) / 100) && !el.matches('.footer__mark')) add(out.sizes, cs.fontSize, w);
+        if (!scale.includes(Math.round(fs * 100) / 100) && !el.closest('.footer__mark')) add(out.sizes, cs.fontSize, w);
       }
       if (!isTransparent(cs.backgroundColor)) add(out.colors, cs.backgroundColor, w + ' (bg)');
       for (const side of ['Top', 'Right', 'Bottom', 'Left'])
@@ -96,7 +96,7 @@ function walk({ scale, families }) {
     const cs = getComputedStyle(el);
     // only an overflow that actually cuts content off counts (text-overflow: clip is the default and cuts nothing by itself)
     if (!/(hidden|clip)/.test(cs.overflowX + ' ' + cs.overflowY)) return false;
-    if (el.matches('.notice, .hero__photo, .preview, .roast__frames, .step__photo, .btn, .chip span, .drawer, .roast__heat')) return false; // visual masks, not text
+    if (el.matches('.notice, .hero__bag, .slide__media, .pdp__media, .roast__frames, .btn, .chip span, .drawer')) return false; // visual masks, not text
     const hasText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
     return hasText && (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1);
   }
@@ -120,7 +120,7 @@ for (const [w, h] of SIZES) {
       await page.evaluate(() => sessionStorage.setItem('dn-last-order', JSON.stringify({ ref: 'DN-AUDIT', totalCents: 2900, lines: [{ name: 'Huila La Plata', size: '250 g', grind: 'Filter', qty: 2, lineCents: 2500 }] })));
       await page.goto(BASE + 'success.html?order=DN-AUDIT', { waitUntil: 'networkidle' });
     } else {
-      if (path === 'checkout.html') { await page.goto(BASE, { waitUntil: 'networkidle' }); await page.evaluate(() => localStorage.setItem('dn-cart', JSON.stringify([{ id: 'huila', size: '250g', grind: 'filter', qty: 2 }]))); }
+      if (path === 'checkout.html') { await page.goto(BASE, { waitUntil: 'networkidle' }); await page.evaluate(() => localStorage.setItem('dn-cart', JSON.stringify([{ id: 'huila', size: '340g', grind: 'filter', qty: 2 }]))); }
       await page.goto(BASE + path, { waitUntil: 'networkidle' });
     }
     await setup(page);

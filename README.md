@@ -53,7 +53,11 @@ Results and every failure are in **QA.md**.
 
 - Photographs: `node tools/fetch-originals.mjs` (downloads originals to `assets-src/`, gitignored),
   then `node tools/images.mjs` (crops and encodes AVIF + WebP per width and writes the manifest), then
-  `node tools/credits.mjs` (regenerates `credits.html`).
+  `node tools/credits.mjs` (regenerates `credits.html`). The bag renders are the owner's: unzip
+  `dolce_nova_coffee_blends.zip` into `assets-src/blends/` first.
+- Pages: `node tools/pages.mjs` writes the six product pages (`coffee-<id>.html`) and fills the shared
+  header, carousel, footer and drawer into the other pages from `site/data/catalog.json`. Run it after any
+  catalog or image change; `node --test` fails if a page no longer matches the catalog.
 - Fonts: `node tools/fonts.mjs` (self-hosts the latin subsets and writes size-adjusted fallbacks).
 
 ## Documents
@@ -62,11 +66,13 @@ Results and every failure are in **QA.md**.
 |---|---|
 | `BRIEF.md` | The creative interview, journey, feeling curve, peak, scope change |
 | `REFERENCE_NOTES.md` | Two reference sites measured from computed styles |
-| `DESIGN.md` | Three comps, the pick and why, every token |
+| `REDESIGN-GUIDE.md` | The two references (Coffee Collective, Canyon Coffee), measured, and the build guide |
+| `DESIGN.md` | The current design (the global redesign from the owner's bags), every token, its history |
 | `QA.md` | Acceptance results, overrides, what is not verified |
 
 ## Credits
 
-Photographs are licensed stand-ins via Wikimedia Commons (CC0, CC BY, CC BY-SA); authors and licences
-are on `credits.html`. Fonts: Fraunces and Figtree, SIL Open Font License. 3D: three.js r185.1, MIT
+The bag designs and renders are the owner's. Every other photograph is a licensed stand-in via Wikimedia
+Commons (CC0, CC BY, CC BY-SA); authors and licences are on `credits.html`. Fonts: Instrument Serif and
+Instrument Sans, SIL Open Font License. 3D: three.js r185.1, MIT
 (`site/assets/vendor/three.LICENSE.txt`). Dolce Nova is fictional.

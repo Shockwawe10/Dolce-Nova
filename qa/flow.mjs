@@ -13,13 +13,21 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   page.on('pageerror', (e) => errors.push(e.message));
   try {
     await page.goto(URL, { waitUntil: 'networkidle' });
-    // open the second coffee, choose espresso and 1 kg, add twice
-    await page.click('#t-nyeri');
-    await page.locator('#p-nyeri label:has-text("Espresso")').click();
-    await page.locator('#p-nyeri label:has-text("1")').filter({ hasText: 'kg' }).click();
-    assert.match(await page.locator('#p-nyeri [data-price]').innerText(), /56\.00/);
-    await page.locator('#p-nyeri button[type=submit]').click();
-    await page.locator('#p-nyeri button[type=submit]').click();
+    // the carousel: the next button moves the row (desktop), a swipe moves it (phone); a bag opens its page
+    const track = page.locator('#coffees .carousel__track');
+    if (w >= 1024) {
+      await page.click('#coffees [data-next]');
+      await page.waitForFunction(() => document.querySelector('#coffees .carousel__track').scrollLeft > 0);
+    } else await track.evaluate((t) => t.scrollBy({ left: t.clientWidth, behavior: 'instant' }));
+    await page.locator('#coffees .slide__link[href="coffee-nyeri.html"]').click();
+    await page.waitForURL(/coffee-nyeri/);
+    // choose espresso and 1 kg, add twice
+    const form = page.locator('form[data-add]');
+    await form.locator('label:has-text("Espresso")').click();
+    await form.locator('label:has-text("1")').filter({ hasText: 'kg' }).click();
+    assert.match(await form.locator('[data-price]').innerText(), /56\.00/);
+    await form.locator('button[type=submit]').click();
+    await form.locator('button[type=submit]').click();
     assert.equal(await page.locator('[data-cart-count]').innerText(), '2');
     // drawer: dialog semantics, inert page, Esc closes and returns focus
     await page.click('[data-cart-open]');

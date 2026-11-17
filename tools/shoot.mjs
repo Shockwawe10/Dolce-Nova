@@ -24,9 +24,9 @@ for (const [w, h] of SIZES) {
   await shot('01-hero');
   const to = async (sel, offset = 0) => page.evaluate(([s, o]) => { const el = document.querySelector(s); scrollTo({ top: el.getBoundingClientRect().top + scrollY - o, behavior: 'instant' }); }, [sel, offset]);
   const header = 64;
-  await to('#shop', header); await shot('02-shop');
-  await to('.coffee:nth-child(1) .coffee__panel', header); await shot('03-shop-open');
-  await to('#craft', header); await shot('04-craft');
+  await to('#coffees', 0); await shot('02-coffees');
+  await to('.manifesto', 0); await shot('03-manifesto');
+  await to('#origin', 0); await shot('04-origin');
   // the peak: walk the roast section at 0, 1/3, 2/3, 1
   const roast = await page.evaluate(() => { const s = document.querySelector('[data-roastpath]'); const st = s.querySelector('.roastpath__stage'); return { top: s.getBoundingClientRect().top + scrollY, travel: s.offsetHeight - st.offsetHeight }; });
   for (const [i, f] of [[0, 0.25], [1, 0.5], [2, 0.75], [3, 1]]) {
@@ -38,10 +38,13 @@ for (const [w, h] of SIZES) {
   await page.evaluate(() => scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' })); await shot('07-footer');
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   const screens = await page.evaluate(() => document.documentElement.scrollHeight / innerHeight);
-  await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
-  await page.click('.coffee:nth-child(1) button[type=submit]');
-  await page.click('[data-cart-open]'); await shot('08-drawer');
-  console.log(tag, 'horizontal overflow px:', overflow, 'page height (screens):', screens.toFixed(1));
+  // a product page: its first screen, its overflow, then the drawer with one bag in it
+  await page.goto(URL + 'coffee-nyeri.html', { waitUntil: 'networkidle' });
+  await shot('08-product');
+  const pdpOverflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  await page.click('form[data-add] button[type=submit]');
+  await page.click('[data-cart-open]'); await shot('09-drawer');
+  console.log(tag, 'horizontal overflow px:', overflow, 'product page:', pdpOverflow, 'page height (screens):', screens.toFixed(1));
   await ctx.close();
 }
 await browser.close();

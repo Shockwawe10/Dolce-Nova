@@ -97,6 +97,20 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   UI), D2 = A (keep the green-bean sack, full-bleed), D3 = remove the scroll reveals (the original brief's reveal
   criterion is dropped by the owner), D4 = A (demo notice stays in the hero), D5 = yes (two colour-block
   chapters). The 3D roast path stays and is restyled to match.
+- **2026-11-17**, a global redesign, not an adjustment: "I want to like global redesign based on that two
+  references ... Also, I want to replace the Coffe selection with the like carousel, and I prepared the
+  references images for each Coffe in the zip folder called Dolcinova Coffe Blends."
+  The zip (`dolce_nova_coffee_blends.zip`) holds nine owner-supplied bag renders for the six coffees.
+  Decisions (asked and answered the same day):
+  - one bag per coffee: Cerrado Natural with the lion emblem, Huila La Plata in forest green (the other three
+    label variants are not used);
+  - sizes follow the printed bag: **340 g and 1 kg** (250 g prices rescaled by 340/250, rounded to €0.50);
+  - **a product page per coffee** (photo, notes, grind, size, add to cart, more coffees), reached from the
+    carousel;
+  - **the palette comes from the bags**: paper ground, near-black ink, the bags' forest green as the one
+    accent, gold only inside photographs and the 3D path. Terracotta and the Garamond/Figtree pair are retired
+    (type: Instrument Serif for display, Instrument Sans for text, my recommendation).
+  The 3D roast path stays (earlier instruction) and takes the new palette.
 
 ### Tell-someone sentence
 
