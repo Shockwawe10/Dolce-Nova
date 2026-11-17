@@ -222,5 +222,103 @@
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "page": "https://commons.wikimedia.org/wiki/File:Manual_drip_(pour-over)_coffee.jpg",
     "cropped": false
+  },
+  "featured": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560
+    ],
+    "ratio": [
+      6000,
+      3884
+    ],
+    "alt": "A spoonful of freshly roasted coffee beans lifted over a basket full of beans",
+    "source": "c75",
+    "by": "Jameswasswa",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Another_closer_look_at_the_roasted_coffee_beans.jpg",
+    "cropped": false
+  },
+  "close": {
+    "widths": [
+      640,
+      960,
+      1280,
+      1920,
+      2560,
+      3200
+    ],
+    "ratio": [
+      5472,
+      3648
+    ],
+    "alt": "Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light",
+    "source": "m61713103",
+    "by": "Thomas Martinsen",
+    "licence": "CC0",
+    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Drip_brewing_(Unsplash).jpg",
+    "cropped": false
+  },
+  "col-trier": {
+    "widths": [
+      480,
+      720,
+      960,
+      1280
+    ],
+    "ratio": [
+      2400,
+      1600
+    ],
+    "alt": "A steel sample trier drawn from the roasting drum, holding pale beans mid-roast",
+    "source": "m147143894",
+    "by": "Jameswasswa",
+    "licence": "CC BY-SA 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Closer_look_at_the_coffee_beans_from_the_coffee_roasting_machine_looking_at_their_progress.jpg",
+    "cropped": false
+  },
+  "col-tray": {
+    "widths": [
+      480,
+      720,
+      960,
+      1280
+    ],
+    "ratio": [
+      4272,
+      2848
+    ],
+    "alt": "Roasted beans turning in the cooling tray under the stirring arm",
+    "source": "m61712989",
+    "by": "Alex Jones",
+    "licence": "CC0",
+    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Alex_Jones_2014_(Unsplash).jpg",
+    "cropped": false
+  },
+  "col-beans": {
+    "widths": [
+      480,
+      720,
+      960,
+      1280
+    ],
+    "ratio": [
+      1800,
+      1200
+    ],
+    "alt": "Glossy roasted coffee beans filling the frame",
+    "source": "c65",
+    "by": "freestock.ca",
+    "licence": "CC BY-SA 3.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "page": "https://commons.wikimedia.org/wiki/File:Roasted_Coffee_Beans_Texture.jpg",
+    "cropped": false
   }
 }

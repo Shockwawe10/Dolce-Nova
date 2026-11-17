@@ -35,6 +35,17 @@ export const IMAGES = [
     alt: 'Whole dark roasted coffee beans' },
   { name: 'grind-espresso', src: 'f197293151', crop: [880, 2150, 900, 900], widths: [420, 640, 840],
     alt: 'Fine espresso grind, soft as cocoa powder' },
+  // redesign (REDESIGN-GUIDE.md section 7): featured coffee, closing card, collage
+  { name: 'featured', src: 'c75', widths: [640, 960, 1280, 1920, 2560],
+    alt: 'A spoonful of freshly roasted coffee beans lifted over a basket full of beans' },
+  { name: 'close', src: 'm61713103', widths: [640, 960, 1280, 1920, 2560, 3200],
+    alt: 'Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light' },
+  { name: 'col-trier', src: 'm147143894', widths: [480, 720, 960, 1280],
+    alt: 'A steel sample trier drawn from the roasting drum, holding pale beans mid-roast' },
+  { name: 'col-tray', src: 'm61712989', widths: [480, 720, 960, 1280],
+    alt: 'Roasted beans turning in the cooling tray under the stirring arm' },
+  { name: 'col-beans', src: 'c65', widths: [480, 720, 960, 1280],
+    alt: 'Glossy roasted coffee beans filling the frame' },
   { name: 'grind-filter', src: 'f56710941', crop: [1120, 750, 1000, 1000], widths: [420, 640, 840, 1000],
     alt: 'Medium filter grind, like coarse sand' },
 ];
