@@ -137,6 +137,13 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   block becomes "Three ways to brew it": pour-over, moka pot and espresso as tabs, each with its own photograph,
   recipe card, steps and a coffee to try. The French press was left out: we sell no coarse grind and the only
   free photograph was a cluttered kitchen counter.
+- **2026-11-17**, the roast becomes a slider: "It should be like sliders that user can slide and see how Coffe
+  roasting changes ... The slider should be like the temperature or intensity ... Maybe in one bin, but maybe it
+  would be better if that would be like four bins". Offered one bean + slider (recommended), four beans + slider, or
+  slider + scroll. Chosen: **four beans + slider**. Built as four batches: all heat together under one temperature
+  slider (20 to 230 C, stretched so the cracks at 196, 210 and 224 C get room), each pulled at its stage (raw, first
+  crack, 210 C, second crack), so sliding shows the change and the end shows the four roasts side by side. The
+  section is one screen; the pinned scroll is gone.
 
 ### Tell-someone sentence
 

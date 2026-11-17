@@ -87,8 +87,10 @@ round carousel arrows (`--r-pill`). One shadow, the cart drawer's.
 Only `transform` and `opacity` animate. No scroll reveals. The hero's words rise once on load and the bag
 settles from 1.04 scale (transform only: it is the largest image, never hidden). The carousel moves by native
 scrolling; its arrows scroll one slide (smooth unless reduced motion), its progress line is a `scaleX`. The 3D
-canvas appears at once when ready (no fade as it scrolls in). The bean never turns: its one pose is a constant
-(`POSE` in `roast-state.js`: face-on, so its S-shaped cut runs down the middle, leaning on a diagonal); during the intro, green grains fly in and the surface fills in exactly where they land
+canvas appears at once when ready (no fade as it scrolls in). No bean ever turns: each has one constant pose
+(`POSES` in `roast-state.js`: face-on, so the S-shaped cut runs down the middle, leaning on a diagonal; the four rolled
+a little differently so the row reads as beans, not copies). The slider value follows a critically damped spring, so a
+tap on a mark glides there; the 3D draws only while it moves or while the grains gather; during the intro, green grains fly in and the surface fills in exactly where they land
 (one formula in JS and in the shader), then scrolling changes only the roast, held at each stage while its note is read. Under `prefers-reduced-motion: reduce` nothing
 moves; the roast path snaps between its five states.
 
@@ -103,7 +105,7 @@ moves; the roast path snaps between its five states.
 | The coffees | 1 screen | h2 and lede in a head row; the carousel: 3.4 slides at 1440, 2.4 on a tablet, 1.3 on a phone; each slide a 4:5 bag on its own backdrop, the roast tag, the name, the notes, "from" price; each links to its product page |
 | Manifesto | about 1.3 screens | one centred serif sentence, then three photographs, all in black and white: one tall frame on columns 1–7, two stacked on 8–12 (phone: one wide, two squares) |
 | Origin | 72% of a screen (560 to 720px) | photograph half and forest half (Coffee Collective), one paragraph; a chapter, not a full screen |
-| Roast (peak) | 3 screens, one pinned | a still life on the hero's ink: one large 3D bean (right half; top on a phone) that gathers from green grains, then turns from green to dark as you scroll, a warm glow rising behind it; beside it the tag, h2, a numbered stage list (01 Green to 04 Dark, the current one at full strength) and that stage's note. No path, no turning. Without WebGL or script: the four roast photographs and every note |
+| Roast (peak) | one screen (801px at 1440, 768 on a phone) | four batches under one temperature slider: four 3D beans in a row (one row on phones too, so the beans and the slider are on screen together), each over a slot with its name, where it is pulled and its status (Waiting, Roasting, Done); the readout in the display serif; a slider from 20 to 230 °C with marks at 20, 196, 210 and 224; a note naming the phase (raw, drying, yellowing, first crack, development, second crack). The grains gather into the beans once as the section arrives. Without WebGL the slots show the four roast photographs and the slider still drives the words. Replaced the pinned three-screen scroll (owner, 2026-11-17) |
 | Brew at home | up to one screen (928px at 1440) | "Three ways to brew it": pour-over, moka pot and espresso as tabs on the ink half; each recipe has a card (coffee, water, grind, time), five numbered steps and a coffee to try; the photograph half crossfades to the chosen method. The recipes share one place, so switching never moves the page. Without script, all three in turn |
 | Close | 1 screen | a paper card over a still life: tag, h2, the forest button |
 | Footer | auto | three columns (the six coffees, craft, about and the demo lines), then the wordmark across the page |
