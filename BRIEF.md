@@ -128,6 +128,15 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   shipping: Standard 3-5 working days, EUR 4.90, free from EUR 40; Express 1-2 working days, EUR 9.90; EU addresses.
   A real sender (EmailJS from the browser, or a small serverless function with Resend) can be added later without
   rebuilding the checkout; it needs the owner's own account.
+- **2026-11-17**, three refinements: "Either make all the images black and white, maybe make them a little bit
+  bigger ... improve the 3D section ... turn around the bean itself, to be more visible of the cut, and also I would
+  like to add some filter recipe ... a little bit bigger, and maybe add a brew, like for example, for a filter, for
+  a mocha pot, or something like other".
+  Built: the collage all in black and white and larger (one tall frame, two beside it); the bean's one fixed pose
+  turned face-on so the S-shaped cut runs down its middle (the bean still never turns while scrolling); the brew
+  block becomes "Three ways to brew it": pour-over, moka pot and espresso as tabs, each with its own photograph,
+  recipe card, steps and a coffee to try. The French press was left out: we sell no coarse grind and the only
+  free photograph was a cluttered kitchen counter.
 
 ### Tell-someone sentence
 
