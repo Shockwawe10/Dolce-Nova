@@ -174,6 +174,10 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   Built: the cart's quantity circles drawn at 28px inside their 44px tap targets; the mouse wheel scrolls the page
   again (the wheel capture of the day before is gone); the row moves by dragging it with the mouse, or by dragging
   the line under it, now a scrollbar thumb. A drag never opens a coffee; a click does.
+- **2026-11-18**, correction: "You got it all wrong. I just want so user can scroll this scroll bar manually by
+  dragging it over his mouse pointer and drag it across the area. Not while scrolling the page". Built: only the
+  scrollbar is dragged; dragging the row by its bags is removed (they are plain links again). Grabbing the thumb
+  keeps the grab point (no jump to centre); pressing the empty line jumps there. The thumb thickens under the pointer.
 
 ### Tell-someone sentence
 
