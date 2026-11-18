@@ -44,6 +44,9 @@ writeFileSync('site/credits.html', `<!doctype html>
     <p class="t-soft">The 3D roast path uses <a class="link" href="https://threejs.org/">three.js</a> (MIT licence). Fonts: Instrument Serif and Instrument Sans (SIL Open Font License).</p>
   </div></div>
 </main>
+
+<!-- @footer -->
+<!-- /@footer -->
 </body>
 </html>
 `);

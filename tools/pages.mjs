@@ -6,6 +6,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { picture } from '../site/assets/js/store.js';
 import { formatEUR } from '../site/assets/js/cart.js';
+import { LEGAL, SOCIAL, UPDATED } from './legal-content.mjs';
 
 const catalog = JSON.parse(readFileSync('site/data/catalog.json', 'utf8'));
 const manifest = JSON.parse(readFileSync('site/assets/img/manifest.json', 'utf8'));
@@ -54,6 +55,10 @@ const carousel = (products, label, lazy = false) => `<div class="carousel" data-
       </div>
     </div>`;
 
+const legalLinks = () => LEGAL.map((l) => `<a href="${l.file}">${esc(l.label)}</a>`);
+const external = (x) => `<a href="${x.href}" target="_blank" rel="noopener noreferrer">${esc(x.name)}<span class="visually-hidden"> (opens ${new URL(x.href).hostname.replace('www.', '')} in a new tab)</span></a>`;
+const copyright = '© 2026 Dolce Nova. All rights reserved.';
+
 const footer = ({ home }) => `<footer class="footer">
   <div class="wrap footer__wrap">
     <div class="footer__cols">
@@ -67,14 +72,33 @@ const footer = ({ home }) => `<footer class="footer">
         <a href="${home}#roast">Roast</a>
         <a href="${home}#brew">Brew</a>
       </nav>
+      <nav aria-label="Help">
+        <p class="tag">Help</p>
+        ${legalLinks().join('\n        ')}
+      </nav>
+      <nav aria-label="Follow">
+        <p class="tag">Follow</p>
+        ${SOCIAL.map(external).join('\n        ')}
+      </nav>
       <div class="footer__about">
         <p class="tag">About</p>
         <p>Dolce Nova roasts six single-origin coffees in small batches and sends them out whole or ground for your brewer.</p>
         <p>Standard shipping is free from €40.</p>
-        <a href="credits.html">Photograph credits</a>
       </div>
     </div>
+    <div class="footer__bar">
+      <p>${copyright}</p>
+      <a href="credits.html">Photograph credits</a>
+    </div>
     <p class="footer__mark" aria-hidden="true">Dolce Nov<span>a</span></p>
+  </div>
+</footer>`;
+
+// checkout, confirmation and credits: just the policies and the copyright line
+const footerSlim = `<footer class="footer footer--slim">
+  <div class="wrap footer__bar">
+    <p>${copyright}</p>
+    <nav aria-label="Policies">${[...legalLinks(), '<a href="credits.html">Photograph credits</a>'].join(' ')}</nav>
   </div>
 </footer>`;
 
@@ -216,6 +240,48 @@ ${drawer}
 `;
 }
 
+// ---------- the legal pages (tools/legal-content.mjs) ----------
+const inline = (part) => (typeof part === 'string' ? esc(part) : `<a class="link" href="${part.href}"${/^https?:/.test(part.href) ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(part.text)}</a>`);
+const block = (b) => {
+  if (typeof b === 'string') return `<p>${esc(b)}</p>`;
+  if (b[0] === 'list') return `<ul class="legal__list">${b.slice(1).map((li) => `<li>${esc(li)}</li>`).join('')}</ul>`;
+  return `<p>${b.map(inline).join('')}</p>`;
+};
+function legalPage(l) {
+  return `${head({ title: `${l.title} · Dolce Nova`, description: l.lede, image: 'assets/img/bag-cerrado-sq-1024.webp' })}
+<body>
+<!-- @header -->
+${header({ home: './' })}
+<!-- /@header -->
+
+<main id="main" class="page legal">
+  <div class="wrap legal__wrap">
+    <header class="legal__head">
+      <p class="tag">Last updated ${UPDATED}</p>
+      <h1>${esc(l.title)}</h1>
+      <p class="t-lede">${esc(l.lede)}</p>
+    </header>
+    <div class="legal__body">
+      ${l.sections.map(([h, blocks]) => `<section>
+        <h2>${esc(h)}</h2>
+        ${blocks.map(block).join('\n        ')}
+      </section>`).join('\n      ')}
+    </div>
+  </div>
+</main>
+
+<!-- @footer -->
+${footer({ home: './' })}
+<!-- /@footer -->
+
+<!-- @drawer -->
+${drawer}
+<!-- /@drawer -->
+</body>
+</html>
+`;
+}
+
 // ---------- fill the marked blocks in the hand-written pages ----------
 function fill(file, blocks) {
   let html = readFileSync(file, 'utf8');
@@ -229,5 +295,6 @@ function fill(file, blocks) {
 
 for (const p of catalog.products) writeFileSync(`site/${pageOf(p)}`, productPage(p));
 fill('site/index.html', { header: header({ home: '', over: true }), coffees: carousel(catalog.products, 'The coffees'), footer: footer({ home: '' }), drawer });
-for (const f of ['site/checkout.html', 'site/success.html', 'site/credits.html']) fill(f, { header: header({ home: './', cart: false }) });
-console.log(`pages: ${catalog.products.length} product pages; index, checkout, success, credits filled`);
+for (const l of LEGAL) writeFileSync(`site/${l.file}`, legalPage(l));
+for (const f of ['site/checkout.html', 'site/success.html', 'site/credits.html']) fill(f, { header: header({ home: './', cart: false }), footer: footerSlim });
+console.log(`pages: ${catalog.products.length} product pages, ${LEGAL.length} legal pages; index, checkout, success, credits filled`);

@@ -312,9 +312,12 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 @media (hover: hover) { .footer__cols a:hover { text-decoration: underline; text-underline-offset: 4px; } }
 @media (min-width: 1024px) {
   .footer__cols { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  /* Coffees, Craft, Help, Follow, About (2026-11-18: a regular shop's footer) */
   .footer__cols > :nth-child(1) { grid-column: 1 / span 3; }
   .footer__cols > :nth-child(2) { grid-column: 4 / span 2; }
-  .footer__cols > .footer__about { grid-column: 8 / span 5; }
+  .footer__cols > :nth-child(3) { grid-column: 6 / span 2; }
+  .footer__cols > :nth-child(4) { grid-column: 8 / span 2; }
+  .footer__cols > .footer__about { grid-column: 10 / span 3; }
 }
 /* the one type moment: the bags' capitals across the container (R = the word's width at 1px, measured, see DESIGN.md) */
 /* measured 4.864 in WebKit and Chromium with 0.04em tracking after every letter; the last letter's tracking is
@@ -560,3 +563,25 @@ html:not(.js) .roast__control { display: none; }
 .trust li { display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: center; column-gap: var(--s-1); font-size: var(--fs-1); color: var(--c-ink-soft); }
 .trust svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
 @media (min-width: 640px) { .trust { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s-3); align-items: start; } .trust li { align-items: start; } }
+
+/* the copyright bar, and the slim footer of checkout, confirmation and credits (2026-11-18) */
+.footer__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--s-3); margin-top: var(--s-6); padding-top: var(--s-2); border-top: 1px solid var(--c-line); font-size: var(--fs-1); color: var(--c-ink-soft); }
+.footer__bar a { display: inline-flex; align-items: center; min-height: 44px; color: var(--c-ink); text-decoration: none; }
+@media (hover: hover) { .footer__bar a:hover { text-decoration: underline; text-underline-offset: 4px; } }
+.footer__bar nav { display: flex; flex-wrap: wrap; gap: 0 var(--s-3); }
+.footer--slim { padding-block: var(--s-2) var(--s-4); }
+.footer--slim .footer__bar { margin-top: 0; border-top: 0; }
+
+/* ---------- the legal pages: a reading column ---------- */
+.legal__wrap { display: grid; gap: var(--s-6); }
+.legal__head { display: grid; gap: var(--s-2); max-width: 46rem; }
+.legal__body { display: grid; gap: var(--s-6); max-width: 42rem; }
+.legal__body section { display: grid; gap: var(--s-2); }
+.legal__body h2 { font-size: var(--fs-5); }
+.legal__list { display: grid; gap: var(--s-1); padding-left: var(--s-3); list-style: disc; }
+.legal__list li::marker { color: var(--c-ink-soft); }
+@media (min-width: 1024px) {
+  .legal__wrap { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); }
+  .legal__head { grid-column: 1 / span 5; align-self: start; position: sticky; top: calc(var(--header) + var(--s-6)); }
+  .legal__body { grid-column: 7 / span 6; }
+}

@@ -12,6 +12,7 @@ const STATES = [
   ['checkout: errors shown', 'checkout.html', async (p) => { await p.click('[data-pay-btn]'); }],
   ['success', 'success.html', async () => {}],
   ['credits', 'credits.html', async () => {}],
+  ['privacy policy', 'privacy.html', async () => {}],
 ];
 
 const browser = await webkit.launch();

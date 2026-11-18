@@ -43,3 +43,34 @@ test('every coffee page tells where it comes from: its own landscape photograph,
     assert.ok(p.region.facts.length >= 4);
   }
 });
+
+test('a regular shop footer: four legal pages, linked from every footer, social links that open safely', async () => {
+  const { LEGAL, SOCIAL } = await import('../tools/legal-content.mjs');
+  assert.deepEqual(LEGAL.map((l) => l.file).sort(), ['cookies.html', 'privacy.html', 'shipping.html', 'terms.html']);
+  for (const l of LEGAL) {
+    const html = read(l.file);
+    assert.match(html, new RegExp(`<h1>${l.title}</h1>`));
+    assert.match(html, /Last updated \d{1,2} \w+ \d{4}/);
+  }
+  const withFooter = ['index.html', 'coffee-nyeri.html', ...LEGAL.map((l) => l.file)];
+  const slim = ['checkout.html', 'success.html', 'credits.html'];
+  for (const page of [...withFooter, ...slim]) {
+    const html = read(page);
+    assert.ok(html.includes('© 2026 Dolce Nova. All rights reserved.'), `${page} has the copyright line`);
+    for (const l of LEGAL) assert.ok(html.includes(`href="${l.file}"`), `${page} links ${l.file}`);
+  }
+  for (const page of withFooter) {
+    const html = read(page);
+    for (const s of SOCIAL) assert.ok(new RegExp(`href="${s.href.replace(/[./]/g, '\$&')}" target="_blank" rel="noopener noreferrer"`).test(html), `${page} links ${s.name} safely`);
+  }
+});
+
+test('the privacy and cookie pages name exactly the storage the code uses', () => {
+  const js = ['store.js', 'checkout.js', 'success.js'].map((f) => read(`assets/js/${f}`)).join('\n');
+  const cookies = read('cookies.html');
+  for (const key of ['dn-cart', 'dn-last-order']) {
+    assert.ok(js.includes(`'${key}'`), `the code uses ${key}`);
+    assert.ok(cookies.includes(key), `the cookie page names ${key}`);
+  }
+  assert.ok(!/document\.cookie/.test(js), 'the code sets no cookies');
+});

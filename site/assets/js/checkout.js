@@ -59,7 +59,7 @@ function renderTotals() {
     if (price) price.textContent = cost === 0 ? 'Free' : formatEUR(cost);
     if (time) time.textContent = `${SHIPPING[key].days[0]}–${SHIPPING[key].days[1]} working days · ${formatWindow(deliveryWindow(key, now))}`;
   }
-  const m = method(), ship = shippingCents(m, t.totalCents);
+  const m = method(), ship = t.lines.length ? shippingCents(m, t.totalCents) : 0;   // nothing to ship, nothing to charge
   out('subtotal').textContent = formatEUR(t.totalCents);
   out('method').textContent = SHIPPING[m].label;
   out('shipping').textContent = ship === 0 ? 'Free' : formatEUR(ship);
