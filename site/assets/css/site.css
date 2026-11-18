@@ -189,12 +189,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
   padding-inline: var(--edge); scrollbar-width: none;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
-@media (hover: hover) and (pointer: fine) {
-  .carousel__track { scroll-snap-type: none; cursor: grab; }
-  .carousel.is-dragging .carousel__track { cursor: grabbing; user-select: none; }
-  .carousel.is-dragging .slide__link { pointer-events: none; }
-}
-.slide img { -webkit-user-drag: none; user-select: none; }
+@media (hover: hover) and (pointer: fine) { .carousel__track { scroll-snap-type: none; } }
 .slide { scroll-snap-align: start; min-width: 0; }
 .slide__link { display: grid; gap: var(--s-1); text-decoration: none; }
 .slide__media { overflow: hidden; background: var(--c-ink); margin-bottom: var(--s-1); }
@@ -209,7 +204,11 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 /* the line under the row is its scrollbar: drag the thumb, or press anywhere on the line to jump there */
 .carousel__progress { justify-self: stretch; position: relative; height: 24px; cursor: pointer; touch-action: none; }
 .carousel__progress::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 1px; background: var(--c-line); }
-.carousel__progress span { position: absolute; left: 0; top: 10px; height: 3px; width: var(--thumb, 30%); background: var(--c-ink); }
+.carousel__progress span { position: absolute; left: 0; top: 10px; height: 3px; width: var(--thumb, 30%); background: var(--c-ink); cursor: grab; }
+/* the thumb thickens under the pointer and while held, so it reads as something to drag (no animation) */
+.carousel__progress:hover span, .carousel.is-seeking .carousel__progress span { top: 9px; height: 5px; }
+.carousel.is-seeking .carousel__progress, .carousel.is-seeking .carousel__progress span { cursor: grabbing; }
+.carousel.is-seeking { user-select: none; }
 html:not(.js) .carousel__progress { display: none; }
 .carousel__nav { display: flex; gap: var(--s-1); margin-right: calc(-1 * var(--s-2)); }
 .carousel__nav button { display: inline-grid; place-items: center; width: 48px; height: 48px; color: var(--c-ink); transition: transform var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }

@@ -1,6 +1,6 @@
 // The coffee carousel (Canyon's bestsellers row): a native horizontal scroller, so touch, trackpad and
-// keyboard (Tab through the slide links) all work without script. Script adds the arrows, a draggable
-// scrollbar under the row, and dragging the row itself with the mouse. Writes only a transform (the line) and the buttons' disabled state.
+// keyboard (Tab through the slide links) all work without script. Script adds the arrows and a draggable
+// scrollbar under the row. Writes only a transform (the line) and the buttons' disabled state.
 const motionOK = () => matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
 export function mountCarousels() {
@@ -32,42 +32,28 @@ export function mountCarousels() {
       const to = dir > 0 ? starts.find((p) => p > x + 2) : [...starts].reverse().find((p) => p < x - 2);
       track.scrollTo({ left: to ?? (dir > 0 ? track.scrollWidth : 0), behavior: motionOK() ? 'smooth' : 'auto' });
     };
-    // drag with the mouse (the owner, 2026-11-18: "scrolled with the mouse pointer ... not with the scroll itself"):
-    // grab the row and pull it, or drag the line under it like a scrollbar. The wheel scrolls the page as usual;
-    // touch keeps its native swipe. A drag never opens a coffee; a plain click still does.
-    let drag = null, swallowClick = false;
-    track.addEventListener('dragstart', (e) => e.preventDefault());   // links and images would start a native drag
-    track.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      drag = { x: e.clientX, left: track.scrollLeft, id: e.pointerId, moved: false };
-    });
-    addEventListener('pointermove', (e) => {
-      if (!drag) return;
-      const dx = e.clientX - drag.x;
-      if (!drag.moved && Math.abs(dx) > 4) { drag.moved = true; root.classList.add('is-dragging'); }
-      if (drag.moved) track.scrollLeft = drag.left - dx;
-    });
-    const endDrag = () => {
-      if (drag && drag.moved) swallowClick = true;
-      drag = null;
-      root.classList.remove('is-dragging');
-    };
-    addEventListener('pointerup', endDrag);
-    addEventListener('pointercancel', endDrag);
-    track.addEventListener('click', (e) => { if (swallowClick) { e.preventDefault(); e.stopPropagation(); swallowClick = false; } }, true);
-    // the scrollbar: press anywhere to centre the thumb there, then drag
+    // the scrollbar under the row (the owner, 2026-11-18: "scroll this scroll bar manually by dragging it ... not
+    // while scrolling the page"): grab the thumb and drag it, or press the line to jump there. The wheel scrolls the
+    // page; the bags stay plain links; touch keeps its native swipe.
     const rail = root.querySelector('.carousel__progress');
-    const seek = (clientX) => {
-      const r = rail.getBoundingClientRect(), frac = track.clientWidth / track.scrollWidth;
-      const t = Math.min(1, Math.max(0, ((clientX - r.left) / r.width - frac / 2) / (1 - frac || 1)));
-      track.scrollLeft = t * (track.scrollWidth - track.clientWidth);
-    };
+    const thumb = rail.querySelector('span');
     rail.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
       e.preventDefault();
-      rail.setPointerCapture(e.pointerId);
+      const r = rail.getBoundingClientRect(), t = thumb.getBoundingClientRect();
+      const span = r.width - t.width, max = track.scrollWidth - track.clientWidth;
+      if (span <= 0 || max <= 0) return;
+      // pressed on the thumb: keep the grab point; on the line: centre the thumb under the pointer
+      const grab = e.clientX >= t.left && e.clientX <= t.right ? e.clientX - t.left : t.width / 2;
+      const seek = (x) => { track.scrollLeft = Math.min(1, Math.max(0, (x - r.left - grab) / span)) * max; };
       seek(e.clientX);
+      rail.setPointerCapture(e.pointerId);
+      root.classList.add('is-seeking');
       const move = (ev) => seek(ev.clientX);
-      const up = () => { rail.removeEventListener('pointermove', move); rail.removeEventListener('pointerup', up); rail.removeEventListener('pointercancel', up); };
+      const up = () => {
+        root.classList.remove('is-seeking');
+        rail.removeEventListener('pointermove', move); rail.removeEventListener('pointerup', up); rail.removeEventListener('pointercancel', up);
+      };
       rail.addEventListener('pointermove', move);
       rail.addEventListener('pointerup', up);
       rail.addEventListener('pointercancel', up);
