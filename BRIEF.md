@@ -161,6 +161,13 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   (the green origin block, the black brew block, the closing card, the hero bag, the origin landscape on product
   pages). On a mouse or trackpad only, as the original brief said "no parallax on touch", and never under reduced
   motion.
+- **2026-11-18**, the carousel and the origin block: "I want the slider to be like scrollable, so user can hover over
+  it and scroll. And these arrows should be plain without the circles around them, maybe below the scroll bar" and,
+  of the green origin block, "I don't know if that really fit inside the design by the color ... Would it be logical
+  or no?" Built: the mouse wheel moves the row sideways while hovering it and hands back to the page at either end;
+  plain chevrons under the progress line. Advised keeping the origin where it is (statement, origin, roast, brew is
+  the story in order) and offered four options; the owner first chose to move it before the statement, then
+  changed to the recommended one: **same place, oat instead of green**, so the page runs light to dark like a roast.
 
 ### Tell-someone sentence
 

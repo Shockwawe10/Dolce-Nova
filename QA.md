@@ -26,6 +26,7 @@ scripts were moved to the new purchase path (carousel → product page → cart 
 | Quality | Captions never overlap, 320 to 430px | **PASS** · `qa/shop-overlap.mjs` (carousel captions and the product title) |
 | Logic | Cart totals in integer cents; pages agree with the catalog | **PASS** · `node --test`: 20/20 (11 shop and page tests, 5 roast-state, 4 order) (the hand-typed price table moved to 340 g; `tests/pages.test.mjs` checks every product page and the carousel against `catalog.json`) |
 | Flow | Home → carousel → product page → espresso, 1 kg, ×2 → drawer → checkout → confirmation | **PASS** in WebKit at 390×844 and 1440×900 (desktop uses the next arrow; phone swipes) |
+| Carousel by wheel, plain arrows; oat origin (2026-11-18) | Hover and scroll moves the row, not the page; the page scrolls on at the row's end; arrows plain, under the line, landing on slides | **PASS** · `qa/carousel-check.mjs` in Chromium and WebKit at 1440 (it failed on every point against the previous carousel). The origin block on oat: its tag reads 5.55:1 (soft ink on oat); audit 0; axe 0 in 12 states; flow and parallax PASS |
 | Parallax and a shorter close (2026-11-17) | Background photographs drift; no edge shows; still sharp; still under reduced motion; no cost | **PASS** · `qa/parallax-check.mjs`: all 4 home frames and the product page's landscape drift, no frame edge shows and every photograph stays 1.5× or sharper at 1280, 1440 and 1920 (the brew photographs gained 2880 and 3600px files for it); nothing moves under reduced motion. Hero alignment still PASS at six sizes. Against HEAD (Chromium + GPU, 4× CPU, 3 rounds): tree 98.5% / 98.3% of frames under 20 ms, HEAD 98.8% / 98.2%. The close is 694px at 1800×964 (was the full window) |
 | Demo markings removed (2026-11-17) | No demo or "fictional" wording left on the pages | **PASS** · a search of every page finds none; one line stays at the payment step and one on the confirmation (BRIEF.md says why); the flow checks the confirmation line |
 | Origin on product pages (2026-11-17) | A licensed landscape, a story and facts on every coffee page | **PASS** · `tests/pages.test.mjs` (each page shows its own landscape and title, two paragraphs, four facts); audit 0 at 4 sizes with the landscapes measured (2880px files cover the 1920 band at 1.5×); axe 0; no overflow |
@@ -313,6 +314,7 @@ node qa/roast-slider.mjs                 # the roast slider: keys, marks, words 
 node qa/hero-align.mjs                   # the hero's words line up with the bag, 1024 to 2560 px
 node qa/brew-tabs.mjs                    # the brew recipes switch by click and keyboard without moving the page
 node qa/parallax-check.mjs               # background photographs drift, never show an edge, stay sharp
+node qa/carousel-check.mjs               # the coffee row scrolls with the wheel; plain arrows land on slides
 node tools/shoot.mjs                     # WebKit screenshots, 4 sizes -> qa/out/shots (add --reduced)
 CHROME_PATH=$(node -e "console.log(require('playwright').chromium.executablePath())") \
   npx lighthouse http://localhost:4600/Dolce-Nova/ --only-categories=performance,accessibility,best-practices,seo
