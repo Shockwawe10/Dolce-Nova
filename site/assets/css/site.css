@@ -189,6 +189,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
   padding-inline: var(--edge); scrollbar-width: none;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
+@media (hover: hover) and (pointer: fine) { .carousel__track { scroll-snap-type: none; } }
 .slide { scroll-snap-align: start; min-width: 0; }
 .slide__link { display: grid; gap: var(--s-1); text-decoration: none; }
 .slide__media { overflow: hidden; background: var(--c-ink); margin-bottom: var(--s-1); }
@@ -198,14 +199,16 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 .slide__name { font-size: var(--fs-5); }
 .slide__notes { color: var(--c-ink-soft); }
 .slide__price { font-variant-numeric: tabular-nums; }
-.carousel__bar { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-3); }
-.carousel__progress { flex: 1; height: 1px; background: var(--c-line); overflow: hidden; }
+/* the progress line, then plain arrows under its right end (the owner, 2026-11-18: no circles) */
+.carousel__bar { display: grid; justify-items: end; gap: var(--s-1); margin-top: var(--s-3); }
+.carousel__progress { justify-self: stretch; height: 1px; background: var(--c-line); overflow: hidden; }
 .carousel__progress span { display: block; height: 100%; background: var(--c-ink); transform-origin: left; transform: scaleX(var(--p, 0.3)); }
-.carousel__nav { display: flex; gap: var(--s-1); }
-.carousel__nav button { display: inline-grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--c-ink); border-radius: var(--r-pill); transition: transform var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }
+.carousel__nav { display: flex; gap: var(--s-1); margin-right: calc(-1 * var(--s-2)); }
+.carousel__nav button { display: inline-grid; place-items: center; width: 48px; height: 48px; color: var(--c-ink); transition: transform var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }
+@media (hover: hover) { .carousel__nav button:not([disabled]):hover { transform: translateX(var(--nudge, 0)); } .carousel__nav [data-prev] { --nudge: -3px; } .carousel__nav [data-next] { --nudge: 3px; } }
 .carousel__nav button:active { transform: scale(0.94); }
 .carousel__nav button[disabled] { opacity: 0.3; cursor: default; }
-.carousel__nav svg { width: 16px; height: 16px; }
+.carousel__nav svg { width: 20px; height: 20px; }
 html:not(.js) .carousel__nav { display: none; }
 
 /* ---------- manifesto (Canyon): one sentence set large, then a collage ---------- */
@@ -230,8 +233,11 @@ html:not(.js) .carousel__nav { display: none; }
 /* ---------- colour-block split (Coffee Collective): a photograph half and a solid half ---------- */
 /* a chapter, not a screen: shorter than the viewport (the owner found the full-screen origin block "very big") */
 .block-split { display: grid; grid-template-rows: 36svh auto; color: var(--c-ground); container-type: inline-size; }
-.block-split--accent { background: var(--c-accent); }
 .block-split--ink { background: var(--c-ink); }
+/* the light chapter: the page runs light (coffees, story, origin) to dark (roast, brew), like a roast (2026-11-18) */
+.block-split--paper { background: var(--c-surface); color: var(--c-ink); }
+.block-split.block-split--paper .tag { color: var(--c-ink-soft); }
+.block-split.block-split--paper :focus-visible { outline-color: var(--c-ink); }
 .block-split :focus-visible { outline-color: var(--c-ground); }
 .block-split .tag { color: var(--c-line); }
 .block-split__photo { position: relative; overflow: hidden; }
