@@ -168,6 +168,12 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   plain chevrons under the progress line. Advised keeping the origin where it is (statement, origin, roast, brew is
   the story in order) and offered four options; the owner first chose to move it before the statement, then
   changed to the recommended one: **same place, oat instead of green**, so the page runs light to dark like a roast.
+- **2026-11-18**, the cart and the carousel again: "the circles around there, so I want them to be a little bit
+  smaller ... the scroll section with the Coffe user, should be scrolled with the mouse pointer, not with the scroll
+  itself. It's not efficient. So just regular scroll, but user can scroll it with the hand. This scroll bar."
+  Built: the cart's quantity circles drawn at 28px inside their 44px tap targets; the mouse wheel scrolls the page
+  again (the wheel capture of the day before is gone); the row moves by dragging it with the mouse, or by dragging
+  the line under it, now a scrollbar thumb. A drag never opens a coffee; a click does.
 
 ### Tell-someone sentence
 
