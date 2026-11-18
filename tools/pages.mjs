@@ -106,7 +106,9 @@ const head = ({ title, description, image, preload = [] }) => `<!doctype html>
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:type" content="product">
 <meta property="og:image" content="${image}">
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${preload.join('\n')}<link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/site.css">

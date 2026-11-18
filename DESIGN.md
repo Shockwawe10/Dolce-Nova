@@ -60,6 +60,9 @@ breakpoints: h1 49 / 61 / 76, h2 39 / 49 / 61 (phone / tablet / desktop); the na
 larger than the Garamond was. Tags: 13px Instrument Sans 500, uppercase, +0.08em. Buttons: 48px tall, 13px
 uppercase, +0.08em, square.
 
+**The favicon** (2026-11-18): the bags' gold lion medallion on their navy, cropped from the owner's Huehuetenango render
+(`site/assets/icon-32.png`, `icon-192.png`, and `icon-180.png` for home screens).
+
 **The header wordmark:** Instrument Serif 20px in capitals, +0.14em, like the arched "DOLCE NOVA" on the bags.
 
 **The one size off the scale: the footer wordmark.** "DOLCE NOVA" spans the container exactly:
