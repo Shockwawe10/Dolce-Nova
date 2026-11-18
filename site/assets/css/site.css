@@ -189,7 +189,12 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
   padding-inline: var(--edge); scrollbar-width: none;
 }
 .carousel__track::-webkit-scrollbar { display: none; }
-@media (hover: hover) and (pointer: fine) { .carousel__track { scroll-snap-type: none; } }
+@media (hover: hover) and (pointer: fine) {
+  .carousel__track { scroll-snap-type: none; cursor: grab; }
+  .carousel.is-dragging .carousel__track { cursor: grabbing; user-select: none; }
+  .carousel.is-dragging .slide__link { pointer-events: none; }
+}
+.slide img { -webkit-user-drag: none; user-select: none; }
 .slide { scroll-snap-align: start; min-width: 0; }
 .slide__link { display: grid; gap: var(--s-1); text-decoration: none; }
 .slide__media { overflow: hidden; background: var(--c-ink); margin-bottom: var(--s-1); }
@@ -201,8 +206,11 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 .slide__price { font-variant-numeric: tabular-nums; }
 /* the progress line, then plain arrows under its right end (the owner, 2026-11-18: no circles) */
 .carousel__bar { display: grid; justify-items: end; gap: var(--s-1); margin-top: var(--s-3); }
-.carousel__progress { justify-self: stretch; height: 1px; background: var(--c-line); overflow: hidden; }
-.carousel__progress span { display: block; height: 100%; background: var(--c-ink); transform-origin: left; transform: scaleX(var(--p, 0.3)); }
+/* the line under the row is its scrollbar: drag the thumb, or press anywhere on the line to jump there */
+.carousel__progress { justify-self: stretch; position: relative; height: 24px; cursor: pointer; touch-action: none; }
+.carousel__progress::before { content: ""; position: absolute; left: 0; right: 0; top: 11px; height: 1px; background: var(--c-line); }
+.carousel__progress span { position: absolute; left: 0; top: 10px; height: 3px; width: var(--thumb, 30%); background: var(--c-ink); }
+html:not(.js) .carousel__progress { display: none; }
 .carousel__nav { display: flex; gap: var(--s-1); margin-right: calc(-1 * var(--s-2)); }
 .carousel__nav button { display: inline-grid; place-items: center; width: 48px; height: 48px; color: var(--c-ink); transition: transform var(--d-1) var(--ease), opacity var(--d-2) var(--ease); }
 @media (hover: hover) { .carousel__nav button:not([disabled]):hover { transform: translateX(var(--nudge, 0)); } .carousel__nav [data-prev] { --nudge: -3px; } .carousel__nav [data-next] { --nudge: 3px; } }
@@ -433,10 +441,14 @@ html:not(.js) .roast__control { display: none; }
 .line__name { font-family: var(--f-display); font-size: var(--fs-4); line-height: 1.1; }
 .line__meta { color: var(--c-ink-soft); font-size: var(--fs-1); }
 .line__price { font-variant-numeric: tabular-nums; text-align: right; }
-.qty { display: inline-flex; align-items: center; gap: var(--s-1); margin-top: var(--s-1); }
+.qty { display: inline-flex; align-items: center; gap: 0; margin-top: var(--s-1); margin-left: calc(-1 * var(--s-1)); }
 .qty output { min-width: 24px; text-align: center; font-variant-numeric: tabular-nums; }
-.qty .icon-btn { border: 1px solid var(--c-ink-soft); width: 44px; height: 44px; }
-.line__remove { font-size: var(--fs-1); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
+/* a light 28px circle inside the 44px tap target (the owner, 2026-11-18: the 44px rings looked chunky) */
+.qty .icon-btn { position: relative; width: 44px; height: 44px; font-size: var(--fs-1); }
+.qty .icon-btn::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--c-line); border-radius: var(--r-pill); }
+@media (hover: hover) { .qty .icon-btn:not([disabled]):hover::before { border-color: var(--c-ink-soft); } }
+.qty .icon-btn[disabled] { opacity: 0.4; }
+.line__remove { margin-left: var(--s-3); font-size: var(--fs-1); text-decoration: underline; text-underline-offset: 4px; min-height: 44px; display: inline-flex; align-items: center; }
 .drawer__foot { padding: var(--s-3); border-top: 1px solid var(--c-line); display: grid; gap: var(--s-2); }
 .drawer__total { display: flex; justify-content: space-between; font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
 .drawer__note { font-size: var(--fs-1); color: var(--c-ink-soft); }
