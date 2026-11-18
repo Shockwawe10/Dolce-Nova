@@ -552,3 +552,11 @@ html:not(.js) .roast__control { display: none; }
 
 /* parallax frames: the picture is 12% taller at each end so its drift never shows an edge (motion.js) */
 .block-split__photo.has-parallax > picture, .photo-card__photo.has-parallax > picture, .origin-story__photo.has-parallax > picture { inset: -12% 0; }
+
+/* the pay button, its status line and the trust row stay together (the form spaces its groups 48px apart) */
+.pay-actions { display: grid; gap: var(--s-2); }
+/* the trust row under the pay button: three true statements, small line icons in the soft ink (2026-11-18) */
+.trust { display: grid; gap: var(--s-1); padding-top: var(--s-2); border-top: 1px solid var(--c-line); }
+.trust li { display: grid; grid-template-columns: 24px minmax(0, 1fr); align-items: center; column-gap: var(--s-1); font-size: var(--fs-1); color: var(--c-ink-soft); }
+.trust svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; }
+@media (min-width: 640px) { .trust { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--s-3); align-items: start; } .trust li { align-items: start; } }

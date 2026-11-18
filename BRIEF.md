@@ -183,7 +183,8 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   lion medallion on their navy (cropped from the Huehuetenango render; 32, 192 and a 180px home-screen icon).
   **Not built: the payment logos.** The checkout takes no payment through any of those providers (it says so); their
   marks would tell visitors they can pay with Apple Pay or PayPal, and the brands allow their marks only where the
-  method is offered. Alternatives offered to the owner.
+  method is offered. Alternatives offered to the owner; chosen: **an honest trust row** under the pay button (a lock:
+  card details stay in the browser; a parcel: free standard shipping from €40; a bag: resealable 340 g and 1 kg bags).
 
 ### Tell-someone sentence
 

@@ -142,7 +142,9 @@ browsers fill them; card fields do not (it is a demo card). Every field says wha
 
 The confirmation repeats the order and the address, then shows **the confirmation email** as a message (From,
 To, Subject, then the body: greeting, lines, subtotal, shipping, total, arrival window, address, order number),
-introduced by one line on the page: nothing was charged and no email was sent, the shop is a showcase. The sender is `orders@dolcenova.example`, a
+introduced by one line on the page: nothing was charged and no email was sent, the shop is a showcase.
+Under the pay button, a **trust row** of three true statements with small line icons (lock, parcel, bag) in the soft
+ink, in place of payment-provider logos, which the checkout could not honour. The sender is `orders@dolcenova.example`, a
 reserved example domain. Rules and prices live in `site/assets/js/order.js` (tested by `tests/order.test.mjs`).
 
 ### Sizes and prices
