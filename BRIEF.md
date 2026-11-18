@@ -185,6 +185,14 @@ Under reduced motion it shows the final roasted state (or a stepped fade), never
   marks would tell visitors they can pay with Apple Pay or PayPal, and the brands allow their marks only where the
   method is offered. Alternatives offered to the owner; chosen: **an honest trust row** under the pay button (a lock:
   card details stay in the browser; a parcel: free standard shipping from €40; a bag: resealable 340 g and 1 kg bags).
+- **2026-11-18**, "I need like it to be like your regular e-commerce shop, like privacy policy, all kind of policies, all
+  rights reserved, links to the Facebook, X, or just they happen to redirect to the facebook.com and x.com." Built: a
+  privacy policy, terms of use, shipping and returns, and a cookie page, written to match what the site does (no
+  cookies, the cart and last order kept only in the browser, hosting by GitHub); the terms keep one plain sentence
+  that the site takes no payment and ships nothing. The footer gains Help (the four pages) and Follow (Facebook,
+  Instagram, X, each to the platform's own home page, labelled as such, opening in a new tab) and a bar with
+  "© 2026 Dolce Nova. All rights reserved."; checkout, confirmation and credits get a slim footer with the same
+  links. Also fixed: an empty cart showed €4.90 shipping at checkout.
 
 ### Tell-someone sentence
 

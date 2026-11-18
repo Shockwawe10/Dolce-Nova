@@ -57,7 +57,8 @@ Results and every failure are in **QA.md**.
   `dolce_nova_coffee_blends.zip` into `assets-src/blends/` first.
 - Pages: `node tools/pages.mjs` writes the six product pages (`coffee-<id>.html`) and fills the shared
   header, carousel, footer and drawer into the other pages from `site/data/catalog.json`. Run it after any
-  catalog or image change; `node --test` fails if a page no longer matches the catalog.
+  catalog or image change; `node --test` fails if a page no longer matches the catalog. It also writes the legal pages
+  (privacy, terms, shipping and returns, cookies) from `tools/legal-content.mjs`.
 - Fonts: `node tools/fonts.mjs` (self-hosts the latin subsets and writes size-adjusted fallbacks).
 
 ## Documents

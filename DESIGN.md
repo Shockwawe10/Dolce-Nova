@@ -114,7 +114,7 @@ moves; the roast path snaps between its five states.
 | Roast (peak) | one screen (801px at 1440, 768 on a phone) | four batches under one temperature slider: four 3D beans in a row (one row on phones too, so the beans and the slider are on screen together), each over a slot with its name, where it is pulled and its status (Waiting, Roasting, Done); the readout in the display serif; a slider from 20 to 230 °C with marks at 20, 196, 210 and 224; a note naming the phase (raw, drying, yellowing, first crack, development, second crack). The grains gather into the beans once as the section arrives. Without WebGL the slots show the four roast photographs and the slider still drives the words. Replaced the pinned three-screen scroll (owner, 2026-11-17) |
 | Brew at home | up to one screen (928px at 1440) | "Three ways to brew it": pour-over, moka pot and espresso as tabs on the ink half; each recipe has a card (coffee, water, grind, time), five numbered steps and a coffee to try; the photograph half crossfades to the chosen method. The recipes share one place, so switching never moves the page. Without script, all three in turn |
 | Close | 520 to 760px (72% of a screen) | a paper card over a still life: tag, h2, the forest button; the photograph drifts (parallax) |
-| Footer | auto | three columns (the six coffees, craft, about and the demo lines), then the wordmark across the page |
+| Footer | auto | five columns (the six coffees; craft; help: privacy, terms, shipping and returns, cookies; follow: Facebook, Instagram, X; about), a bar with the copyright line and the photograph credits, then the wordmark across the page. Checkout, confirmation and credits carry a slim version: the copyright line and the policy links |
 
 ### Product page (`coffee-<id>.html`, generated)
 
@@ -146,6 +146,13 @@ introduced by one line on the page: nothing was charged and no email was sent, t
 Under the pay button, a **trust row** of three true statements with small line icons (lock, parcel, bag) in the soft
 ink, in place of payment-provider logos, which the checkout could not honour. The sender is `orders@dolcenova.example`, a
 reserved example domain. Rules and prices live in `site/assets/js/order.js` (tested by `tests/order.test.mjs`).
+
+### Legal pages (generated)
+
+`privacy.html`, `terms.html`, `shipping.html` and `cookies.html`, written by `tools/pages.mjs` from
+`tools/legal-content.mjs`: the "last updated" tag, the title and a lede on columns 1–5 (sticky on desktop), the
+sections on 7–12 in a reading column of at most 42rem. They describe what the site really does; a test checks that
+the cookie page names exactly the storage keys the code uses.
 
 ### Sizes and prices
 
