@@ -77,7 +77,18 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.click('[data-test-card]');
     await page.click('[data-pay-btn]');
     await page.waitForURL(/success\.html\?order=DN-/);
-    assert.match(await page.locator('[data-total]').innerText(), /121\.90/);
+    assert.match(await page.locator('[data-total-line]').innerText(), /121\.90/);
+    // the confirmation (2026-11-19): the bag bought, under a label addressed to the buyer; three dated steps;
+    // the brew card for the grind chosen (espresso); the email folded away until asked for
+    await page.waitForFunction(() => { const i = document.querySelector('[data-bags] img'); return i && i.complete && i.naturalWidth > 0; });
+    const label = await page.locator('[data-label]').innerText();
+    for (const want of [/Ada Lovelace/, /Amsterdam, Netherlands/, /Nyeri Gatomboya/, /DN-/]) assert.match(label, want);
+    assert.equal(await page.locator('[data-steps] li').count(), 3, 'three steps');
+    assert.match(await page.locator('[data-steps]').innerText(), /arrives\s+\w{3} \d{1,2} \w{3} – /i);
+    await page.waitForSelector('[data-brew]:not([hidden])');
+    assert.match(await page.locator('[data-brew]').innerText(), /espresso/i);
+    assert.equal(await page.locator('[data-email] .email').isVisible(), false, 'the email starts folded');
+    await page.click('[data-email] summary');
     // the confirmation and the email preview carry the order, the shipping and the address
     const mail = await page.locator('[data-email]').innerText();
     for (const want of [/ada@example\.com/, /Your Dolce Nova order DN-/, /Hi Ada/, /Express/, /9\.90/, /121\.90/, /Arriving \w{3} \d{1,2} \w{3} – /, /Keizersgracht 1/, /1015 CJ Amsterdam/, /Netherlands/, /Nyeri Gatomboya/]) {

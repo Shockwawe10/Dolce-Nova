@@ -30,22 +30,25 @@
 <!-- /@header -->
 <main id="main" class="page">
   <div class="wrap"><div class="done">
-    <p class="tag" data-enter style="--i:0">Order <span data-ref>placed</span></p>
-    <h1 data-enter style="--i:1">Thank you. Your coffee is on the roaster’s list.</h1>
-    <p class="t-lede" data-enter style="--i:2" data-lede>Nothing was charged and no email was sent: this shop is a showcase. Below is the confirmation you would receive.</p>
-    <div class="summary" data-order hidden data-enter style="--i:3">
-      <h2>What you ordered</h2>
-      <div data-lines></div>
-      <p class="summary__row"><span>Subtotal</span><span data-subtotal></span></p>
-      <p class="summary__row"><span>Shipping <span class="t-soft" data-method></span></span><span data-shipping></span></p>
-      <p class="summary__total"><span>Total</span><span data-total></span></p>
-      <p class="summary__eta" data-eta></p>
-      <p class="summary__address" data-address></p>
+    <div class="done__intro">
+      <h1 data-enter style="--i:0">Thank you. Your coffee is on the roaster’s list.</h1>
+      <p class="t-lede" data-enter style="--i:1" data-lede>Nothing was charged and no email was sent: this shop is a showcase.</p>
     </div>
-
-    <section class="email-preview" data-email hidden aria-labelledby="email-title">
-      <h2 id="email-title">The confirmation email</h2>
-      <article class="email" aria-label="Email preview">
+    <!-- the bag(s) just bought, labelled like the parcel they would leave in (success.js) -->
+    <figure class="done__bags" data-bags hidden>
+      <div class="done__bag-grid" data-bag-grid></div>
+      <figcaption class="parcel-label" data-label></figcaption>
+    </figure>
+    <section class="done__next" data-next hidden aria-labelledby="next-title">
+      <h2 id="next-title">What happens next</h2>
+      <ol class="steps" data-steps></ol>
+      <p class="done__total" data-total-line></p>
+    </section>
+    <section class="done__brew" data-brew hidden aria-labelledby="brew-card-title"></section>
+    <p class="done__back" data-fallback><a class="btn" href="./#coffees">Back to the coffees</a></p>
+    <details class="email-preview" data-email hidden>
+      <summary><span id="email-title">See the confirmation email</span></summary>
+      <article class="email" aria-labelledby="email-title">
         <dl class="email__head">
           <dt>From</dt><dd>Dolce Nova &lt;orders@dolcenova.example&gt;</dd>
           <dt>To</dt><dd data-email-to></dd>
@@ -53,8 +56,7 @@
         </dl>
         <div class="email__body" data-email-body></div>
       </article>
-    </section>
-    <p data-enter style="--i:4"><a class="btn" href="./#coffees">Back to the coffees</a></p>
+    </details>
   </div></div>
 </main>
 

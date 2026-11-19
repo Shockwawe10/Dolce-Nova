@@ -140,9 +140,16 @@ phone), **Shipping** (two radio cards, each with its price and its arrival dates
 EUR 40), total and "Arrives Wed 18 Nov – Thu 19 Nov". Address fields use the standard `autocomplete` tokens, so
 browsers fill them; card fields do not (it is a demo card). Every field says what it needs; focus goes to the first.
 
-The confirmation repeats the order and the address, then shows **the confirmation email** as a message (From,
-To, Subject, then the body: greeting, lines, subtotal, shipping, total, arrival window, address, order number),
-introduced by one line on the page: nothing was charged and no email was sent, the shop is a showcase.
+The confirmation (reworked 2026-11-19 after the Impeccable critique: the ending was the least designed screen)
+shows **the bag(s) just bought**, square crops on their own grounds (one large over two when there are three), under
+a **parcel label** stuck over the foot of the photograph (the one shadow): who it is for, the lines, the order
+number. On desktop the bags take columns 8–12 beside the words; on a phone they follow the heading. Then **what
+happens next** in three dated steps (placed; roasted and sent *by* the next working day; arrives in the window),
+the total, a **brew card** for the first line's grind (filter: pour-over; espresso: espresso, or the moka pot;
+whole bean: a grind note), each linking to its tab on the home page (`./#recipe-<name>`, brew.js opens it), and,
+folded behind "See the confirmation email", **the email** as a message (From, To, Subject, then the body). One
+line under the heading says nothing was charged and no email was sent. Opened without an order, the page is the
+heading, that line and "Back to the coffees".
 Under the pay button, a **trust row** of three true statements with small line icons (lock, parcel, bag) in the soft
 ink, in place of payment-provider logos, which the checkout could not honour. The sender is `orders@dolcenova.example`, a
 reserved example domain. Rules and prices live in `site/assets/js/order.js` (tested by `tests/order.test.mjs`).

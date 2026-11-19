@@ -487,7 +487,53 @@ html:not(.js) .roast__control { display: none; }
 .summary h2 { font-size: var(--fs-5); }
 .summary__line { display: grid; grid-template-columns: 1fr auto; gap: var(--s-2); padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 .summary__total { display: flex; justify-content: space-between; font-size: var(--fs-3); padding-top: var(--s-1); font-variant-numeric: tabular-nums; }
-.done { display: grid; gap: var(--s-3); max-width: 640px; }
+/* the order confirmation: the words, then the bag(s) bought under a parcel label; on desktop the bags take the
+   right half beside the words, steps and brew card (success.js reveals each part once the order is read) */
+.done { display: grid; gap: var(--s-6); }
+.done__intro { display: grid; gap: var(--s-3); }
+.done__intro h1 { max-width: 14ch; }
+@media (min-width: 1024px) {
+  .done { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); row-gap: var(--s-8); align-items: start; }
+  .done > * { grid-column: 1 / span 6; }
+  .done > .done__bags { grid-column: 8 / -1; grid-row: 1 / span 5; }
+  .done__intro h1 { font-size: var(--fs-8); }
+}
+.done__bags { margin: 0; display: grid; }
+@media (max-width: 1023px) { .done__bags { width: 100%; max-width: 560px; } }   /* the 1024 px bag stays sharp (1.8x) on a tablet */
+.done__bag-grid { display: grid; gap: var(--s-1); }
+.done__bag-grid.is-many { grid-template-columns: 1fr 1fr; }
+.done__bag-grid.is-many > :first-child:nth-last-child(odd) { grid-column: 1 / -1; }   /* three: one large over two, no hole */
+.done__bag-grid > picture { display: block; }
+.done__bag-grid img { display: block; width: 100%; height: auto; }
+/* the label stuck over the foot of the bag's ground, as on the parcel it would leave in */
+.parcel-label { position: relative; margin: calc(-1 * var(--s-8)) var(--s-3) 0; display: grid; background: var(--c-ground); border: 1px solid var(--c-ink); box-shadow: var(--shadow); font-size: var(--fs-1); line-height: 1.5; }
+.parcel-label > span { padding: var(--s-2) var(--s-3); }
+.parcel-label > span + span { border-top: 1px solid var(--c-line); }
+.parcel-label__to { font-size: var(--fs-2); }
+.parcel-label__lines { display: grid; }
+.parcel-label .tag { margin-right: var(--s-1); }
+.parcel-label__ref { font-variant-numeric: tabular-nums; }
+@media (min-width: 640px) { .parcel-label { margin-inline: var(--s-4); } }
+.done__next { display: grid; gap: var(--s-3); }
+.done__next > h2, .done__brew > h2 { font-size: var(--fs-5); }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+@media (min-width: 640px) { .steps { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.5fr); gap: var(--g); } }   /* the last holds a date range */
+.step { display: grid; gap: 0; padding-top: var(--s-2); border-top: 2px solid var(--c-line); }
+.step.is-done { border-top-color: var(--c-ink); }
+.step__what { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; color: var(--c-ink-soft); }
+.step__when { font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
+.step__note { font-size: var(--fs-1); }
+.done__total { display: grid; grid-template-columns: 1fr auto; column-gap: var(--s-2); padding-top: var(--s-2); border-top: 1px solid var(--c-line); font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
+.done__total > .t-soft { grid-column: 1 / -1; font-size: var(--fs-1); }
+.done__brew { display: grid; gap: var(--s-3); padding: var(--s-4); background: var(--c-surface); }
+.done__brew .recipe__specs { grid-template-columns: repeat(3, minmax(0, 1fr)); border-color: var(--c-line); }
+.done__brew .recipe__specs dt { color: var(--c-ink-soft); }
+.done__brew-links { display: flex; flex-wrap: wrap; column-gap: var(--s-4); }
+.email-preview > summary { display: flex; align-items: center; gap: var(--s-1); min-height: 48px; cursor: pointer; font-weight: 500; list-style: none; }
+.email-preview > summary::-webkit-details-marker { display: none; }
+.email-preview > summary::after { content: ""; width: 8px; height: 8px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform var(--d-2) var(--ease); }
+.email-preview[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.email-preview > summary:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
 /* the checkout form in four groups, Coffee Collective's order: contact, address, shipping, payment */
 .checkout__form { gap: var(--s-6); }
 .form__group { display: grid; gap: var(--s-2); }
@@ -506,8 +552,7 @@ html:not(.js) .roast__control { display: none; }
 .summary__eta { font-weight: 500; }
 .summary__address { font-size: var(--fs-1); }
 /* the confirmation email, shown as a message: a header block, then the body */
-.email-preview { display: grid; gap: var(--s-2); }
-.email-preview > h2 { font-size: var(--fs-5); }
+.email-preview > .email { margin-top: var(--s-2); }   /* a margin, not a grid gap: <details> as a grid is unreliable in older Safari */
 .email { border: 1px solid var(--c-line); background: var(--c-ground); }
 .email__head { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: var(--s-2); padding: var(--s-2) var(--s-3); background: var(--c-surface); font-size: var(--fs-1); }
 .email__head dt { color: var(--c-ink-soft); }
@@ -585,3 +630,6 @@ html:not(.js) .roast__control { display: none; }
   .legal__head { grid-column: 1 / span 5; align-self: start; position: sticky; top: calc(var(--header) + var(--s-6)); }
   .legal__body { grid-column: 7 / span 6; }
 }
+/* the confirmation without an order (opened directly, or the tab was closed) is short: the footer stays at the foot */
+body:has(.done) { min-height: 100svh; display: flex; flex-direction: column; }
+body:has(.done) > main { flex: 1 0 auto; }

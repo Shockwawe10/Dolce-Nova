@@ -22,4 +22,14 @@ export function mountBrew(root = document.querySelector('.brew')) {
     e.preventDefault();
     select(to, true);
   });
+  // a link to #recipe-<name> (the order confirmation's "Full recipe") opens that tab: the panel is hidden until
+  // chosen, so the browser cannot scroll to it on its own; show it, then bring the section into view
+  const fromHash = () => {
+    const k = panels.findIndex((p) => p && `#${p.id}` === location.hash);
+    if (k < 0) return;
+    select(k, false);
+    (root.closest('section') || root).scrollIntoView({ block: 'start' });
+  };
+  fromHash();
+  addEventListener('hashchange', fromHash);
 }
