@@ -246,7 +246,7 @@ ${originStory(p)}
        (product.js). It never adds by itself: the grind is the buyer's to choose -->
   <div class="buy-bar" data-buy-bar hidden>
     <p class="buy-bar__what"><span>${esc(p.name)}</span><span class="t-soft">from ${formatEUR(Math.min(...Object.values(p.prices)))}</span></p>
-    <a class="btn" href="#buy" data-buy-jump>Choose grind &amp; size</a>
+    <a class="btn" href="#buy" data-buy-jump>Choose grind<span class="buy-bar__more">&amp; size</span></a>
   </div>
   <section class="more coffees" aria-labelledby="more-title">
     <div class="wrap section__head"><h2 id="more-title">More coffees</h2></div>

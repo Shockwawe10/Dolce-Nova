@@ -116,6 +116,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 .header--over:not(.is-scrolled)::before { opacity: 0; }
 .header__bar { position: relative; height: var(--header); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s-2); }
 .header__nav { display: flex; gap: var(--s-1); }
+.cart-btn { white-space: nowrap; }   /* "Cart (0)" broke over two lines at 320 */
 .header__nav a, .header__end > a, .cart-btn {
   display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--s-1); text-decoration: none; position: relative;
   font-size: var(--fs-1); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 500;
@@ -611,6 +612,8 @@ html:not(.js) .roast__control { display: none; }
 .buy-bar__what { flex: 1; min-width: 0; display: grid; font-size: var(--fs-1); line-height: 1.4; }
 .buy-bar__what > span:first-child { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .buy-bar .btn { flex: none; }
+.buy-bar__what > span { white-space: nowrap; }
+@media (max-width: 399px) { .buy-bar__more { display: none; } }   /* 320: the name keeps room */
 @media (min-width: 1024px) { .buy-bar { display: none !important; } }
 /* the drawer's free-shipping line: how far is left, and a 2 px track that fills */
 .drawer__free { display: grid; gap: var(--s-1); }
