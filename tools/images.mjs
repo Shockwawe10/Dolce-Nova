@@ -10,7 +10,12 @@ const OUT = 'site/assets/img';
 const src = JSON.parse(readFileSync('assets-src/sources.json', 'utf8'));
 
 // crop: [x, y, w, h] in original pixels; omitted = full frame.
-export const IMAGES = [
+export // The side labels of the bag strip, in the 1024 px source (the same place on all six renders).
+const STRIP = 'delogo=x=352:y=596:w=88:h=36,delogo=x=584:y=596:w=150:h=36,split=3[a][b][c];' +
+  '[b]crop=84:32:354:598,noise=alls=10:allf=u[n1];[c]crop=146:32:586:598,noise=alls=10:allf=u[n2];' +
+  '[a][n1]overlay=354:598[t];[t][n2]overlay=586:598';
+
+const IMAGES = [
   { name: 'origin', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
     alt: 'A hand lifting green coffee beans from a wide basket during sorting' },
   // origin landscapes for the product pages (2026-11-17)
@@ -69,19 +74,22 @@ function BAGS() {
     huila: 'Huila La Plata', huehuetenango: 'Huehuetenango', decaf: 'Sugarcane Decaf' };
   return Object.entries(files).flatMap(([id, f]) => {
     const alt = `A 340 g bag of Dolce Nova ${names[id]}: ${looks[id]}`;
-    const own = { file: `assets-src/blends/${f}.png`, owner: true, alt };
+    // Every render prints "ESTD. · 2023 · NAT. PROC." over the name, but only Cerrado is a natural-process coffee
+    // (the critique, 2026-11-19; the owner chose to mask it): on the other five the two side labels are
+    // rebuilt from the paper around them (delogo), with the paper's grain added back, leaving "· 2023 ·".
+    const own = { file: `assets-src/blends/${f}.png`, owner: true, alt, patch: id === 'cerrado' ? null : STRIP };
     return [{ name: `bag-${id}`, ...own, crop: [132, 40, 760, 950], widths: [240, 480, 760] },
       { name: `bag-${id}-sq`, ...own, widths: [640, 1024] }];
   });
 }
 
-function encode(input, crop, width, out, codec) {
-  const vf = [crop ? `crop=${crop[2]}:${crop[3]}:${crop[0]}:${crop[1]}` : null, `scale=${width}:-2:flags=lanczos`]
+function encode(input, crop, width, out, codec, patch) {
+  const vf = [patch, crop ? `crop=${crop[2]}:${crop[3]}:${crop[0]}:${crop[1]}` : null, `scale=${width}:-2:flags=lanczos`]
     .filter(Boolean).join(',');
   const args = codec === 'avif'
     ? ['-c:v', 'libaom-av1', '-still-picture', '1', '-crf', '30', '-b:v', '0', '-cpu-used', '4', '-pix_fmt', 'yuv420p']
     : ['-c:v', 'libwebp', '-quality', '78', '-compression_level', '6'];
-  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', input, '-vf', vf, ...args, '-frames:v', '1', out]);
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', input, '-filter_complex', vf, ...args, '-frames:v', '1', out]);
 }
 
 const only = process.argv.slice(2);
@@ -94,7 +102,7 @@ for (const img of IMAGES) {
   const [cw, ch] = img.crop ? [img.crop[2], img.crop[3]] : [s.width, s.height];
   const widths = img.widths.filter((w) => w <= cw);
   for (const w of widths) {
-    for (const codec of ['avif', 'webp']) encode(img.file || `assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec);
+    for (const codec of ['avif', 'webp']) encode(img.file || `assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec, img.patch);
   }
   manifest[img.name] = { widths, ratio: [cw, ch], alt: img.alt, source: img.src || 'owner-bags', owner: !!img.owner,
     by: s.by, licence: s.licence, licenceUrl: s.licenceUrl, page: s.page, cropped: !!img.crop };

@@ -127,6 +127,12 @@ the region as h2 with a tag ("Origin · Kenya") on columns 1–5 and, on 7–12,
 coffee is grown, and four facts typical of the region. Then "More coffees": the same carousel with the other five.
 Phone: stacked in the same order.
 
+The grind chips carry one line of help ("Whole bean for your own grinder. Espresso is fine, for machines and moka
+pots. Filter is medium, for pour-over and drip.") and the Process fact a line on what the process does to the cup.
+The bag renders print "ESTD. · 2023 · NAT. PROC." over the name, true only for Cerrado; on the other five,
+`tools/images.mjs` rebuilds the two side labels from the paper around them (ffmpeg `delogo`, grain added back), so
+the bags read "· 2023 ·" (the owner's choice, 2026-11-19). The "WHOLE BEAN · 12OZ · 340G" line at the foot stays.
+
 After Add, "View cart" (opens the drawer) and "Checkout →" appear under the button. On a phone, until the Add button
 comes into view, a **buy bar** is fixed to the foot of the screen: the name, "from" the lowest price, and "Choose grind
 & size", which scrolls to the choices and focuses the grind; it never adds by itself. The drawer's foot counts down to

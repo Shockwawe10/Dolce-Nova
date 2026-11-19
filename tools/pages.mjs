@@ -13,6 +13,12 @@ const manifest = JSON.parse(readFileSync('site/assets/img/manifest.json', 'utf8'
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const from = (p) => Math.min(...Object.values(p.prices));
 const roastTag = (p) => `${p.roast} roast · ${p.origin}`;
+// What each process means, in a line, under the fact (the critique, 2026-11-19: "Washed" was never explained).
+const PROCESS = {
+  Washed: 'The fruit is washed off before the beans dry: a clean, bright cup.',
+  Natural: 'The beans dry inside the whole cherry: a fruitier, heavier cup.',
+  'Sugarcane EA': 'Decaffeinated with ethyl acetate made from sugarcane, before roasting.',
+};
 export const pageOf = (p) => `coffee-${p.id}.html`;
 
 // ---------- partials ----------
@@ -25,7 +31,7 @@ const header = ({ home, over = false, cart = true }) => `<header class="header h
     <div class="header__end">${cart ? `
       <button class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart" data-cart-open>
         Cart (<span class="cart-btn__count" data-cart-count aria-live="polite">0</span><span class="visually-hidden"> items</span>)
-      </button>` : `<a href="./#coffees" aria-label="Back to the coffees"><span class="end-long">Back to the coffees</span><span class="end-short">Shop</span></a>`}
+      </button>` : `<a class="header__back" href="./#coffees">Back to the coffees</a>`}
     </div>
   </div>
 </header>`;
@@ -202,7 +208,9 @@ ${header({ home: './' })}
       <p class="pdp__notes">${esc(p.notes)}.</p>
       <p>${esc(p.about)}</p>
       <form class="options" id="buy" data-add novalidate>
-        <fieldset class="choice"><legend>Grind</legend><div class="chips">
+        <fieldset class="choice" aria-describedby="grind-hint-${p.id}"><legend>Grind</legend>
+        <p class="choice__hint" id="grind-hint-${p.id}">Whole bean for your own grinder. Espresso is fine, for machines and moka pots. Filter is medium, for pour-over and drip.</p>
+        <div class="chips">
           ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${esc(label)}</label>`).join('\n          ')}
         </div></fieldset>
         <fieldset class="choice"><legend>Size</legend><div class="chips">
@@ -217,7 +225,7 @@ ${header({ home: './' })}
       </form>
       <dl class="facts">
         <dt>Origin</dt><dd>${esc(p.origin)}</dd>
-        <dt>Process</dt><dd>${esc(p.process)}</dd>
+        <dt>Process</dt><dd>${esc(p.process)}${PROCESS[p.process] ? `<span class="facts__note">${PROCESS[p.process]}</span>` : ''}</dd>
         <dt>Roast</dt><dd>${esc(p.roast)}</dd>
         <dt>Bag</dt><dd>${sizesList.map(([, l]) => l).join(' or ')}, resealable</dd>
         <dt>Shipping</dt><dd>Standard 3–5 working days, free from €40; Express 1–2 working days</dd>

@@ -349,6 +349,8 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 
 /* ---------- choices: grind and size ---------- */
 .options { display: grid; gap: var(--s-3); align-content: start; }
+.choice__hint { font-size: var(--fs-1); line-height: 1.5; color: var(--c-ink-soft); margin: 0 0 var(--s-1); max-width: 48ch; }
+.facts__note { display: block; font-size: var(--fs-1); line-height: 1.5; color: var(--c-ink-soft); }
 .choice legend { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; margin-bottom: var(--s-1); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-1); }
 /* a pill label holding a real, visible radio dot: focus lands on the dot and nothing covers the text */
@@ -620,8 +622,8 @@ html:not(.js) .roast__control { display: none; }
 }
 
 /* the utility pages' way back: the full words on a tablet and up, one word on a phone (the bar holds three items) */
-.end-short { display: none; }
-@media (max-width: 639px) { .end-long { display: none; } .end-short { display: inline; } }
+/* checkout, confirmation, credits: "Coffees" in the nav already leads back on a phone, so the second link goes */
+@media (max-width: 639px) { .header__end > .header__back { display: none; } }
 
 /* the one line at the payment step: no payment is taken here (kept where card details are asked for) */
 .pay-note { font-size: var(--fs-1); color: var(--c-ink-soft); max-width: 60ch; }

@@ -51,7 +51,9 @@
       <p class="pdp__notes">Blackcurrant, grapefruit, cane sugar.</p>
       <p>From the Gatomboya washing station in Nyeri, on the slopes of Mount Kenya. Kenyan coffee at its brightest: juicy, with a long, sweet finish.</p>
       <form class="options" id="buy" data-add novalidate>
-        <fieldset class="choice"><legend>Grind</legend><div class="chips">
+        <fieldset class="choice" aria-describedby="grind-hint-nyeri"><legend>Grind</legend>
+        <p class="choice__hint" id="grind-hint-nyeri">Whole bean for your own grinder. Espresso is fine, for machines and moka pots. Filter is medium, for pour-over and drip.</p>
+        <div class="chips">
           <label class="chip"><input type="radio" name="grind" value="whole" checked>Whole bean</label>
           <label class="chip"><input type="radio" name="grind" value="espresso">Espresso</label>
           <label class="chip"><input type="radio" name="grind" value="filter">Filter</label>
@@ -69,7 +71,7 @@
       </form>
       <dl class="facts">
         <dt>Origin</dt><dd>Kenya</dd>
-        <dt>Process</dt><dd>Washed</dd>
+        <dt>Process</dt><dd>Washed<span class="facts__note">The fruit is washed off before the beans dry: a clean, bright cup.</span></dd>
         <dt>Roast</dt><dd>Light</dd>
         <dt>Bag</dt><dd>340 g or 1 kg, resealable</dd>
         <dt>Shipping</dt><dd>Standard 3–5 working days, free from €40; Express 1–2 working days</dd>
