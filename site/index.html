@@ -186,7 +186,7 @@
           <p class="tag">Roast</p>
           <h2 id="roast-title">From green bean to dark.</h2>
         </div>
-        <p class="t-lede">Four batches go into the drum together. Turn up the heat and watch each one pulled at its stage.</p>
+        <p class="t-lede">Four batches roast together. Light and medium are out; take the heat to second crack for the dark.</p>
       </div>
       <div class="roast__stage">
         <canvas class="roast__canvas" role="img" aria-label="Four coffee beans roasting together, from green to light, medium and dark, as the temperature rises"></canvas>
@@ -216,10 +216,10 @@
       <div class="roast__control" data-roast-control>
         <div class="roast__readout">
           <label for="roast-temp">Bean temperature</label>
-          <output for="roast-temp" data-roast-temp>20 °C</output>
+          <output for="roast-temp" data-roast-temp>217 °C</output>
         </div>
         <div class="roast__track">
-          <input id="roast-temp" class="roast__range" type="range" min="0" max="100" step="0.5" value="0" aria-valuetext="20 °C, raw" aria-describedby="roast-note">
+          <input id="roast-temp" class="roast__range" type="range" min="0" max="100" step="0.5" value="82" aria-valuetext="217 °C, development" aria-describedby="roast-note">
           <div class="roast__ticks">
             <button type="button" class="roast__tick" style="--u: 0" data-roast-tick="0" aria-label="Set to 20 °C: raw">20°</button>
             <button type="button" class="roast__tick" style="--u: 60" data-roast-tick="60" aria-label="Set to 196 °C: light batch pulled">196°</button>
@@ -227,8 +227,24 @@
             <button type="button" class="roast__tick" style="--u: 90" data-roast-tick="90" aria-label="Set to 224 °C: dark batch pulled">224°</button>
           </div>
         </div>
-        <p class="roast__note" id="roast-note" aria-live="polite" data-roast-note><strong>Raw.</strong> Green coffee at room temperature: dense, grassy and about 11% water.</p>
+        <p class="roast__note" id="roast-note" aria-live="polite" data-roast-note><strong>Development.</strong> Sugars caramelise toward chestnut. Pulled at 210 °C, the medium batch is sweet and round.</p>
       </div>
+      <!-- @roastshop -->
+<nav class="roast__shop" aria-label="The coffees by roast">
+        <div class="roast__shop-group">
+          <p class="roast__shop-roast">Light</p>
+          <p><a class="link" href="coffee-yirgacheffe.html">Yirgacheffe Konga</a>, <a class="link" href="coffee-nyeri.html">Nyeri Gatomboya</a></p>
+        </div>
+        <div class="roast__shop-group">
+          <p class="roast__shop-roast">Medium</p>
+          <p><a class="link" href="coffee-huila.html">Huila La Plata</a>, <a class="link" href="coffee-huehuetenango.html">Huehuetenango</a>, <a class="link" href="coffee-decaf.html">Sugarcane Decaf</a></p>
+        </div>
+        <div class="roast__shop-group">
+          <p class="roast__shop-roast">Medium-dark</p>
+          <p><a class="link" href="coffee-cerrado.html">Cerrado Natural</a></p>
+        </div>
+      </nav>
+<!-- /@roastshop -->
     </div>
   </section>
 

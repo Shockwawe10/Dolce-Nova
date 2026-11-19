@@ -13,6 +13,14 @@ const manifest = JSON.parse(readFileSync('site/assets/img/manifest.json', 'utf8'
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const from = (p) => Math.min(...Object.values(p.prices));
 const roastTag = (p) => `${p.roast} roast · ${p.origin}`;
+// A small drawn mark per grind (the brief: "the choice is visual, not a dropdown"): the whole bean with its cut,
+// fine even grains for espresso, fewer and larger grains for filter. One stroke weight, currentColor.
+const dots = (pts, r) => pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="${r}"/>`).join('');
+const GRIND_MARK = {
+  whole: '<svg class="grind-mark" viewBox="0 0 20 20" aria-hidden="true"><ellipse cx="10" cy="10" rx="5.5" ry="7.5" transform="rotate(30 10 10)" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12.4 4.9c-2.6 2.2-.4 4.7-2.6 7.4-1 1.2-1.7 1.9-2.2 2.8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+  espresso: `<svg class="grind-mark" viewBox="0 0 20 20" aria-hidden="true" fill="currentColor">${dots([[4, 5], [8, 4], [12, 5], [16, 4], [6, 8], [10, 8], [14, 9], [4, 12], [8, 12], [12, 12], [16, 12], [6, 16], [10, 16], [14, 15]], 1.1)}</svg>`,
+  filter: `<svg class="grind-mark" viewBox="0 0 20 20" aria-hidden="true" fill="currentColor">${dots([[5, 5], [12, 4.5], [8.5, 10], [15.5, 10], [4.5, 14.5], [12, 15.5]], 2)}</svg>`,
+};
 // What each process means, in a line, under the fact (the critique, 2026-11-19: "Washed" was never explained).
 const PROCESS = {
   Washed: 'The fruit is washed off before the beans dry: a clean, bright cup.',
@@ -211,7 +219,7 @@ ${header({ home: './' })}
         <fieldset class="choice" aria-describedby="grind-hint-${p.id}"><legend>Grind</legend>
         <p class="choice__hint" id="grind-hint-${p.id}">Whole bean for your own grinder. Espresso is fine, for machines and moka pots. Filter is medium, for pour-over and drip.</p>
         <div class="chips">
-          ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${esc(label)}</label>`).join('\n          ')}
+          ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip chip--grind"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${GRIND_MARK[g] || ''}${esc(label)}</label>`).join('\n          ')}
         </div></fieldset>
         <fieldset class="choice"><legend>Size</legend><div class="chips">
           ${sizesList.map(([s, label], i) => `<label class="chip"><input type="radio" name="size" value="${s}" data-price="${formatEUR(p.prices[s])}"${i === 0 ? ' checked' : ''}>${esc(label)} · ${formatEUR(p.prices[s])}</label>`).join('\n          ')}
@@ -312,7 +320,16 @@ function fill(file, blocks) {
 }
 
 for (const p of catalog.products) writeFileSync(`site/${pageOf(p)}`, productPage(p));
-fill('site/index.html', { header: header({ home: '', over: true }), coffees: carousel(catalog.products, 'The coffees'), footer: footer({ home: '' }), drawer });
+// the roast section ends on the coffees, grouped by the roast they are sold at (the critique, 2026-11-19: the
+// section led nowhere); the catalog's roasts are light, medium and medium-dark
+const ROAST_ORDER = ['Light', 'Medium', 'Medium-dark', 'Dark'];
+const roastShop = `<nav class="roast__shop" aria-label="The coffees by roast">
+        ${ROAST_ORDER.filter((r) => catalog.products.some((p) => p.roast === r)).map((r) => `<div class="roast__shop-group">
+          <p class="roast__shop-roast">${r}</p>
+          <p>${catalog.products.filter((p) => p.roast === r).map((p) => `<a class="link" href="${pageOf(p)}">${esc(p.name)}</a>`).join(', ')}</p>
+        </div>`).join('\n        ')}
+      </nav>`;
+fill('site/index.html', { header: header({ home: '', over: true }), roastshop: roastShop, coffees: carousel(catalog.products, 'The coffees'), footer: footer({ home: '' }), drawer });
 for (const l of LEGAL) writeFileSync(`site/${l.file}`, legalPage(l));
 for (const f of ['site/checkout.html', 'site/success.html', 'site/credits.html']) fill(f, { header: header({ home: './', cart: false }), footer: footerSlim });
 console.log(`pages: ${catalog.products.length} product pages, ${LEGAL.length} legal pages; index, checkout, success, credits filled`);
