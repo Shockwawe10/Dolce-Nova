@@ -57,7 +57,7 @@ appear only in the photographs: the page stays quiet so six different bags can s
   (`tools/fonts.mjs`).
 
 **Scale:** major third (×1.25) from 16px: 13 · 16 · 20 · 25 · 31 · 39 · 49 · 61 · 76 · 95 (95 only for the hero h1 at 1280 and wider, since 2026-11-19, so the hero outranks the sections). Headings step at
-breakpoints: h1 49 / 61 / 76, h2 39 / 49 / 61 (phone / tablet / desktop); the narrow serif is set one step
+breakpoints: h1 49 / 61 / 76, h2 39 / 49 / 61 (phone / tablet / desktop); since 2026-11-19 the section h2s carry loud and quiet beats: the roast (the peak, `.h-loud`) one step up, 49 / 61 / 76, origin and brew (`.h-quiet`) one step down on tablet and desktop, 39 / 39 / 49; no small tag sits above a section heading any more (tags stay over product names); the narrow serif is set one step
 larger than the Garamond was. Tags: 13px Instrument Sans 500, uppercase, +0.08em. Buttons: 48px tall, 13px
 uppercase, +0.08em, square.
 

@@ -303,6 +303,11 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 .photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-card__wrap { position: relative; }
 .photo-card__card { display: grid; gap: var(--s-2); justify-items: start; padding: var(--s-4); background: var(--c-ground); }
+/* loud and quiet beats (the critique, 2026-11-19: every section h2 was 61 px, the peak announced like the close):
+   the roast, the page's peak, one step up; origin and brew one step down; the coffees and the close as they were */
+h2.h-loud { font-size: var(--fs-7); }
+@media (min-width: 640px) { h2.h-loud { font-size: var(--fs-8); } h2.h-quiet { font-size: var(--fs-6); } }
+@media (min-width: 1024px) { h2.h-loud { font-size: var(--fs-9); } h2.h-quiet { font-size: var(--fs-7); } }
 .photo-card__card h2 { font-size: var(--fs-6); }
 @media (min-width: 1024px) { .photo-card { padding-bottom: var(--s-8); } .photo-card__card { width: var(--col5); padding: var(--s-6); } .photo-card__card h2 { font-size: var(--fs-7); } }
 
