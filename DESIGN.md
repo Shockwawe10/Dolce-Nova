@@ -42,7 +42,7 @@ Not taken: either brand's logo, wordmark, glyphs, photographs, colours or copy (
 | `--c-line` | `#d8d3c9` | rules; tags on ink and forest | 11.57:1 on ink |
 | `--c-accent` | `#2f4a33` forest | the primary button, the origin block. From the Huila bag (`#344d2f`) | ground on it 8.97:1 |
 
-`--c-ember` (`#9a6a3a`, the bags' gold darkened) colours only the warm glow behind the 3D bean as it roasts. It is never text, a ground or a border, so the design
+`--c-ember` (`#9a6a3a`, the bags' gold darkened) colours only the warm glow behind the 3D bean as it roasts. Since 2026-11-19 it also fills **the lion mark**: the medallion from the Huehuetenango render, its gold line work cut to an alpha mask (`assets/lion.png`, 176 px, so at most 88 px on screen), used four times: the seal over the home statement (80 px, 64 on a phone), beside the copyright line in every footer, the stamp on the confirmation's parcel label, and over an empty cart (drawer and checkout). Always aria-hidden; the audit names it beside the six palette colours. It is never text, a ground or a border, so the design
 audit's colour count (6) does not include it. `--c-error` (`#9b3a24`, the bags' terracotta darkened, 6.37:1 on
 ground) is the one state colour: field error borders, messages and their alert mark, nothing else (2026-11-19). The bags' own colours (kraft, terracotta, navy, burgundy)
 appear only in the photographs: the page stays quiet so six different bags can sit side by side.

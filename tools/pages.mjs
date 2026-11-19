@@ -101,7 +101,7 @@ const footer = ({ home }) => `<footer class="footer">
       </div>
     </div>
     <div class="footer__bar">
-      <p>${copyright}</p>
+      <p class="footer__legal"><span class="lion" aria-hidden="true"></span>${copyright}</p>
       <a href="credits.html">Photograph credits</a>
     </div>
     <p class="footer__mark" aria-hidden="true">Dolce Nov<span>a</span></p>
@@ -111,7 +111,7 @@ const footer = ({ home }) => `<footer class="footer">
 // checkout, confirmation and credits: just the policies and the copyright line
 const footerSlim = `<footer class="footer footer--slim">
   <div class="wrap footer__bar">
-    <p>${copyright}</p>
+    <p class="footer__legal"><span class="lion" aria-hidden="true"></span>${copyright}</p>
     <nav aria-label="Policies">${[...legalLinks(), '<a href="credits.html">Photograph credits</a>'].join(' ')}</nav>
   </div>
 </footer>`;

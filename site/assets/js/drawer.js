@@ -34,7 +34,7 @@ export function mountDrawer(catalog, manifest) {
     if (freeBar) freeBar.style.transform = `scaleX(${Math.min(1, t.totalCents / free)})`;
     foot.hidden = cart.length === 0;
     if (!cart.length) {
-      lines.innerHTML = `<div class="drawer__empty"><p>Your cart is empty.</p><a class="link-arrow" href="./#coffees" data-cart-close>Browse the coffees <span aria-hidden="true">→</span></a></div>`;
+      lines.innerHTML = `<div class="drawer__empty"><span class="lion lion--empty" aria-hidden="true"></span><p>Your cart is empty.</p><a class="link-arrow" href="./#coffees" data-cart-close>Browse the coffees <span aria-hidden="true">→</span></a></div>`;
       return;
     }
     lines.innerHTML = t.lines.map((l, i) => `

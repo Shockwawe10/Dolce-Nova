@@ -9,7 +9,7 @@
   --c-line: #d8d3c9;
   --c-accent: #2f4a33;      /* the forest green of the Huila bag */
   --c-error: #9b3a24;      /* the terracotta of the bags, darkened: field errors only (6.4:1 on paper) */
-  --c-ember: #9a6a3a;       /* the bags' gold, darkened: the 3D scene's glow only, never text or a ground */
+  --c-ember: #9a6a3a;       /* the bags' gold, darkened: the 3D scene's glow and the lion mark only, never text or a ground */
 
   --f-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
   --f-text: "Instrument Sans", "Instrument Sans Fallback", Arial, sans-serif;
@@ -620,6 +620,16 @@ html:not(.js) .roast__control { display: none; }
 .drawer__free { display: grid; gap: var(--s-1); }
 .drawer__free-track { display: block; height: 2px; background: var(--c-line); overflow: hidden; }
 .drawer__free-track > span { display: block; height: 100%; background: var(--c-accent); transform-origin: left; transform: scaleX(0); transition: transform var(--d-3) var(--ease); }
+/* the lion medallion from the bags (assets/lion.png: the Huehuetenango render's gold line work as an alpha mask),
+   the site's one recurring mark, in the bags' gold: the statement's seal, the footer, the parcel label, an empty cart */
+.lion { display: inline-block; flex: none; width: 24px; aspect-ratio: 1; vertical-align: middle; background: var(--c-ember);
+  -webkit-mask: url("../lion.png") center / contain no-repeat; mask: url("../lion.png") center / contain no-repeat; }
+.lion--seal { width: 64px; }
+@media (min-width: 640px) { .lion--seal { width: 80px; justify-self: center; margin-bottom: calc(-1 * var(--s-4)); } }
+.lion--empty { width: 48px; }
+.footer__legal { display: inline-flex; align-items: center; gap: var(--s-1); }
+.parcel-label > .parcel-label__to { padding-right: calc(48px + var(--s-3)); }   /* room for the seal */
+.parcel-label__seal { position: absolute; top: var(--s-2); right: var(--s-2); width: 48px; opacity: 0.9; }
 .credits li { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 
 /* ---------- motion: the hero's one entrance (never under reduced motion) ---------- */

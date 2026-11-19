@@ -148,7 +148,8 @@ for (const [w, h] of SIZES) {
 await browser.close();
 // the six palette colours, plus one named state colour that only field errors use (--c-error, 2026-11-19); any
 // other seventh colour still fails
-const STATE_COLORS = ['rgb(155, 58, 36)'];
+// and the lion mark's gold (--c-ember, a masked decoration, aria-hidden, 2026-11-19)
+const STATE_COLORS = ['rgb(155, 58, 36)', 'rgb(154, 106, 58)'];
 const colors = [...all.colors.keys()].filter((c) => !STATE_COLORS.includes(c)), families = [...all.families.keys()], radii = [...all.radii.keys()], shadows = [...all.shadows.keys()];
 if (colors.length > 6) violations.push(`${colors.length} distinct colours (max 6): ${colors.join(' | ')}`);
 if (families.length !== 2 || !FAMILIES.every((f) => families.includes(f))) violations.push(`font families: ${families.join(', ')} (expected exactly ${FAMILIES.join(' + ')})`);

@@ -38,6 +38,7 @@ if (order && order.ref === ref && order.shipping) {
 
   // the parcel label: who it is for, what is inside, the order number
   $('[data-label]').innerHTML = `
+    <span class="lion parcel-label__seal" aria-hidden="true"></span>
     <span class="parcel-label__to"><span class="tag">For</span> ${esc(`${c.firstName} ${c.lastName}`)}<br><span class="t-soft">${esc(a.city)}, ${esc(a.country)}</span></span>
     <span class="parcel-label__lines">${order.lines.map((l) => `<span>${l.qty} × ${esc(l.name)} <span class="t-soft">${esc(l.size)} · ${esc(l.grind)}</span></span>`).join('')}</span>
     <span class="parcel-label__ref"><span class="tag">Order</span> ${esc(order.ref)}</span>`;
