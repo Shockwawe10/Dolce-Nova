@@ -149,7 +149,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 .section { min-height: calc(var(--h, 1) * var(--screen)); padding-block: var(--padt) var(--padb); }
 .section__head { display: grid; gap: var(--s-2); margin-bottom: var(--s-4); }
 @media (min-width: 1024px) {
-  .section__head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--g); align-items: end; margin-bottom: var(--s-6); }
+  .section__head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--g); align-items: last baseline; margin-bottom: var(--s-6); }
 }
 .on-dark { background: var(--c-ink); color: var(--c-ground); }
 .on-dark :focus-visible { outline-color: var(--c-ground); }
@@ -202,6 +202,7 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
   display: grid; grid-auto-flow: column; grid-auto-columns: var(--slide); gap: var(--g);
   overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
   padding-inline: var(--edge); scrollbar-width: none;
+  padding-block: var(--s-1); margin-block: calc(-1 * var(--s-1));   /* room for a focus ring the scroller would clip */
 }
 .carousel__track::-webkit-scrollbar { display: none; }
 @media (hover: hover) and (pointer: fine) { .carousel__track { scroll-snap-type: none; } }
@@ -356,7 +357,7 @@ h2.h-loud { font-size: var(--fs-7); }
 /* the one type moment: the bags' capitals across the container (R = the word's width at 1px, measured, see DESIGN.md) */
 /* measured 4.864 in WebKit and Chromium with 0.04em tracking after every letter; the last letter's tracking is
    dropped (the span), so the word is 4.824 wide and ends on the right line under R = 4.84 */
-.footer__mark { --R: 4.84; font-family: var(--f-display); font-size: calc(100cqi / var(--R)); line-height: 0.9; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; margin-top: var(--s-12); }
+.footer__mark { --R: 4.9; font-family: var(--f-display); font-size: calc(100cqi / var(--R)); line-height: 0.9; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; margin-top: var(--s-12); }
 .footer__mark span { letter-spacing: 0; }
 
 /* ---------- product page (both references): the bag large, the choices beside it ---------- */
@@ -370,7 +371,8 @@ h2.h-loud { font-size: var(--fs-7); }
 .pdp__head { display: grid; gap: var(--s-1); }
 .pdp__price { font-size: var(--fs-3); font-variant-numeric: tabular-nums; }
 .pdp__notes { font-family: var(--f-display); font-size: var(--fs-5); line-height: 1.15; }
-.facts { display: grid; grid-template-columns: max-content 1fr; column-gap: var(--s-3); border-top: 1px solid var(--c-line); }
+.facts { display: grid; grid-template-columns: max-content 1fr; border-top: 1px solid var(--c-line); }
+.facts dd { padding-left: var(--s-3); }   /* the space between label and value, so each row's rule runs unbroken */
 .facts dt, .facts dd { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 .facts dt { color: var(--c-ink-soft); }
 @media (min-width: 1024px) {

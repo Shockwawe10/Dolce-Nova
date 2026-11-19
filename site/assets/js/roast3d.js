@@ -10,7 +10,7 @@ import { state, clamp01, smooth, mix, hash, delayAt, FLIGHT, REVEAL_GLSL, degree
 
 // One row per roast degree (0 green .. 3 dark). Colours are sRGB; three converts them.
 const LOOKS = [
-  { bean: '#7a8065', crease: 1.25, rough: 0.78, coat: 0.0 },
+  { bean: '#6c7556', crease: 1.25, rough: 0.66, coat: 0.08 },   // 2026-11-19: was #7a8065, 0.78, 0 (read as putty)
   { bean: '#9a683c', crease: 1.15, rough: 0.62, coat: 0.04 },
   { bean: '#5c361d', crease: 0.75, rough: 0.46, coat: 0.18 },
   { bean: '#22140b', crease: 0.55, rough: 0.24, coat: 0.7 },
