@@ -72,6 +72,10 @@ with 0.04em tracking is 4.864 wide at 1px, of which 0.04 is the tracking after t
 sits in a span with no tracking, so the word is 4.824 wide; `R` is set to 4.84 so rounding never
 overflows. `qa/audit.mjs` allow-lists `.footer__mark` and its span for font size only.
 
+### Photographs: one grade
+
+Every photograph is graded in `tools/images.mjs` (2026-11-19, design critique: four registers): mapped into the page's own range, the darkest shadow the ink and the brightest light the paper, so they read as printed on this site. Colour photographs also lose a little saturation (0.82); the collage (black and white since 2026-11-17) is an ink-to-paper duotone in the files, no CSS filter. The roast references keep true colour, since they show roast degree; the owner's bag renders are never graded.
+
 ### Spacing, radius, shadow
 
 8-px grid: 8 · 16 · 24 · 32 · 48 · 64 · 96 · 128. Page gutter 16 / 32 / 64; content max 1280; 12 columns,
@@ -114,7 +118,7 @@ moves; the roast path snaps between its five states.
 | Origin | 72% of a screen (560 to 720px) | photograph half and oat half (Coffee Collective's split; oat, not forest, since 2026-11-18, so the page runs light to dark: coffees, story and origin in paper and oat, then roast and brew in ink), one paragraph |
 | Roast (peak) | one screen (897px at 1440; 1270px on a phone) | four batches under one temperature slider: four 3D beans in a row (two by two on a phone, 4:3 slots, since 2026-11-19: in one row they were 60px; qa/roast-slider.mjs keeps the beans and the slider within one screen down to 360x640), each over a slot with its name, where it is pulled and its status (Waiting, Roasting, Done); the readout in the display serif; a slider from 20 to 230 °C with marks at 20, 196, 210 and 224; a note naming the phase (raw, drying, yellowing, first crack, development, second crack). The slider opens at 217 °C, where the batches already differ (light and medium out, dark roasting), not at 20 °C where all four were the same green. The grains gather into the beans once as the section arrives. The section ends on the coffees by roast (Light, Medium, Medium-dark, from the catalog via tools/pages.mjs). Without WebGL the slots show the four roast photographs and the slider still drives the words. Replaced the pinned three-screen scroll (owner, 2026-11-17) |
 | Brew at home | up to one screen (928px at 1440) | "Three ways to brew it": pour-over, moka pot and espresso as tabs on the ink half; each recipe has a card (coffee, water, grind, time), five numbered steps and a coffee to try; the photograph half crossfades to the chosen method. The recipes share one place, so switching never moves the page. Without script, all three in turn |
-| Close | 520 to 760px (72% of a screen) | a paper card over a still life: tag, h2, the forest button; the photograph drifts (parallax) |
+| Close | 520 to 760px (72% of a screen) | a paper card (h2, the forest button) beside a still life of three of the owner's bags on the ink (Yirgacheffe, Huila forward, Sugarcane Decaf; their grounds faded into the ink as in the hero), on columns 6 to 12 at desktop, above the card on a phone. Replaced the stock photograph on 2026-11-19 (design critique: it read as any roaster's) |
 | Footer | auto | five columns (the six coffees; craft; help: privacy, terms, shipping and returns, cookies; follow: Facebook, Instagram, X; about), a bar with the copyright line and the photograph credits, then the wordmark across the page. Checkout, confirmation and credits carry a slim version: the copyright line and the policy links |
 
 ### Product page (`coffee-<id>.html`, generated)

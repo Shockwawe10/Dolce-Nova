@@ -85,6 +85,7 @@
     ],
     "alt": "A hand lifting green coffee beans from a wide basket during sorting",
     "source": "m62054123",
+    "owner": false,
     "by": "Joshua Newton",
     "licence": "CC0",
     "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -114,27 +115,6 @@
     "page": "https://commons.wikimedia.org/wiki/File:Manual_drip_(pour-over)_coffee.jpg",
     "cropped": false
   },
-  "close": {
-    "widths": [
-      640,
-      960,
-      1280,
-      1920,
-      2560,
-      3200
-    ],
-    "ratio": [
-      5472,
-      3648
-    ],
-    "alt": "Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light",
-    "source": "m61713103",
-    "by": "Thomas Martinsen",
-    "licence": "CC0",
-    "licenceUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "page": "https://commons.wikimedia.org/wiki/File:Drip_brewing_(Unsplash).jpg",
-    "cropped": false
-  },
   "col-trier": {
     "widths": [
       480,
@@ -145,8 +125,8 @@
       2400
     ],
     "ratio": [
-      2400,
-      1600
+      6000,
+      4000
     ],
     "alt": "A steel sample trier drawn from the roasting drum, holding pale beans mid-roast",
     "source": "m147143894",
@@ -191,6 +171,7 @@
     ],
     "alt": "Glossy roasted coffee beans filling the frame",
     "source": "c65",
+    "owner": false,
     "by": "freestock.ca",
     "licence": "CC BY-SA 3.0",
     "licenceUrl": "https://creativecommons.org/licenses/by-sa/3.0/",

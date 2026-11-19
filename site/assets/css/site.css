@@ -230,7 +230,7 @@ html:not(.js) .carousel__nav { display: none; }
 .collage { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); }
 .collage figure { position: relative; overflow: hidden; background: var(--c-surface); }
 .collage picture { position: absolute; inset: 0; }
-.collage img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.06); }
+.collage img { width: 100%; height: 100%; object-fit: cover; }   /* the ink-to-paper duotone is in the files (tools/images.mjs) */
 .collage .collage__a { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
 .collage .collage__b, .collage .collage__c { aspect-ratio: 1; }
 @media (min-width: 1024px) {
@@ -302,6 +302,17 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 .photo-card__photo picture { position: absolute; inset: 0; }
 .photo-card__photo img { width: 100%; height: 100%; object-fit: cover; }
 .photo-card__wrap { position: relative; }
+/* the still life: three bags in a line-up, the middle one forward; each bag's own ground fades into the ink */
+.still { display: flex; justify-content: center; align-items: flex-start; padding-top: var(--s-6); }
+.photo-card__photo.still > .still__bag { position: relative; inset: auto; display: block; flex: none; width: 50%; margin-inline: -40px; }   /* not the old photo's absolute frame */
+.still__bag img { display: block; width: 100%; height: auto; -webkit-mask-image: radial-gradient(closest-side, #000 70%, transparent); mask-image: radial-gradient(closest-side, #000 70%, transparent); }
+.photo-card__photo.still > .still__bag--huila { z-index: 1; width: 58%; margin-top: calc(-1 * var(--s-2)); }
+@media (min-width: 1024px) {
+  .still { justify-content: flex-end; align-items: center; padding: 0 max(var(--gutter), (100% - var(--max)) / 2) 0 0; }
+  .photo-card__photo.still > .still__bag { width: 20vw; max-width: 380px; margin-inline: -48px; }   /* clear of the card on columns 1 to 5 */
+  .photo-card__photo.still > .still__bag--huila { width: 24vw; max-width: 460px; margin-top: 0; }
+  .photo-card__photo.still > .still__bag:last-child { margin-right: 0; }
+}
 .photo-card__card { display: grid; gap: var(--s-2); justify-items: start; padding: var(--s-4); background: var(--c-ground); }
 /* loud and quiet beats (the critique, 2026-11-19: every section h2 was 61 px, the peak announced like the close):
    the roast, the page's peak, one step up; origin and brew one step down; the coffees and the close as they were */

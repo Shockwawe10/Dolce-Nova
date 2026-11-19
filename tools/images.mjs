@@ -15,28 +15,36 @@ const STRIP = 'delogo=x=352:y=596:w=88:h=36,delogo=x=584:y=596:w=150:h=36,split=
   '[b]crop=84:32:354:598,noise=alls=10:allf=u[n1];[c]crop=146:32:586:598,noise=alls=10:allf=u[n2];' +
   '[a][n1]overlay=354:598[t];[t][n2]overlay=586:598';
 
+// One grade for every photograph (the design critique, 2026-11-19: four registers, B&W industrial, warm
+// saturated, teal and orange bokeh, saturated landscape). Each is mapped into the page's own range, its darkest
+// shadow the ink (#1b1b19) and its brightest light the paper (#f7f5f0), so they read as printed on this site;
+// colour photographs lose a little saturation, the collage (black and white since the owner's request of
+// 2026-11-17) becomes an ink-to-paper duotone. The roast references keep true colour (they show roast degree).
+const INK_TO_PAPER = "lutrgb=r='27+val*220/255':g='27+val*218/255':b='25+val*215/255'";
+const GRADE = { print: `eq=saturation=0.82,${INK_TO_PAPER}`, mono: `hue=s=0,${INK_TO_PAPER}` };
+
 const IMAGES = [
-  { name: 'origin', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
+  { name: 'origin', grade: 'print', src: 'm62054123', widths: [640, 960, 1280, 1920, 2560],
     alt: 'A hand lifting green coffee beans from a wide basket during sorting' },
   // origin landscapes for the product pages (2026-11-17)
-  { name: 'origin-yirgacheffe', src: 'f105363090', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-yirgacheffe', grade: 'print', src: 'f105363090', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Cloud filling the valleys between green ridges in the highlands of southern Ethiopia' },
-  { name: 'origin-nyeri', src: 'f137079822', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-nyeri', grade: 'print', src: 'f137079822', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Green hills of trees and banana plants in the countryside near Nyeri, Kenya' },
-  { name: 'origin-huila', src: 'f194922582', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-huila', grade: 'print', src: 'f194922582', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Coffee branches with ripe red cherries above a deep river valley in Huila, Colombia' },
-  { name: 'origin-huehuetenango', src: 'f102957452', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-huehuetenango', grade: 'print', src: 'f102957452', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Morning haze over the valley of Huehuetenango, seen from the Cuchumatanes mountains' },
-  { name: 'origin-cerrado', src: 'f59165026', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-cerrado', grade: 'print', src: 'f59165026', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Low sun over a dry golden pasture in the Cerrado Mineiro, Brazil' },
-  { name: 'origin-decaf', src: 'f159887397', widths: [960, 1280, 1920, 2560, 2880],
+  { name: 'origin-decaf', grade: 'print', src: 'f159887397', widths: [960, 1280, 1920, 2560, 2880],
     alt: 'Cloud over green mountain pastures in Quindío, in Colombia’s coffee region' },
   // brew methods (2026-11-17): the pour-over above, then a moka pot and an espresso machine
-  { name: 'brew-moka', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
+  { name: 'brew-moka', grade: 'print', src: 'f143766326', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Coffee pouring from the centre column into the top chamber of a moka pot' },
-  { name: 'brew-espresso', src: 'm61716670', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
+  { name: 'brew-espresso', grade: 'print', src: 'm61716670', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Two streams of espresso running into a white cup at a dark machine' },
-  { name: 'brew', src: 'c96', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
+  { name: 'brew', grade: 'print', src: 'c96', widths: [640, 960, 1280, 1920, 2560, 2880, 3600],
     alt: 'Hot water poured from a copper gooseneck kettle into a pour-over dripper, seen from above' },
   // The roast peak: one bean scale, four stages. Green from Roger Burger; light/medium/dark from one Alorin shot.
   { name: 'roast-green', src: 'f84555762', crop: [753, 1249, 1470, 1470], widths: [420, 640, 840],
@@ -48,13 +56,12 @@ const IMAGES = [
   { name: 'roast-dark', src: 'f125379393', crop: [900, 1520, 840, 840], widths: [420, 640, 840],
     alt: 'Dark roasted coffee beans with an oily sheen' },
   // closing card and collage
-  { name: 'close', src: 'm61713103', widths: [640, 960, 1280, 1920, 2560, 3200],
-    alt: 'Filter coffee dripping into a glass server on a scale, kettles behind, in warm low light' },
-  { name: 'col-trier', src: 'm147143894', widths: [480, 720, 960, 1280, 1920, 2400],
+  // (the stock 'close' photograph was replaced by the bags' still life, 2026-11-19)
+  { name: 'col-trier', grade: 'mono', src: 'm147143894', widths: [480, 720, 960, 1280, 1920, 2400],
     alt: 'A steel sample trier drawn from the roasting drum, holding pale beans mid-roast' },
-  { name: 'col-tray', src: 'm61712989', widths: [480, 720, 960, 1280, 1920],
+  { name: 'col-tray', grade: 'mono', src: 'm61712989', widths: [480, 720, 960, 1280, 1920],
     alt: 'Roasted beans turning in the cooling tray under the stirring arm' },
-  { name: 'col-beans', src: 'c65', widths: [480, 720, 960, 1280],
+  { name: 'col-beans', grade: 'mono', src: 'c65', widths: [480, 720, 960, 1280],
     alt: 'Glossy roasted coffee beans filling the frame' },
   // The owner's bag renders (dolce_nova_coffee_blends.zip, extracted to assets-src/blends/): a 4:5 crop around the
   // bag for the carousel, the whole square for product pages and the hero.
@@ -102,7 +109,7 @@ for (const img of IMAGES) {
   const [cw, ch] = img.crop ? [img.crop[2], img.crop[3]] : [s.width, s.height];
   const widths = img.widths.filter((w) => w <= cw);
   for (const w of widths) {
-    for (const codec of ['avif', 'webp']) encode(img.file || `assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec, img.patch);
+    for (const codec of ['avif', 'webp']) encode(img.file || `assets-src/${img.src}.jpg`, img.crop, w, `${OUT}/${img.name}-${w}.${codec}`, codec, img.patch || GRADE[img.grade]);
   }
   manifest[img.name] = { widths, ratio: [cw, ch], alt: img.alt, source: img.src || 'owner-bags', owner: !!img.owner,
     by: s.by, licence: s.licence, licenceUrl: s.licenceUrl, page: s.page, cropped: !!img.crop };
