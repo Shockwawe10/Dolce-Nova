@@ -21,11 +21,20 @@
 <header class="header header--fixed header--solid" id="top">
   <div class="wrap header__bar">
     <a class="skip-link" href="#main">Skip to content</a>
-    <nav class="header__nav" aria-label="Main"><a href="./#coffees">Coffees</a><a href="./#roast">Roast</a><a href="./#brew">Brew</a></nav>
+    <nav class="header__nav" aria-label="Main">
+      <button class="header__menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <div class="header__links" id="site-nav"><a href="./#coffees">Coffees</a><a href="./#roast">Roast</a><a href="./#brew">Brew</a></div>
+    </nav>
     <a class="wordmark" href="./" aria-label="Dolce Nova, home">Dolce Nova</a>
     <div class="header__end"><a class="header__back" href="./#coffees">Back to the coffees</a>
     </div>
   </div>
+  <script>/* the phone menu (2026-11-19): opens and closes the section links; a link or Esc closes it */
+  (() => { const h = document.currentScript.closest('header'), b = h.querySelector('.header__menu');
+    const set = (o) => { b.setAttribute('aria-expanded', String(o)); h.classList.toggle('is-menu', o); };
+    b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+    h.querySelectorAll('.header__links a').forEach((a) => a.addEventListener('click', () => set(false)));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } }); })();</script>
 </header>
 <!-- /@header -->
 <main id="main" class="page">

@@ -34,7 +34,10 @@ export const pageOf = (p) => `coffee-${p.id}.html`;
 const header = ({ home, over = false, cart = true }) => `<header class="header header--fixed${over ? ' header--over' : ' header--solid'}" id="top">
   <div class="wrap header__bar">
     <a class="skip-link" href="#main">Skip to content</a>
-    <nav class="header__nav" aria-label="Main"><a href="${home}#coffees">Coffees</a><a href="${home}#roast">Roast</a><a href="${home}#brew">Brew</a></nav>
+    <nav class="header__nav" aria-label="Main">
+      <button class="header__menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <div class="header__links" id="site-nav"><a href="${home}#coffees">Coffees</a><a href="${home}#roast">Roast</a><a href="${home}#brew">Brew</a></div>
+    </nav>
     <a class="wordmark" href="${home ? './' : '#top'}" aria-label="Dolce Nova, home">Dolce Nova</a>
     <div class="header__end">${cart ? `
       <button class="cart-btn" type="button" aria-haspopup="dialog" aria-controls="cart" data-cart-open>
@@ -42,6 +45,12 @@ const header = ({ home, over = false, cart = true }) => `<header class="header h
       </button>` : `<a class="header__back" href="./#coffees">Back to the coffees</a>`}
     </div>
   </div>
+  <script>/* the phone menu (2026-11-19): opens and closes the section links; a link or Esc closes it */
+  (() => { const h = document.currentScript.closest('header'), b = h.querySelector('.header__menu');
+    const set = (o) => { b.setAttribute('aria-expanded', String(o)); h.classList.toggle('is-menu', o); };
+    b.addEventListener('click', () => set(b.getAttribute('aria-expanded') !== 'true'));
+    h.querySelectorAll('.header__links a').forEach((a) => a.addEventListener('click', () => set(false)));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && b.getAttribute('aria-expanded') === 'true') { set(false); b.focus(); } }); })();</script>
 </header>`;
 
 // lazy: on the home page the row is the second screen, so its bags load with the page at low priority (lazy images
@@ -218,7 +227,7 @@ ${header({ home: './' })}
       <form class="options" id="buy" data-add novalidate>
         <fieldset class="choice" aria-describedby="grind-hint-${p.id}"><legend>Grind</legend>
         <p class="choice__hint" id="grind-hint-${p.id}">Whole bean for your own grinder. Espresso is fine, for machines and moka pots. Filter is medium, for pour-over and drip.</p>
-        <div class="chips">
+        <div class="chips chips--grind">
           ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip chip--grind"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${GRIND_MARK[g] || ''}${esc(label)}</label>`).join('\n          ')}
         </div></fieldset>
         <fieldset class="choice"><legend>Size</legend><div class="chips">
