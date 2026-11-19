@@ -505,7 +505,7 @@ html:not(.js) .roast__control { display: none; }
 .field select, .row-2 > * { min-width: 0; width: 100%; }
 .field__error { color: var(--c-error); font-size: var(--fs-1); font-weight: 500; min-height: 16px; display: flex; gap: var(--s-1); align-items: flex-start; }
 /* a drawn alert mark before a message (none while the line is empty) */
-.field__error:not(:empty)::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 1px; background: currentColor;
+.field__error:not(:empty)::before { content: ""; flex: none; width: 16px; height: 16px; background: currentColor;
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.75'/%3E%3Cpath d='M8 4.5v4.25'/%3E%3Ccircle cx='8' cy='11.25' r='.4' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.75'/%3E%3Cpath d='M8 4.5v4.25'/%3E%3Ccircle cx='8' cy='11.25' r='.4' fill='black'/%3E%3C/svg%3E") center / contain no-repeat; }
 .ships[aria-invalid="true"] .ship { border-color: var(--c-error); }
