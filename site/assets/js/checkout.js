@@ -43,7 +43,10 @@ function setError(name, msg) {
 }
 const showErrors = (errors) => FIELDS.forEach((k) => setError(k, errors[k] || ''));
 // a field's message clears as soon as it is fixed, not only on the next submit
-form.addEventListener('change', (e) => { if (e.target.name && form.querySelector(`[data-err="${e.target.name}"]`)?.textContent) setError(e.target.name, ''); });
+// (on input too: a corrected code no longer keeps its message while focus stays in the field; submit checks again)
+const clearFixed = (e) => { if (e.target.name && form.querySelector(`[data-err="${e.target.name}"]`)?.textContent) setError(e.target.name, ''); };
+form.addEventListener('change', clearFixed);
+form.addEventListener('input', clearFixed);
 
 let catalog = null;
 let t = { lines: [], totalCents: 0 };
@@ -106,7 +109,10 @@ form.addEventListener('submit', (e) => {
 ({ catalog } = await load());
 t = totals(getCart(), catalog);
 if (!t.lines.length) {
-  summary.innerHTML = '<p>Your cart is empty.</p><p><a class="link-arrow" href="./#coffees">Choose a coffee <span aria-hidden="true">→</span></a></p>';
+  // nothing to buy: the empty state replaces the summary and the form (both stay in the HTML for no-script visitors)
+  summary.innerHTML = '<p>Your cart is empty.</p>';
+  document.querySelector('[data-empty]').hidden = false;
+  document.querySelector('.checkout').hidden = true;
 } else {
   summary.innerHTML = t.lines.map((l) => `<div class="summary__line"><span>${l.qty} × ${l.product.name}<br><span class="t-soft">${catalog.sizes[l.size]} · ${catalog.grinds[l.grind]}</span></span><span>${formatEUR(l.lineCents)}</span></div>`).join('');
   payBtn.disabled = false;

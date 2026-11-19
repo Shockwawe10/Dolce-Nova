@@ -8,6 +8,7 @@
   --c-ink-soft: #5f5a52;
   --c-line: #d8d3c9;
   --c-accent: #2f4a33;      /* the forest green of the Huila bag */
+  --c-error: #9b3a24;      /* the terracotta of the bags, darkened: field errors only (6.4:1 on paper) */
   --c-ember: #9a6a3a;       /* the bags' gold, darkened: the 3D scene's glow only, never text or a ground */
 
   --f-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
@@ -500,9 +501,20 @@ html:not(.js) .roast__control { display: none; }
   background-image: linear-gradient(45deg, transparent 50%, var(--c-ink) 50%), linear-gradient(135deg, var(--c-ink) 50%, transparent 50%);
   background-position: calc(100% - 24px) 26px, calc(100% - 18px) 26px; background-size: 6px 6px; background-repeat: no-repeat; }
 .field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 0; border-color: var(--c-accent); }
-.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--c-ink); border-width: 2px; }
+.field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: var(--c-error); border-width: 2px; }
 .field select, .row-2 > * { min-width: 0; width: 100%; }
-.field__error { color: var(--c-ink); font-size: var(--fs-1); font-weight: 500; min-height: 16px; }
+.field__error { color: var(--c-error); font-size: var(--fs-1); font-weight: 500; min-height: 16px; display: flex; gap: var(--s-1); align-items: flex-start; }
+/* a drawn alert mark before a message (none while the line is empty) */
+.field__error:not(:empty)::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 1px; background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.75'/%3E%3Cpath d='M8 4.5v4.25'/%3E%3Ccircle cx='8' cy='11.25' r='.4' fill='black'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='6.75'/%3E%3Cpath d='M8 4.5v4.25'/%3E%3Ccircle cx='8' cy='11.25' r='.4' fill='black'/%3E%3C/svg%3E") center / contain no-repeat; }
+.ships[aria-invalid="true"] .ship { border-color: var(--c-error); }
+/* the empty checkout: a bag and the way back, in place of the form */
+.checkout-empty { display: grid; gap: var(--s-4); margin-top: var(--s-6); align-items: center; }
+.checkout-empty picture, .checkout-empty img { display: block; width: 100%; max-width: 400px; height: auto; }
+.checkout-empty__text { display: grid; gap: var(--s-3); justify-items: start; max-width: 36ch; }
+.checkout-empty__text h2 { font-size: var(--fs-6); }
+@media (min-width: 1024px) { .checkout-empty { grid-template-columns: 400px minmax(0, 1fr); gap: var(--s-12); } }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
 .row-2 > *, .field input { min-width: 0; width: 100%; }
 .summary { display: grid; gap: var(--s-2); padding: var(--s-3); border: 1px solid var(--c-line); border-radius: var(--r-1); }

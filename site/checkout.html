@@ -32,6 +32,18 @@
 <main id="main" class="page">
   <div class="wrap">
     <h1>Checkout</h1>
+    <!-- nothing to buy: this replaces the summary and the form (checkout.js), instead of a form that cannot be sent -->
+    <section class="checkout-empty" data-empty hidden aria-labelledby="empty-title">
+      <picture>
+        <source type="image/avif" sizes="(min-width: 1024px) 400px, 60vw" srcset="assets/img/bag-huila-sq-640.avif 640w, assets/img/bag-huila-sq-1024.avif 1024w">
+        <img src="assets/img/bag-huila-sq-640.webp" sizes="(min-width: 1024px) 400px, 60vw" srcset="assets/img/bag-huila-sq-640.webp 640w, assets/img/bag-huila-sq-1024.webp 1024w" width="1024" height="1024" alt="" decoding="async">
+      </picture>
+      <div class="checkout-empty__text">
+        <h2 id="empty-title">Your cart is empty.</h2>
+        <p>Six single-origin coffees, roasted to order, whole bean or ground for how you brew.</p>
+        <a class="btn" href="./#coffees">Choose a coffee</a>
+      </div>
+    </section>
     <div class="checkout">
       <!-- the order first: on a phone it is a bar under the heading that opens (checkout.js), so the buyer sees what
            they pay for before ten screens of form; on desktop it is the right column, kept in view -->
@@ -164,18 +176,18 @@
             </div>
             <div class="field">
               <label for="number">Card number</label>
-              <input id="number" name="number" type="text" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="4242 4242 4242 4242" aria-describedby="number-err">
+              <input id="number" name="number" type="text" inputmode="numeric" autocomplete="off" maxlength="23" placeholder="1234 1234 1234 1234" aria-describedby="number-err">
               <p class="field__error" id="number-err" data-err="number"></p>
             </div>
           <div class="row-2">
             <div class="field">
               <label for="expiry">Expiry (MM/YY)</label>
-              <input id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="12/34" aria-describedby="expiry-err">
+              <input id="expiry" name="expiry" type="text" inputmode="numeric" autocomplete="off" maxlength="5" placeholder="MM/YY" aria-describedby="expiry-err">
               <p class="field__error" id="expiry-err" data-err="expiry"></p>
             </div>
             <div class="field">
               <label for="cvc">CVC</label>
-              <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="123" aria-describedby="cvc-err">
+              <input id="cvc" name="cvc" type="text" inputmode="numeric" autocomplete="off" maxlength="4" aria-describedby="cvc-err">
               <p class="field__error" id="cvc-err" data-err="cvc"></p>
             </div>
           </div>

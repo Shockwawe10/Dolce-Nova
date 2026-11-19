@@ -146,7 +146,10 @@ for (const [w, h] of SIZES) {
   }
 }
 await browser.close();
-const colors = [...all.colors.keys()], families = [...all.families.keys()], radii = [...all.radii.keys()], shadows = [...all.shadows.keys()];
+// the six palette colours, plus one named state colour that only field errors use (--c-error, 2026-11-19); any
+// other seventh colour still fails
+const STATE_COLORS = ['rgb(155, 58, 36)'];
+const colors = [...all.colors.keys()].filter((c) => !STATE_COLORS.includes(c)), families = [...all.families.keys()], radii = [...all.radii.keys()], shadows = [...all.shadows.keys()];
 if (colors.length > 6) violations.push(`${colors.length} distinct colours (max 6): ${colors.join(' | ')}`);
 if (families.length !== 2 || !FAMILIES.every((f) => families.includes(f))) violations.push(`font families: ${families.join(', ')} (expected exactly ${FAMILIES.join(' + ')})`);
 if (radii.length > 3) violations.push(`${radii.length} radii (max 3): ${radii.join(', ')}`);

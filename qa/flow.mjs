@@ -90,6 +90,10 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.click('[data-pay-btn]');
     assert.match(await page.locator('#number-err').innerText(), /valid card/);
     assert.equal(await page.getAttribute('#number', 'aria-invalid'), 'true');
+    // the message clears as the field is corrected, before it is left (2026-11-19)
+    await page.fill('#number', '4242 4242 4242 4242');
+    assert.equal((await page.locator('#number-err').innerText()).trim(), '', 'the number message clears while typing the fix');
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'number', 'focus still in the field');
     assert.equal((await page.locator('#email-err').innerText()).trim(), '', 'the fixed email has no message');
     await page.click('[data-test-card]');
     await page.click('[data-pay-btn]');
@@ -138,6 +142,19 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
   const leaked = /4242/.test(page.url());
   console.log(`${leaked ? 'FAIL' : 'PASS'} no native submit before the checkout script: ${leaked ? 'card digits in the URL: ' + page.url() : 'URL unchanged'}`);
   if (leaked) failed++;
+  await ctx.close();
+}
+// an empty cart: an empty state with the way back, not a form that cannot be sent (2026-11-19)
+{
+  const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  const page = await ctx.newPage();
+  await page.goto(URL + 'checkout.html', { waitUntil: 'networkidle' });
+  await page.waitForSelector('[data-empty]:not([hidden])');
+  const formShown = await page.locator('[data-pay]').isVisible();
+  const link = await page.locator('[data-empty] a.btn').getAttribute('href');
+  const ok = !formShown && link === './#coffees';
+  console.log(`${ok ? 'PASS' : 'FAIL'} empty cart: ${ok ? 'empty state, no form' : `form visible ${formShown}, link ${link}`}`);
+  if (!ok) failed++;
   await ctx.close();
 }
 await browser.close();
