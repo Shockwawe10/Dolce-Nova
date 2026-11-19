@@ -462,7 +462,29 @@ html:not(.js) .roast__control { display: none; }
 .notice + .header--fixed + .page { padding-top: calc(32px + var(--header) + var(--s-6)); }
 .checkout { display: grid; gap: var(--s-8); margin-top: var(--s-6); }
 .checkout > * { min-width: 0; }
-@media (min-width: 1024px) { .checkout { grid-template-columns: 7fr 5fr; gap: var(--s-12); align-items: start; } }
+@media (min-width: 1024px) {
+  .checkout { grid-template-columns: 7fr 5fr; gap: var(--s-12); align-items: start; }
+  /* the summary comes first in the source (a phone shows it first); on desktop it is the right column, in view
+     while the form scrolls (the detector, 2026-11-19: the form ran 231% of the screen beside a 38% summary) */
+  .checkout > .summary { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--header) + var(--s-3)); }
+  .checkout > .checkout__form { grid-column: 1; grid-row: 1; }
+  .summary__toggle { display: none !important; }
+}
+.summary__body { display: grid; gap: var(--s-2); }
+/* below 1024 the summary is a bar that opens: "Your order · 2 items" and the total, a chevron */
+@media (max-width: 1023px) {
+  .checkout { gap: var(--s-6); }
+  .summary:has(> .summary__toggle:not([hidden])) { padding: 0; gap: 0; }
+  .summary__toggle:not([hidden]) { display: flex; align-items: center; gap: var(--s-2); width: 100%; min-height: 56px; padding: var(--s-1) var(--s-3); border: 0; background: none; color: inherit; font: inherit; font-weight: 500; text-align: left; cursor: pointer; }
+  .summary__toggle > :first-child { flex: 1; }
+  .summary__toggle-total { font-size: var(--fs-3); font-weight: 400; font-variant-numeric: tabular-nums; }
+  .summary__toggle::after { content: ""; flex: none; width: 8px; height: 8px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform var(--d-2) var(--ease); }
+  .summary__toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(-135deg); }
+  .summary__toggle:focus-visible { outline: 2px solid var(--c-accent); outline-offset: -2px; }
+  .summary__toggle:not([hidden]) + .summary__body { padding: var(--s-2) var(--s-3) var(--s-3); border-top: 1px solid var(--c-line); }
+  .summary__toggle:not([hidden]) + .summary__body > h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .summary__toggle[aria-expanded="false"] + .summary__body { display: none; }
+}
 .demo-box { display: grid; gap: var(--s-2); padding: var(--s-3); background: var(--c-surface); border-radius: var(--r-1); }
 .demo-box strong { font-weight: 500; }
 .demo-box .link { min-height: 48px; text-align: left; white-space: normal; }

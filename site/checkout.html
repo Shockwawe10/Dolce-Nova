@@ -33,6 +33,23 @@
   <div class="wrap">
     <h1>Checkout</h1>
     <div class="checkout">
+      <!-- the order first: on a phone it is a bar under the heading that opens (checkout.js), so the buyer sees what
+           they pay for before ten screens of form; on desktop it is the right column, kept in view -->
+      <aside class="summary" aria-labelledby="sum-title">
+        <button class="summary__toggle" type="button" aria-expanded="true" aria-controls="sum-body" hidden data-sum-toggle>
+          <span>Your order <span class="t-soft" data-sum-count></span></span>
+          <span class="summary__toggle-total" data-sum-total-short></span>
+        </button>
+        <div class="summary__body" id="sum-body">
+          <h2 id="sum-title">Your order</h2>
+          <div data-summary><p class="t-soft">Loading your cart…</p></div>
+          <p class="summary__row"><span>Subtotal</span><span data-sum-subtotal>€0.00</span></p>
+          <p class="summary__row"><span>Shipping <span class="t-soft" data-sum-method>Standard</span></span><span data-sum-shipping>€0.00</span></p>
+          <p class="summary__total"><span>Total</span><span data-sum-total>€0.00</span></p>
+          <p class="summary__eta" data-sum-eta></p>
+          <p class="drawer__note">Prices in euro, including VAT.</p>
+        </div>
+      </aside>
       <form class="form checkout__form" data-pay novalidate>
         <section class="form__group" aria-labelledby="contact-title">
           <h2 id="contact-title">Contact</h2>
@@ -176,15 +193,6 @@
         </div>
       </form>
 
-      <aside class="summary" aria-labelledby="sum-title">
-        <h2 id="sum-title">Your order</h2>
-        <div data-summary><p class="t-soft">Loading your cart…</p></div>
-        <p class="summary__row"><span>Subtotal</span><span data-sum-subtotal>€0.00</span></p>
-        <p class="summary__row"><span>Shipping <span class="t-soft" data-sum-method>Standard</span></span><span data-sum-shipping>€0.00</span></p>
-        <p class="summary__total"><span>Total</span><span data-sum-total>€0.00</span></p>
-        <p class="summary__eta" data-sum-eta></p>
-        <p class="drawer__note">Prices in euro, including VAT.</p>
-      </aside>
     </div>
   </div>
 </main>

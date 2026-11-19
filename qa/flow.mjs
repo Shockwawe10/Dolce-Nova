@@ -45,6 +45,23 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await page.click('[data-cart-open]');
     await page.click('[data-checkout]');
     await page.waitForURL(/checkout/);
+    // the order (2026-11-19): on a phone a folded bar above the form that names the count and total and opens;
+    // on desktop the full summary in the right column, no bar
+    await page.waitForFunction(() => !document.querySelector('[data-pay-btn]').disabled);
+    const bar = page.locator('[data-sum-toggle]');
+    if (w < 1024) {
+      assert.equal(await bar.isVisible(), true, 'the order bar shows on a phone');
+      assert.match(await bar.innerText(), /2 items[\s\S]*€\d/);
+      const [barY, formY] = await page.evaluate(() => ['[data-sum-toggle]', '[data-pay]'].map((s) => document.querySelector(s).getBoundingClientRect().top));
+      assert.ok(barY < formY, 'the order bar sits above the form');
+      assert.equal(await page.locator('[data-summary]').isVisible(), false, 'the lines start folded');
+      await bar.click();
+      assert.equal(await page.locator('[data-summary]').isVisible(), true, 'the bar opens the lines');
+      assert.equal(await bar.getAttribute('aria-expanded'), 'true');
+    } else {
+      assert.equal(await bar.isVisible(), false, 'no bar on desktop');
+      assert.equal(await page.locator('[data-summary]').isVisible(), true, 'the summary shows on desktop');
+    }
     // an empty form: every required field says what it needs, focus goes to the first (the email)
     await page.click('[data-pay-btn]');
     for (const id of ['email', 'firstName', 'lastName', 'address1', 'postcode', 'city', 'country', 'number']) {

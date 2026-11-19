@@ -136,8 +136,11 @@ header, carousel, footer and drawer into the hand-written pages, so names and pr
 The checkout is one form in four groups, in the order both references use: **Contact** (email), **Delivery
 address** (first and last name, street, optional apartment, postcode, town, country from the 27 EU states, optional
 phone), **Shipping** (two radio cards, each with its price and its arrival dates computed in working days), and
-**Payment** (the demo card). The order summary beside it shows subtotal, shipping (Free once Standard passes
-EUR 40), total and "Arrives Wed 18 Nov – Thu 19 Nov". Address fields use the standard `autocomplete` tokens, so
+**Payment** (the demo card). The order summary shows the lines, subtotal, shipping (Free once Standard passes
+EUR 40), total and "Arrives Wed 18 Nov – Thu 19 Nov". It comes before the form in the source: on desktop it is the
+right column, sticky under the header while the form scrolls; below 1024 it folds into a bar under the heading,
+"Your order · 2 items" and the total with a chevron, that opens the lines (2026-11-19, after the critique found a
+phone buyer filled ten screens before seeing the order). Without the script, or with an empty cart, it stays open. Address fields use the standard `autocomplete` tokens, so
 browsers fill them; card fields do not (it is a demo card). Every field says what it needs; focus goes to the first.
 
 The confirmation (reworked 2026-11-19 after the Impeccable critique: the ending was the least designed screen)

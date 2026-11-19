@@ -65,6 +65,9 @@ function renderTotals() {
   out('shipping').textContent = ship === 0 ? 'Free' : formatEUR(ship);
   out('total').textContent = formatEUR(t.totalCents + ship);
   out('eta').textContent = t.lines.length ? `Arrives ${formatWindow(deliveryWindow(m, now))}` : '';
+  out('total-short').textContent = t.lines.length ? formatEUR(t.totalCents + ship) : '';
+  const n = t.lines.reduce((s, l) => s + l.qty, 0);
+  out('count').textContent = n ? `· ${n} ${n === 1 ? 'item' : 'items'}` : '';
   if (t.lines.length) payBtn.textContent = `Place order · ${formatEUR(t.totalCents + ship)}`;
 }
 form.addEventListener('change', (e) => { if (e.target.name === 'shipping' && catalog) renderTotals(); });
@@ -107,5 +110,11 @@ if (!t.lines.length) {
 } else {
   summary.innerHTML = t.lines.map((l) => `<div class="summary__line"><span>${l.qty} × ${l.product.name}<br><span class="t-soft">${catalog.sizes[l.size]} · ${catalog.grinds[l.grind]}</span></span><span>${formatEUR(l.lineCents)}</span></div>`).join('');
   payBtn.disabled = false;
+  // on a phone or tablet the order folds into a bar under the heading (the CSS shows the bar below 1024 only);
+  // without this script, or with an empty cart, the summary simply stays open
+  const toggle = document.querySelector('[data-sum-toggle]');
+  toggle.hidden = false;
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.addEventListener('click', () => toggle.setAttribute('aria-expanded', String(toggle.getAttribute('aria-expanded') !== 'true')));
 }
 renderTotals();
