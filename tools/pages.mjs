@@ -114,7 +114,10 @@ const drawer = `<div class="scrim" data-scrim hidden></div>
   <div class="drawer__foot" data-cart-foot>
     <p class="drawer__total"><span>Subtotal</span><span data-cart-total>€0.00</span></p>
     <a class="btn btn--block" href="checkout.html" data-checkout>Go to checkout</a>
-    <p class="drawer__note">Standard shipping is free from €40.</p>
+    <div class="drawer__free" data-cart-free>
+      <p class="drawer__note" data-cart-free-text>Standard shipping is free from €40.</p>
+      <span class="drawer__free-track" aria-hidden="true"><span data-cart-free-bar></span></span>
+    </div>
   </div>
 </aside>`;
 
@@ -198,7 +201,7 @@ ${header({ home: './' })}
       </div>
       <p class="pdp__notes">${esc(p.notes)}.</p>
       <p>${esc(p.about)}</p>
-      <form class="options" data-add novalidate>
+      <form class="options" id="buy" data-add novalidate>
         <fieldset class="choice"><legend>Grind</legend><div class="chips">
           ${Object.entries(catalog.grinds).map(([g, label], i) => `<label class="chip"><input type="radio" name="grind" value="${g}"${i === 0 ? ' checked' : ''}>${esc(label)}</label>`).join('\n          ')}
         </div></fieldset>
@@ -208,6 +211,7 @@ ${header({ home: './' })}
         <div class="add">
           <button class="btn btn--block" type="submit"><span data-add-label>Add to cart</span> · <span data-add-price>${formatEUR(p.prices[sizesList[0][0]])}</span></button>
           <p class="add__status" role="status" aria-live="polite"></p>
+          <p class="add__next" data-add-next hidden><button class="link-arrow" type="button" data-cart-open>View cart</button><a class="link-arrow" href="checkout.html">Checkout <span aria-hidden="true">→</span></a></p>
           <noscript><p>The cart needs JavaScript.</p></noscript>
         </div>
       </form>
@@ -222,6 +226,12 @@ ${header({ home: './' })}
   </div>
 
 ${originStory(p)}
+  <!-- on a phone, until the choices come into view: the name, the lowest price, and a jump to the choices
+       (product.js). It never adds by itself: the grind is the buyer's to choose -->
+  <div class="buy-bar" data-buy-bar hidden>
+    <p class="buy-bar__what"><span>${esc(p.name)}</span><span class="t-soft">from ${formatEUR(Math.min(...Object.values(p.prices)))}</span></p>
+    <a class="btn" href="#buy" data-buy-jump>Choose grind &amp; size</a>
+  </div>
   <section class="more coffees" aria-labelledby="more-title">
     <div class="wrap section__head"><h2 id="more-title">More coffees</h2></div>
     ${carousel(others, 'More coffees', true)}

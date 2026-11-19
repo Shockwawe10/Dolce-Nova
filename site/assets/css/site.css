@@ -593,6 +593,19 @@ html:not(.js) .roast__control { display: none; }
 .email__head dd { overflow-wrap: anywhere; }
 .email__body { display: grid; gap: var(--s-2); padding: var(--s-3); }
 .email__lines { border-top: 1px solid var(--c-line); }
+/* after adding: the way on, under the button */
+.add__next { display: flex; flex-wrap: wrap; column-gap: var(--s-4); }
+.add__next button { border: 0; padding: 0; background: none; color: inherit; font: inherit; font-weight: 500; cursor: pointer; }
+/* the phone's buy bar (product pages, below 1024 only) */
+.buy-bar { position: fixed; z-index: 25; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: var(--s-2); padding: var(--s-1) var(--gutter) calc(var(--s-1) + env(safe-area-inset-bottom)); background: var(--c-ground); border-top: 1px solid var(--c-line); }
+.buy-bar__what { flex: 1; min-width: 0; display: grid; font-size: var(--fs-1); line-height: 1.4; }
+.buy-bar__what > span:first-child { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.buy-bar .btn { flex: none; }
+@media (min-width: 1024px) { .buy-bar { display: none !important; } }
+/* the drawer's free-shipping line: how far is left, and a 2 px track that fills */
+.drawer__free { display: grid; gap: var(--s-1); }
+.drawer__free-track { display: block; height: 2px; background: var(--c-line); overflow: hidden; }
+.drawer__free-track > span { display: block; height: 100%; background: var(--c-accent); transform-origin: left; transform: scaleX(0); transition: transform var(--d-3) var(--ease); }
 .credits li { padding-block: var(--s-1); border-bottom: 1px solid var(--c-line); }
 
 /* ---------- motion: the hero's one entrance (never under reduced motion) ---------- */

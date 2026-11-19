@@ -33,6 +33,10 @@ for (const [w, h] of [[390, 844], [1440, 900]]) {
     await form.locator('button[type=submit]').click();
     // both presses count, even the ones made while the catalog was still on its way
     await page.waitForFunction(() => document.querySelector('[data-cart-count]').textContent === '2', null, { timeout: 5000 });
+    // the way on after adding (2026-11-19): View cart and Checkout under the button; the drawer counts down to
+    // free shipping (2 x 1 kg is over 40 euro, so it says the order ships free)
+    assert.equal(await form.locator('[data-add-next]').isVisible(), true, 'View cart / Checkout shown after adding');
+    assert.match(await page.locator('[data-cart-free-text]').textContent(), /free on this order/);
     // drawer: dialog semantics, inert page, Esc closes and returns focus
     await page.click('[data-cart-open]');
     await page.waitForSelector('#cart.is-open');

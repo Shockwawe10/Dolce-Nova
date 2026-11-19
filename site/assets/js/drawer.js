@@ -1,6 +1,7 @@
 // Cart drawer: a modal dialog. Focus trap, Esc, `inert` on everything behind it, iOS-safe scroll lock.
 import { totals, setQuantity, remove, count, formatEUR } from './cart.js';
 import { getCart, setCart, subscribe, picture } from './store.js';
+import { SHIPPING } from './order.js';
 
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -26,6 +27,11 @@ export function mountDrawer(catalog, manifest) {
     lastCount = n;
     const t = totals(cart, catalog);
     total.textContent = formatEUR(t.totalCents);
+    // how far to free standard shipping, instead of a fixed rule
+    const free = SHIPPING.standard.freeFromCents, left = Math.max(0, free - t.totalCents);
+    const freeText = drawer.querySelector('[data-cart-free-text]'), freeBar = drawer.querySelector('[data-cart-free-bar]');
+    if (freeText) freeText.textContent = left ? `${formatEUR(left)} more for free standard shipping.` : 'Standard shipping is free on this order.';
+    if (freeBar) freeBar.style.transform = `scaleX(${Math.min(1, t.totalCents / free)})`;
     foot.hidden = cart.length === 0;
     if (!cart.length) {
       lines.innerHTML = `<div class="drawer__empty"><p>Your cart is empty.</p><a class="link-arrow" href="./#coffees" data-cart-close>Browse the coffees <span aria-hidden="true">→</span></a></div>`;
