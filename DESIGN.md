@@ -56,7 +56,7 @@ appear only in the photographs: the page stays quiet so six different bags can s
   Fallback` = Arial at 102.74%, with ascent, descent and line-gap overrides) from published metrics
   (`tools/fonts.mjs`).
 
-**Scale:** major third (×1.25) from 16px: 13 · 16 · 20 · 25 · 31 · 39 · 49 · 61 · 76. Headings step at
+**Scale:** major third (×1.25) from 16px: 13 · 16 · 20 · 25 · 31 · 39 · 49 · 61 · 76 · 95 (95 only for the hero h1 at 1280 and wider, since 2026-11-19, so the hero outranks the sections). Headings step at
 breakpoints: h1 49 / 61 / 76, h2 39 / 49 / 61 (phone / tablet / desktop); the narrow serif is set one step
 larger than the Garamond was. Tags: 13px Instrument Sans 500, uppercase, +0.08em. Buttons: 48px tall, 13px
 uppercase, +0.08em, square.
@@ -108,7 +108,7 @@ moves; the roast path snaps between its five states.
 | Section | Height | Composition |
 |---|---|---|
 | Header | fixed 64px | Coffees / Roast / Brew left (phone: Coffees only), DOLCE NOVA centred, Cart (0) right; paper words on the hero's ink until the page scrolls, then the paper ground |
-| Hero | as tall as the bag (804px at 1440; a full screen on phones), ink | 1440: the words on columns 1–6, centred on the bag (notice, h1, lede, a paper button and an outline button: the notice starts level with the bag's top, the buttons end near its base); the Cerrado bag on 7–12, 628 to 640px, its edges faded into the ink. Shorter than the window at the owner's request (2026-11-17), so the words and the bag line up on wide screens. Phone: the bag above, cut and faded, the words under it, one button |
+| Hero | one screen up to 1000px (since 2026-11-19: the bag-height hero left a 96px band of paper at 1440x900); the words and the bag centred together; a full screen on phones; ink. h1 "Six coffees, each with a bag worth keeping." | 1440: the words on columns 1–6, centred on the bag (notice, h1, lede, a paper button and an outline button: the notice starts level with the bag's top, the buttons end near its base); the Cerrado bag on 7–12, 628 to 640px, its edges faded into the ink. Shorter than the window at the owner's request (2026-11-17), so the words and the bag line up on wide screens. Phone: the bag above, cut and faded, the words under it, one button |
 | The coffees | 1 screen | h2 and lede in a head row; the carousel: 3.4 slides at 1440, 2.4 on a tablet, 1.3 on a phone; each slide a 4:5 bag on its own backdrop, the roast tag, the name, the notes, "from" price; each links to its product page. Under the row, a scrollbar: its thumb is the share of the row in view; drag it (it keeps the grab point) or press the line to jump; the wheel scrolls the page, the bags are plain links. Plain chevrons under the line step one bag at a time; touch keeps its native swipe |
 | Manifesto | about 1.3 screens | one centred serif sentence, then three photographs, all in black and white: one tall frame on columns 1–7, two stacked on 8–12 (phone: one wide, two squares) |
 | Origin | 72% of a screen (560 to 720px) | photograph half and oat half (Coffee Collective's split; oat, not forest, since 2026-11-18, so the page runs light to dark: coffees, story and origin in paper and oat, then roast and brew in ink), one paragraph |

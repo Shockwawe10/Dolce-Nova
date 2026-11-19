@@ -9,7 +9,7 @@ const arg = (k, d) => (process.argv.includes(k) ? process.argv[process.argv.inde
 const engine = arg('--engine', 'webkit') === 'chromium' ? chromium : webkit;
 const DPR = Number(arg('--dpr', '2'));
 const BASE = 'http://localhost:4600/Dolce-Nova/';
-const SCALE = [13, 16, 20, 25, 31, 39, 49, 61, 76];
+const SCALE = [13, 16, 20, 25, 31, 39, 49, 61, 76, 95];   // 95: --fs-10, the hero h1 at 1280 and wider (2026-11-19)
 const FAMILIES = ['Instrument Serif', 'Instrument Sans'];
 const SIZES = [[390, 844], [820, 1180], [1440, 900], [1920, 1080]];
 

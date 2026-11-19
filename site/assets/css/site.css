@@ -14,7 +14,7 @@
   --f-display: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
   --f-text: "Instrument Sans", "Instrument Sans Fallback", Arial, sans-serif;
   --fs-1: 13px; --fs-2: 16px; --fs-3: 20px; --fs-4: 25px; --fs-5: 31px;
-  --fs-6: 39px; --fs-7: 49px; --fs-8: 61px; --fs-9: 76px;
+  --fs-6: 39px; --fs-7: 49px; --fs-8: 61px; --fs-9: 76px; --fs-10: 95px;   /* 10: the hero's h1 on wide screens only */
 
   --s-1: 8px; --s-2: 16px; --s-3: 24px; --s-4: 32px; --s-6: 48px; --s-8: 64px; --s-12: 96px; --s-16: 128px;
   --gutter: var(--s-2);
@@ -168,13 +168,16 @@ button { cursor: pointer; background: none; border: 0; padding: 0; text-align: i
 @media (min-width: 1024px) {
   /* as tall as the bag, not the window (the owner, 2026-11-17: shorter, the words lined up with the bag): the words
      are centred on the bag, whose printed body fills 13% to 90% of its square, so their centres meet within 1.5% */
-  .hero { min-height: 0; padding-block: calc(var(--header) + var(--s-6)) var(--s-8); }
+  /* one screen again (the critique, 2026-11-19: a 96 px band of empty paper under an 804 px hero at 1440x900),
+     the words and the bag centred together so they stay aligned; capped so a tall monitor is not mostly ink */
+  .hero { min-height: min(100svh, 1000px); align-content: center; padding-block: calc(var(--header) + var(--s-6)) var(--s-8); }
   .hero__inner { grid-template-rows: none; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--g); align-items: center; }
   .hero__text { grid-column: 1 / span 6; grid-row: 1; gap: var(--s-3); align-self: center; align-content: start; }
 }
 @media (min-width: 1024px) and (max-width: 1279px) {
   .hero h1 { font-size: var(--fs-8); }   /* a smaller laptop's bag is smaller: one step down keeps the words within its height */
 }
+@media (min-width: 1280px) { .hero h1 { font-size: var(--fs-10); max-width: 12ch; } }   /* two steps above the h2s' 61, so the hero outranks every section */
 @media (min-width: 1024px) {
   .hero__bag { grid-column: 7 / span 6; grid-row: 1; align-self: center; justify-self: end; margin: 0; width: min(100%, 640px, 100svh - var(--header) - 96px); }
   .hero__bag img { -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent); mask-image: radial-gradient(closest-side, #000 78%, transparent); }
