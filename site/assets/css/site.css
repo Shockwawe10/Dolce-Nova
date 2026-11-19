@@ -351,6 +351,7 @@ html:not(.js) .recipe { grid-area: auto; visibility: visible; margin-bottom: var
 /* ---------- choices: grind and size ---------- */
 .options { display: grid; gap: var(--s-3); align-content: start; }
 .choice__hint { font-size: var(--fs-1); line-height: 1.5; color: var(--c-ink-soft); margin: 0 0 var(--s-1); max-width: 48ch; }
+.facts dd:has(.facts__note) { padding-bottom: var(--s-2); }   /* the small note line gets air above the rule */
 .facts__note { display: block; font-size: var(--fs-1); line-height: 1.5; color: var(--c-ink-soft); }
 .choice legend { font-size: var(--fs-1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-soft); font-weight: 500; margin-bottom: var(--s-1); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--s-1); }
